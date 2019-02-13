@@ -41,7 +41,7 @@
     "bluebird": "^3.5.3",
     "electron-is-dev": "^0.3.0",
     "flexlayout-react": "^0.3.3",
-    "jquery": "2.1.0",
+    "jquery": "^3.0.0",
     "pubsub.js": "^1.5.2",
     "react": "^16.2.0",
     "react-codemirror": "^1.0.0",
