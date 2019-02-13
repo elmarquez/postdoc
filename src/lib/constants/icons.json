@@ -1,0 +1,57 @@
+[
+  {
+    "extension": ["adoc", "asciidoc"],
+    "icon": "icon",
+    "mimetype": "text/asciidoc",
+    "name": "AsciiDoc",
+  },
+  {
+    "extension": ["css"],
+    "icon": "icon",
+    "mimetype": "text/css",
+    "name": "Cascading style sheet",
+  },
+  {
+    "extension": ["gif"],
+    "icon": "icon",
+    "mimetype": "image/gif",
+    "name": "GIF",
+  },
+  {
+    "extension": ["htm", "html"],
+    "icon": "icon",
+    "mimetype": "text/html",
+    "name": "HTML",
+  },
+  {
+    "extension": ["js", "asciidoc"],
+    "icon": "icon",
+    "mimetype": "text/asciidoc",
+    "name": "AsciiDoc",
+  },
+  {
+    "extension": ["adoc", "asciidoc"],
+    "icon": "icon",
+    "mimetype": "text/asciidoc",
+    "name": "AsciiDoc",
+  },
+  {
+    "js": "DOCUMENT_LOAD",
+    "json": "DOCUMENT_LOAD",
+    "json5": "DOCUMENT_LOAD",
+    "jpeg": "PROJECT_LOAD",
+    "jpg": "PROJECT_LOAD",
+    "ltx": "PROJECT_LOAD",
+    "md": "DOCUMENT_LOAD_ERROR",
+    "pdf": "PROJECT_LOAD",
+    "png": "PROJECT_LOAD",
+    "ps": "PROJECT_LOAD",
+    "py": "PROJECT_LOAD",
+    "scss": "PROJECT_LOAD",
+    "sh": "PROJECT_LOAD",
+    "svg": "PROJECT_LOAD",
+    "text": "PROJECT_LOAD",
+    "txt": "PROJECT_LOAD",
+    "UNKNOWN": "PROJECT_LOAD_ERROR"
+  }
+]

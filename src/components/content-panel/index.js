@@ -1,27 +1,47 @@
+import CodeMirror from 'react-codemirror';
 import React from 'react';
-import TabbedPanel from '../tabbed-panel';
 
 /**
  * Content editing and viewing panel.
  */
-export default class ContentPanel extends React.Component {
-  /**
-   * Constructor.
-   * @param {Object} props Component properties
-   */
+class ContentPanel extends React.Component {
   constructor (props) {
     super(props);
+    this.state = {
+      code: "// this is a test",
+      mode: 'markdown',
+      readOnly: false
+    };
   }
 
   /**
    * Render the component.
    * @returns {XML}
    */
-  render () {
+  render() {
     return (
       <div className={'content panel'}>
-        <TabbedPanel />
+        {this.renderEditor()}
       </div>
     );
   }
+
+  /**
+   * Render the editing panel.
+   * @returns {XML}
+   */
+  renderEditor () {
+    var options = {
+      lineNumbers: true,
+    };
+    return (
+      <CodeMirror ref="editor" className={'editor'} value={this.state.code} onChange={this.updateCode} options={options} />
+    );
+  }
+
+  updateCode (newCode) {
+    this.setState({code: newCode});
+  }
 }
+
+module.exports = ContentPanel;

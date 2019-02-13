@@ -1,8 +1,4 @@
-.content.panel {
-    align-items: stretch;
-    background-color: rgb(250,250,250);
-    display: flex;
-    flex-direction: column;
-    flex-grow: 2;
-    overflow: hidden;
+.content.panel .editor {
+    flex-grow:2 ;
+    font-size: 14px;
 }

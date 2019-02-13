@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    padding: 8px;
     width: 280px;
 }
 
@@ -21,7 +20,16 @@
 }
 
 .project.panel > .header {
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    flex-direction: row;
     height: 32px;
+    justify-content: space-between;
     max-height: 32px;
     min-height: 32px;
+}
+
+.project.panel > .header span {
+    padding: 0 16px;
 }

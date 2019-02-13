@@ -28,17 +28,23 @@
     "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-css": "^0.1.0",
+    "gulp-process": "^0.1.2",
     "gulp-sourcemaps": "^2.6.4",
     "jest": "^22.4.2",
     "react-test-renderer": "^16.2.0"
   },
   "dependencies": {
     "@atlaskit/button": "^10.1.2",
+    "@atlaskit/css-reset": "^3.0.5",
     "@atlaskit/form": "^5.1.3",
+    "@atlaskit/tree": "^4.1.10",
+    "bluebird": "^3.5.3",
     "electron-is-dev": "^0.3.0",
     "flexlayout-react": "^0.3.3",
     "jquery": "2.1.0",
+    "pubsub.js": "^1.5.2",
     "react": "^16.2.0",
+    "react-codemirror": "^1.0.0",
     "react-dom": "^16.2.0",
     "styled-components": "^4.1.3"
   },
