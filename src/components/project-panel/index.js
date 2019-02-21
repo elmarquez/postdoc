@@ -1,13 +1,14 @@
+import FileIcon from '@atlaskit/icon/glyph/file';
+import FolderIcon from '@atlaskit/icon/glyph/folder';
+import FolderFilledIcon from '@atlaskit/icon/glyph/folder-filled';
+import Select from '@atlaskit/select';
+import Tree, {TreeItem} from '@atlaskit/tree';
 import {remote} from 'electron';
 import fs from 'fs';
 import log from 'electron-log';
 import path from 'path';
 import project from '../../lib/project';
 import React from 'react';
-import FileIcon from '@atlaskit/icon/glyph/file';
-import FolderIcon from '@atlaskit/icon/glyph/folder';
-import FolderFilledIcon from '@atlaskit/icon/glyph/folder-filled';
-import Tree, {TreeItem} from '@atlaskit/tree';
 
 
 import utils from "../../lib/utils";
@@ -86,7 +87,10 @@ class ProjectPanel extends React.Component {
           }
         };
         let tree = {rootId: prj, items};
-        self.setState({project: tree});
+        let projects = [
+          {label: path.basename(prj), value: prj}
+        ];
+        self.setState({project: tree, projects});
       })
       .catch(err => {
           console.error(err);
@@ -148,31 +152,22 @@ class ProjectPanel extends React.Component {
    * @returns {XML}
    */
   renderHeader () {
-    if (this.state.project) {
-      return (
-        <div className={'header'}>
-          <span className={'project name'}>{this.state.project.name}</span>
-          <span className={'ti-angle-down'}></span>
-        </div>
-      )
-    } else {
-      return (
-        <div className={'header'}>
-          <span className={'project name'}>&nbsp;</span>
-          <span className={'ti-angle-down'}></span>
-        </div>
-      )
-    }
+    return (
+      <div className={'header'}>
+        <Select
+          className="single-select"
+          classNamePrefix="react-select"
+          options={this.state.projects}
+          placeholder="Select project"/>
+      </div>
+    )
   }
 
   /**
    * Render the file system tree.
    * @returns {XML}
    */
-  renderTree() {
-    // let tree = this.state.project || {};
-    // tree.items = tree.items ? tree.items : [];
-    // tree.rootId = tree.rootId ? tree.rootId : 'empty'
+  renderTree () {
     return (
       <Tree onCollapse={this.onTreeItemCollapse.bind(this)}
             onExpand={this.onTreeItemExpand.bind(this)}
