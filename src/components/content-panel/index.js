@@ -21,7 +21,18 @@ class ContentPanel extends React.Component {
   render() {
     return (
       <div className={'content panel'}>
-        {this.renderEditor()}
+        <div className={'header'}>
+          <div className={'tabs'}>
+            <div className={'tab'}>filename1.md</div>
+            <div className={'tab'}>filename2.md</div>
+            <div className={'tab'}>filename3.md</div>
+            <div className={'tab'}>filename4.md</div>
+            <div className={'tab'}>filename5.md</div>
+          </div>
+        </div>
+        <div className={'body'}>
+          {this.renderEditor()}
+        </div>
       </div>
     );
   }
