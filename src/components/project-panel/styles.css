@@ -33,3 +33,14 @@
 .project.panel > .header span {
     padding: 0 16px;
 }
+
+.treeitem {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    padding: 0 8px;
+}
+
+.treeitem > span {
+    margin-right: 8px;
+}

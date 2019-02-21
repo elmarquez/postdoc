@@ -52,7 +52,6 @@ function handleProjectOpen () {
     title: "Open Project"
   };
   dialog.showOpenDialog(config, function (files) {
-    console.info(EVENTS.PROJECT_OPEN, files);
     pubsub.publish(EVENTS.PROJECT_OPEN, files);
   });
 }

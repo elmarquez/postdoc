@@ -1,8 +1,15 @@
 import {remote} from 'electron';
 import fs from 'fs';
+import log from 'electron-log';
 import path from 'path';
+import project from '../../lib/project';
 import React from 'react';
+import FileIcon from '@atlaskit/icon/glyph/file';
+import FolderIcon from '@atlaskit/icon/glyph/folder';
+import FolderFilledIcon from '@atlaskit/icon/glyph/folder-filled';
 import Tree, {TreeItem} from '@atlaskit/tree';
+
+
 import utils from "../../lib/utils";
 
 const {EVENTS, pubsub} = remote.getGlobal('pubsub');
@@ -19,9 +26,9 @@ class ProjectPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      project: null,
-      projects: [],
-      items: []
+      path: '/',
+      project: {rootId:'empty', items: {}},
+      projects: []
     };
   }
 
@@ -29,11 +36,7 @@ class ProjectPanel extends React.Component {
    * Handle life cycle event.
    */
   componentDidMount () {
-    console.log(pubsub);
-    pubsub.subscribe(EVENTS.PROJECT_OPEN, function (a,b) {
-      console.log(a,b)
-    });
-    this.updateFileSystemTree();
+    pubsub.subscribe(EVENTS.PROJECT_OPEN, this.onProjectOpen.bind(this));
   }
 
   /**
@@ -43,6 +46,52 @@ class ProjectPanel extends React.Component {
    */
   getFileItemMimetype (f) {
     return "application/octet-stream";
+  }
+
+  onProjectOpen (prj) {
+    let self = this;
+    if (!prj) {
+      return;
+    } else {
+      project.load(prj).then(p => {
+        // let data = p.metadata;
+        let items = p
+          .files
+          .map(f => {
+            return {
+              id: f.path,
+              children: [],
+              hasChildren: f.stats.isDirectory(),
+              isExpanded: false,
+              isChildrenLoading: false,
+              data: {
+                title: path.basename(f.path)
+                // TODO add file metadata
+              }
+            };
+          })
+          .reduce((m, f) => {
+            m[f.id] = f;
+            return m;
+          }, {})
+        items[prj] = {
+          id: prj,
+          children: Object.keys(items),
+          hasChildren: true,
+          isExpanded: true,
+          isChildrenLoading: false,
+          data: {
+            title: path.basename(prj)
+            // TODO add file metadata
+          }
+        };
+        let tree = {rootId: prj, items};
+        self.setState({project: tree});
+      })
+      .catch(err => {
+          console.error(err);
+        });
+    }
   }
 
   /**
@@ -82,6 +131,10 @@ class ProjectPanel extends React.Component {
     );
   }
 
+  /**
+   * Render body.
+   * @returns {XML}
+   */
   renderBody () {
     return (
       <div className={'body'}>
@@ -90,6 +143,10 @@ class ProjectPanel extends React.Component {
     );
   }
 
+  /**
+   * Render header.
+   * @returns {XML}
+   */
   renderHeader () {
     if (this.state.project) {
       return (
@@ -113,9 +170,14 @@ class ProjectPanel extends React.Component {
    * @returns {XML}
    */
   renderTree() {
-    let tree = {rootId:this.state.project ? this.state.project.path : 'empty', items:this.state.items};
+    // let tree = this.state.project || {};
+    // tree.items = tree.items ? tree.items : [];
+    // tree.rootId = tree.rootId ? tree.rootId : 'empty'
     return (
-      <Tree renderItem={this.renderTreeItem.bind(this)} tree={tree}/>
+      <Tree onCollapse={this.onTreeItemCollapse.bind(this)}
+            onExpand={this.onTreeItemExpand.bind(this)}
+            renderItem={this.renderTreeItem.bind(this)}
+            tree={this.state.project} />
     );
   }
 
@@ -126,8 +188,8 @@ class ProjectPanel extends React.Component {
    */
   renderTreeItem(node) {
     return (
-      <div key={node.item.id} ref={node.provided.innerRef}>
-        {this.renderTreeItemIcon(node.item.data)}
+      <div className={'treeitem'} key={node.item.id} ref={node.provided.innerRef}>
+        {this.renderTreeItemIcon(node.item)}
         {node.item.data.title}
       </div>
     );
@@ -139,46 +201,13 @@ class ProjectPanel extends React.Component {
    * @returns {XML}
    */
   renderTreeItemIcon(node) {
-    return (
-      <span className={"ti-file"}> </span>
-    );
-  }
-
-  /**
-   * Update file system tree. The current implementation loads the tree in
-   * full.
-   */
-  updateFileSystemTree () {
-    let self = this;
-    let files = [];
-    if (this.state.project) {
-      // TODO check to see that the path exists
-      files = fs
-        .readdirSync(this.state.project.path, {encoding: 'utf8', withFileTypes: true})
-        .map(f => {
-          let p = path.join(self.state.project.path, f)
-          let s = fs.statSync(p);
-          return {
-            hidden: f.length > 0 ? f[0] === '.' : false,
-            mimetype: this.getFileItemMimetype(),
-            path: p,
-            name: f,
-            dir: s.isDirectory()
-          };
-        })
-        .map(f => {
-          return {
-            children: [],
-            data: f,
-            hasChildren: f.dir,
-            id: f.path,
-            isChildrenLoading: false,
-            isExpanded: false
-          };
-        });
+    if (node.hasChildren === true && node.isExpanded === true) {
+      return (<FolderIcon className={'icon'} size={'small'} />);
+    } else if (node.hasChildren === true) {
+      return (<FolderFilledIcon className={'icon'} size={'small'} />);
+    } else {
+      return (<FileIcon className={'icon'} size={'small'} />);
     }
-    // return file system tree
-    this.setState({items: files});
   }
 }
 
