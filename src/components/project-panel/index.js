@@ -2,7 +2,7 @@ import FileIcon from '@atlaskit/icon/glyph/file';
 import FolderIcon from '@atlaskit/icon/glyph/folder';
 import FolderFilledIcon from '@atlaskit/icon/glyph/folder-filled';
 import Select from '@atlaskit/select';
-import Tree, {TreeItem} from '@atlaskit/tree';
+import Tree, {mutateTree, moveItemOnTree, TreeItem} from '@atlaskit/tree';
 import {remote} from 'electron';
 import fs from 'fs';
 import log from 'electron-log';
@@ -68,7 +68,9 @@ class ProjectPanel extends React.Component {
               data: {
                 title: path.basename(f.path)
                 // TODO add file metadata
-              }
+              },
+              onCollapse: self.onTreeItemCollapse,
+              onExpand: self.onTreeItemExpand
             };
           })
           .reduce((m, f) => {
@@ -93,7 +95,7 @@ class ProjectPanel extends React.Component {
         self.setState({project: tree, projects});
       })
       .catch(err => {
-          console.error(err);
+          log.error(err);
         });
     }
   }
@@ -102,25 +104,35 @@ class ProjectPanel extends React.Component {
    * Handle tree item collapse.
    * @param {Event} e - Event
    */
-  onTreeItemCollapse (e) {}
+  onTreeItemCollapse (e) {
+    log.info('collapse', e);
+  }
 
   /**
    *
    * @param {Event} e - Event
    */
-  onTreeItemDrag (e) {}
+  onTreeItemDrag (e) {
+    log.info('drag', e);
+  }
 
   /**
    * Handle tree item drop.
    * @param {Event} e - Event
    */
-  onTreeItemDrop (e) {}
+  onTreeItemDrop (e) {
+    log.info('drop', e);
+  }
 
   /**
    * Handle tree item expand.
    * @param {Event} e - Event
    */
-  onTreeItemExpand (e) {}
+  onTreeItemExpand (itemId) {
+    log.info('expand', e);
+    const tree = this.state.project;
+    this.setState({tree: mutateTree(tree, itemId, { isExpanded: true })});
+  }
 
   /**
    * Render the component.

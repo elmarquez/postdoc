@@ -35,7 +35,13 @@ class ContentPanel extends React.Component {
       lineNumbers: true,
     };
     return (
-      <CodeMirror ref="editor" className={'editor'} value={this.state.code} onChange={this.updateCode} options={options} />
+      <CodeMirror
+        className={'editor'}
+        onChange={this.updateCode.bind(this)}
+        options={options}
+        ref="editor"
+        value={this.state.code}
+      />
     );
   }
 

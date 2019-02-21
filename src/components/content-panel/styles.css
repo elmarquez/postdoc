@@ -1,4 +1,16 @@
 .content.panel .editor {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     flex-grow:2 ;
     font-size: 14px;
+}
+
+.content.panel .CodeMirror {
+    height: 100%;
+}
+
+.content.panel .ReactCodeMirror {
+    flex-grow: 2;
+    height: 100%;
 }
