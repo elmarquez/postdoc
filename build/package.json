@@ -71,7 +71,7 @@
       "last 1 safari version"
     ]
   },
-  "main": "index.html",
+  "main": "http://localhost:3000/",
   "nwBuilder": {
     "//": "https://github.com/nwjs-community/nw-builder",
     "platforms": [
@@ -84,5 +84,6 @@
     "buildDir": "./build",
     "cacheDir": "./cache",
     "macIcns": "./src/logo.icns"
-  }
+  },
+  "node-remote": "*://*/*"
 }

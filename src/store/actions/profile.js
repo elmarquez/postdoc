@@ -1,0 +1,44 @@
+import { PROFILE } from "./actionTypes";
+import shortid from "shortid";
+import Profile from "../../lib/profile";
+
+/**
+ * Load profile into memory.
+ * @returns {Object}
+ */
+function loadProfile() {
+  return function(dispatch) {
+    dispatch({
+      type: PROFILE.LOAD_PROFILE,
+      id: shortid.generate(),
+      isLoading: true
+    });
+    Profile.getProfile().then(function(data) {
+      dispatch({
+        type: PROFILE.LOAD_PROFILE,
+        id: shortid.generate(),
+        data,
+        isLoading: false
+      });
+    });
+  };
+}
+
+/**
+ * Update profile.
+ * @param {Object} data - Profile data
+ * @returns {Object}
+ */
+function updateProfile(data) {
+  return function(dispatch) {
+    Profile.updateSettings(data).then(function() {
+      dispatch({
+        type: PROFILE.UPDATE_PROFILE,
+        id: shortid.generate(),
+        data
+      });
+    });
+  };
+}
+
+export { loadProfile, updateProfile };

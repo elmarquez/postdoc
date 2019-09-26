@@ -1,82 +1,92 @@
-import {dialog, remote} from 'electron';
-import {pubsub, EVENTS} from '../pubsub';
+/**
+ * Handle file close.
+ */
+function handleFileClose() {
+  throw new Error("not implemented");
+}
 
 /**
  * Handle file creation.
  */
-function handleFileNew () {
-  console.info('file new');
-}
-
-/**
- * Handle file save.
- */
-function handleFileSave () {
-  console.info('file save');
-}
-
-/**
- * Handle file save as.
- */
-function handleFileSaveAs () {
-  console.info('file save as');
-}
-
-/**
- * Handle file close.
- */
-function handleFileClose () {
-  console.info('file close');
+function handleFileNew() {
+  throw new Error("not implemented");
 }
 
 /**
  * Handle file open action.
  */
-function handleFileOpen () {
-  console.info('file open');
+function handleFileOpen() {
+  throw new Error("not implemented");
+}
+
+/**
+ * Handle file save.
+ */
+function handleFileSave() {
+  throw new Error("not implemented");
+}
+
+/**
+ * Handle file save as.
+ */
+function handleFileSaveAs() {
+  throw new Error("not implemented");
 }
 
 /**
  * Handle project close action.
  */
-function handleProjectClose () {
-  console.info('project close');
+function handleProjectClose() {
+  throw new Error("not implemented");
 }
 
 /**
  * Handle project open action.
  */
-function handleProjectOpen () {
-  let config = {
-    properties: ['openDirectory', 'createDirectory'],
-    title: "Open Project"
-  };
-  dialog.showOpenDialog(config, function (files) {
-    pubsub.publish(EVENTS.PROJECT_OPEN, files);
-  });
+function handleProjectOpen() {
+  throw new Error("not implemented");
 }
 
-function handleNewFile () {}
+function handleNewFile() {
+  throw new Error("not implemented");
+}
 
-function handleNewProject () {}
-
+function handleNewProject() {
+  throw new Error("not implemented");
+}
 
 /**
  * Handle application quit.
  */
-function handleQuit () {}
+function handleQuit() {
+  throw new Error("not implemented");
+}
 
 /**
  * Handle show application info.
  */
-function handleShowAboutApplication () {}
+function handleShowAboutApplication() {
+  throw new Error("not implemented");
+}
 
 /**
  * Handle show application settings.
  */
-function handleShowSettings () {}
+function handleShowSettings() {
+  throw new Error("not implemented");
+}
 
-
-module.exports = {
-  handleProjectOpen: handleProjectOpen
+export default {
+  handleFileClose,
+  handleFileNew,
+  handleFileOpen,
+  handleFileSave,
+  handleFileSaveAs,
+  handleProjectClose,
+  handleProjectOpen,
+  handleNewFile,
+  handleNewProject,
+  handleQuit,
+  handleShowAboutApplication,
+  handleShowSettings
 };

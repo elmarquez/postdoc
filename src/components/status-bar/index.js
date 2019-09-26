@@ -1,43 +1,48 @@
-import React from 'react';
+import React from "react";
+import { StatusBar, Group, Item } from "./styles";
 
 /**
  * Application status bar.
  */
-class StatusBar extends React.Component {
-
+class StatusBarComponent extends React.Component {
   /**
    * Constructor.
    * @param {Object} props Component properties
    */
-  constructor (props) {
+  constructor(props) {
     super(props);
+    this.state = {
+      cursor: [1, 1],
+      filename: null
+    };
   }
 
   /**
    * Render the component.
    * @returns {XML}
    */
-    render() {
-      return (
-        <div className={'status-bar flex flex-row align-items-center justify-content-space-between'}>
-          <div className={'group'}>
-            <div className={'item'}>document/summary.md</div>
-            <div className={'item'}>1:1</div>
-          </div>
-          <div className={'group'}>
-            <div className={'item'}>LF</div>
-            <div className={'item'}>UTF-8</div>
-            <div className={'item'}>Markdown</div>
-            <div className={'item'}>master</div>
-            <div className={'item'}>Fetch</div>
-            <div className={'item'}>GitHub</div>
-            <div className={'item'}>Git (201)</div>
-            <div className={'item'}>1 update <span className="ti-github"></span></div>
-          </div>
-        </div>
-      );
-    }
-
+  render() {
+    return (
+      <StatusBar>
+        <Group>
+          <Item>document/summary.md</Item>
+          <Item>1:1</Item>
+        </Group>
+        <Group>
+          <Item>LF</Item>
+          <Item>UTF-8</Item>
+          <Item>Markdown</Item>
+          <Item>master</Item>
+          <Item>Fetch</Item>
+          <Item>GitHub</Item>
+          <Item>Git (201)</Item>
+          <Item>
+            1 update <span className="ti-github"></span>
+          </Item>
+        </Group>
+      </StatusBar>
+    );
+  }
 }
 
-module.exports = StatusBar;
+export default StatusBarComponent;

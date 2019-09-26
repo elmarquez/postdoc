@@ -1,8 +1,48 @@
 NOTES
 =====
 
+## Tasks
+
+Library
+
+x index the PDF document collection
+x save the index as?
+  - bibliography
+  x searchable index
+- display the list of indexed documents
+- allow the user to tag each document
+
+
+Project
+
+- provide ability to add documents to the bibliography
+- bibliography editor
+
+Application
+
+- menu bar
+- new project
+- new project from existing repo
+- new bibliography
+- plugin architecture
+- runs on ultralight, possibly?
+
+
+- editors
+    - bibliography
+    - markup (asiidoc, markdown)
+    - diagrams
+- task runner
+    - website, blog publisher
+    - nodejs based
+
+
+## Value Proposition
+
 What is the value proposition?
 
+* Capture the research process
+* Work as a team
 * Write and organize research materials (notes, texts, bibliographies, papers, images, etc.) in the editor
     * Manage your bibliographies
     * Record notes, write markdown/latex documents
@@ -91,6 +131,8 @@ Packaging=
 https://github.com/electron-userland/electron-packager
 https://blogs.msdn.microsoft.com/appconsult/2017/03/14/convert-your-electron-app-using-the-desktop-bridge/
 
+Diagramming
+https://github.com/skanaar/nomnoml
 
 
 ## Collaborative Editing
