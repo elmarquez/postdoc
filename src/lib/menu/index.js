@@ -49,7 +49,11 @@ function getEditMenu() {
   menu.append(new nw.MenuItem({ label: "Cut" }));
   menu.append(new nw.MenuItem({ label: "Copy" }));
   menu.append(new nw.MenuItem({ label: "Paste" }));
+  menu.append(new nw.MenuItem({ label: "Delete" }));
   menu.append(new nw.MenuItem({ label: "Select All" }));
+  menu.append(new nw.MenuItem({ type: "separator" }));
+  menu.append(new nw.MenuItem({ label: "Find" }));
+  menu.append(new nw.MenuItem({ label: "Replace" }));
   return menu;
 }
 
@@ -114,7 +118,8 @@ function getWindowMenu() {
   menu.append(new nw.MenuItem({ label: "Outline", type: "checkbox" }));
   menu.append(new nw.MenuItem({ label: "Status Bar", type: "checkbox"  }));
   menu.append(new nw.MenuItem({ type: "separator" }));
-  menu.append(new nw.MenuItem({ label: "Bring all to front" }));
+  menu.append(new nw.MenuItem({ label: "Bring all to Front" }));
+  menu.append(new nw.MenuItem({ label: "Developer Tools" }));
   return menu;
 }
 
