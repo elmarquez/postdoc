@@ -1,4 +1,4 @@
-import { APPLICATION } from "../actions/actionTypes";
+import { APP } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   components: {},
@@ -18,10 +18,10 @@ const INITIAL_STATE = {
  */
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case APPLICATION.LOAD_APPLICATION_STATE_FULFILLED: {
+    case APP.LOAD_APPLICATION_STATE_FULFILLED: {
       return Object.assign({}, state, action.payload);
     }
-    case APPLICATION.UPDATE_PREFERENCE_FULFILLED: {
+    case APP.UPDATE_PREFERENCE_FULFILLED: {
       return Object.assign({}, state, action.payload);
     }
     default:

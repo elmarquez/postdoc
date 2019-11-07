@@ -31,7 +31,6 @@ class LibraryContainer extends React.Component {
    * @returns {JSX.Element}
    */
   render() {
-    console.info('render library', this.props.library);
     const fileControls = [
       <FilePlus key={0}/>
     ];

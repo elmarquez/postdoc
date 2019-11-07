@@ -1,4 +1,4 @@
-import { APPLICATION, LIBRARY, PROFILE } from "./actionTypes";
+import { APP, LIBRARY, PROFILE } from "./actionTypes";
 import shortid from "shortid";
 import Library from "../../lib/library";
 import { loadIndex } from './library';
@@ -12,7 +12,7 @@ import {Promise} from 'bluebird';
  */
 function deleteSetting(settingId) {
   return {
-    type: APPLICATION.DELETE_SETTING,
+    type: APP.DELETE_SETTING,
     id: shortid.generate(),
   };
 }
@@ -23,7 +23,7 @@ function deleteSetting(settingId) {
  */
 function loadApplicationState() {
   return {
-    type: APPLICATION.LOAD_APPLICATION_STATE,
+    type: APP.LOAD_APPLICATION_STATE,
     payload: Profile
       .getProfile()
       .then(function (profile) {
@@ -44,7 +44,7 @@ function loadApplicationState() {
  */
 function loadSettings() {
   return {
-    type: APPLICATION.LOAD_SETTINGS,
+    type: APP.LOAD_SETTINGS,
     id: shortid.generate()
   };
 }
@@ -60,7 +60,7 @@ function resetSettings() {}
  */
 function saveSettings() {
   return {
-    type: APPLICATION.SAVE_SETTINGS,
+    type: APP.SAVE_SETTINGS,
     id: shortid.generate()
   };
 }
@@ -73,7 +73,7 @@ function saveSettings() {
  */
 function updateRecentProjects(data) {
   return {
-    type: APPLICATION.UPDATE_RECENT_PROJECTS,
+    type: APP.UPDATE_RECENT_PROJECTS,
     id: shortid.generate(),
     data
   };
@@ -87,7 +87,7 @@ function updateRecentProjects(data) {
  */
 function updateSetting(settingId, data) {
   return {
-    type: APPLICATION.UPDATE_SETTING,
+    type: APP.UPDATE_SETTING,
     id: shortid.generate()
   };
 }
