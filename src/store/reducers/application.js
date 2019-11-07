@@ -1,8 +1,13 @@
 import { APPLICATION } from "../actions/actionTypes";
 
-// projects is a map from the project ID to the project object
 const INITIAL_STATE = {
-  isLoading: false
+  components: {},
+  isLoading: false,
+  isOutlinePanelVisible: true,
+  isStatusBarVisible: true,
+  recentProjects: [
+    { name: 'My Project', path: '/Users/dmarques/Documents/src/doc/postdoc' }
+  ],
 };
 
 /**
@@ -13,14 +18,11 @@ const INITIAL_STATE = {
  */
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case APPLICATION.DELETE_PREFERENCE: {
-      return state;
+    case APPLICATION.LOAD_APPLICATION_STATE_FULFILLED: {
+      return Object.assign({}, state, action.payload);
     }
-    case APPLICATION.GET_PREFERENCE: {
-      return state;
-    }
-    case APPLICATION.UPDATE_PREFERENCE: {
-      return state;
+    case APPLICATION.UPDATE_PREFERENCE_FULFILLED: {
+      return Object.assign({}, state, action.payload);
     }
     default:
       return state;

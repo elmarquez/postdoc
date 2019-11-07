@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ChevronDown } from 'styled-icons/boxicons-regular/ChevronDown';
 import { ChevronRight } from 'styled-icons/boxicons-regular/ChevronRight';
 import {FlexColumn, FlexRow} from '../../layout';
 
@@ -6,7 +7,12 @@ const Accordion = styled(FlexColumn)``;
 
 const Body = styled(FlexColumn)``;
 
-const ChevronIcon = styled(ChevronRight)`
+const ChevronIconDown = styled(ChevronDown)`
+  margin-right: 4px;
+  width: 18px;
+`;
+
+const ChevronIconRight = styled(ChevronRight)`
   margin-right: 4px;
   width: 18px;
 `;
@@ -25,6 +31,7 @@ const Controls = styled.div`
 
 
 const Header = styled(FlexRow)`
+  margin-left: -4px;
   padding-bottom: 8px;
 `;
 
@@ -34,4 +41,4 @@ const Title = styled.div`
 `;
 
 
-export { Accordion, Body, ChevronIcon, Controls, Header, Title };
+export { Accordion, Body, ChevronIconDown, ChevronIconRight, Controls, Header, Title };

@@ -1,4 +1,4 @@
-import Database from "../database";
+import Database, { loadFromDir } from "../database";
 import path from "path";
 import Utils from "../utils";
 
@@ -24,7 +24,7 @@ function addTag() {
  * @return {Promise}
  */
 function loadIndex(fp) {
-  return Database.loadFromDir(fp).then(function(db) {
+  return loadFromDir(fp).then(function(db) {
     return {files: db.getFiles(), tags: db.getTags()};
   });
 }

@@ -35,33 +35,6 @@ class Database {
   }
 
   /**
-   * Load database
-   * @param {String} fp - File path
-   * @returns {Promise<Database>} data
-   */
-  static load(fp) {
-    return Utils.files.exists(fp).then(function(exists) {
-      if (!exists) {
-        return new Database(fp);
-      } else {
-        return Utils.files.readJSON(fp).then(function(data) {
-          return new Database(fp, data);
-        });
-      }
-    });
-  }
-
-  /**
-   * Load database from a project folder.
-   * @param {String} fp - Project path
-   * @returns {Promise<Database>}
-   */
-  static loadFromDir(fp) {
-    const f = path.join(fp, DATABASE_FILENAME);
-    return Database.load(f);
-  }
-
-  /**
    * Update database index.
    * @param {Function} cb - Progress callback
    * @returns {Promise<Array>} list of files
@@ -73,12 +46,16 @@ class Database {
     console.info("Starting index update", nowIso);
     self._data.lastUpdated = now.toISOString();
     const fp = self.getParentDirectory();
-    return Utils.files
-      .getFileTree(fp)
+    return Utils
+      .files
+      .getFileTree(fp, {absolute: false})
       .then(Utils.files.getFileHashes)
       .then(function(files) {
         self._data.files = files.map(f => {
           // TODO all file paths should be relative to the directory root
+          f.filename = path.basename(f.path);
+          f.extension = path.extname(f.path);
+          f.mimetype = path.extname(f.path);
           f.lastUpdated = nowIso;
           f.tags = [];
           return f;
@@ -105,4 +82,37 @@ class Database {
   }
 }
 
+/**
+ * Load database
+ * @param {String} fp - File path
+ * @returns {Promise<Database>} data
+ */
+function load(fp) {
+  return Utils.files.exists(fp).then(function(exists) {
+    console.info('Loading database from', fp);
+    if (!exists) {
+      return new Database(fp);
+    } else {
+      return Utils.files.readJSON(fp).then(function(data) {
+        return new Database(fp, data);
+      });
+    }
+  });
+}
+
+/**
+ * Load database from a project folder.
+ * @param {String} fp - Project path
+ * @returns {Promise<Database>}
+ */
+function loadFromDir(fp) {
+  const f = path.join(fp, DATABASE_FILENAME);
+  return load(f);
+}
+
 export default Database;
+
+export {
+  load,
+  loadFromDir
+};

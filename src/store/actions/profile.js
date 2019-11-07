@@ -7,20 +7,9 @@ import Profile from "../../lib/profile";
  * @returns {Object}
  */
 function loadProfile() {
-  return function(dispatch) {
-    dispatch({
-      type: PROFILE.LOAD_PROFILE,
-      id: shortid.generate(),
-      isLoading: true
-    });
-    Profile.getProfile().then(function(data) {
-      dispatch({
-        type: PROFILE.LOAD_PROFILE,
-        id: shortid.generate(),
-        data,
-        isLoading: false
-      });
-    });
+  return {
+    type: PROFILE.LOAD_PROFILE,
+    payload: Profile.getProfile()
   };
 }
 

@@ -57,7 +57,7 @@ function getProfile() {
   const profile = getProfileDirectoryPath();
   return ensureProfile(profile).then(function() {
     const settings = path.join(profile, PROFILE_SETTINGS_FILENAME);
-    console.info("Reading user profile from", settings);
+    console.info("Reading profile from", settings);
     return utils.files.readJSON(settings);
   });
 }

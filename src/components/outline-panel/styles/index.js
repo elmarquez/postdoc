@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import {PrimitiveDot} from 'styled-icons/octicons/PrimitiveDot';
+
 import {FlexColumn, FlexRow} from '../../layout';
 
 const Body = styled.div`
   flex-grow: 2;
   overflow: auto;
-  padding: 16px 0;
+  padding: 16px 8px;
 `;
 
 const Controls = styled.div`
@@ -14,6 +16,7 @@ const Controls = styled.div`
 
 const Footer = styled(FlexRow)`
   border-top: 1px solid rgba(0,0,0,0.1);
+  height: 32px;
   padding: 12px 8px;
 `;
 
@@ -21,7 +24,7 @@ const Group = styled(FlexColumn)`
   margin: 0 8px 24px 8px;
   
   .accordion {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
 `;
 
@@ -36,7 +39,7 @@ const Header = styled.div`
   }
 `;
 
-const ProjectPanel = styled.div`
+const OutlinePanel = styled.div`
   align-items: stretch;
   background-color: rgb(242, 244, 246);
   border-right: 1px solid rgb(217, 217, 218);
@@ -44,7 +47,7 @@ const ProjectPanel = styled.div`
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  width: 280px;
+  width: 200px;
 `;
 
 const Title = styled.div`
@@ -53,15 +56,12 @@ const Title = styled.div`
   text-transform: uppercase;
 `;
 
-const TreeItem = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  padding: 0 8px;
-
-  span {
-    margin-right: 8px;
-  }
-`;
-
-export { Body, Controls, Footer, Group, Header, ProjectPanel, Title, TreeItem };
+export {
+  Body,
+  Controls,
+  Footer,
+  Group,
+  Header,
+  OutlinePanel,
+  Title,
+};

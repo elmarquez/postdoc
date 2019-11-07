@@ -1,6 +1,7 @@
 import { LIBRARY } from "./actionTypes";
 import shortid from "shortid";
 import Library from "../../lib/library";
+import {Promise} from 'bluebird';
 
 /**
  * Add file.
@@ -44,21 +45,9 @@ function deleteTag(tag) {
  * @returns {Function}
  */
 function loadIndex(fp) {
-  return function(dispatch) {
-    dispatch({
-      type: LIBRARY.LOAD_LIBRARY_INDEX,
-      id: shortid.generate(),
-      isLoading: true
-    });
-    Library.loadIndex(fp).then(function(data) {
-      dispatch({
-        type: LIBRARY.LOAD_LIBRARY_INDEX,
-        id: shortid.generate(),
-        files: data.files,
-        isLoading: false,
-        tags: data.tags
-      });
-    });
+  return {
+    type: LIBRARY.LOAD_LIBRARY_INDEX,
+    payload: Library.loadIndex(fp)
   };
 }
 

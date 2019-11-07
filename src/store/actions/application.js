@@ -1,7 +1,9 @@
 import { APPLICATION, LIBRARY, PROFILE } from "./actionTypes";
 import shortid from "shortid";
 import Library from "../../lib/library";
+import { loadIndex } from './library';
 import Profile from "../../lib/profile";
+import {Promise} from 'bluebird';
 
 /**
  * Delete settings.
@@ -15,47 +17,26 @@ function deleteSetting(settingId) {
   };
 }
 
+/**
+ *
+ * @returns {Function}
+ */
 function loadApplicationState() {
-  return function (dispatch) {
-    console.info('*** load profile');
-    let action = {
-      type: PROFILE.LOAD_PROFILE,
-      id: shortid.generate(),
-      isLoading: true
-    };
-    dispatch(action);
-    Profile
+  return {
+    type: APPLICATION.LOAD_APPLICATION_STATE,
+    payload: Profile
       .getProfile()
-      .then(function(data) {
-        console.info('*** profile loaded');
-        action = {
-          type: PROFILE.LOAD_PROFILE,
-          id: shortid.generate(),
-          data,
-          isLoading: false
-        };
-        dispatch(action);
-        action = {
-          type: LIBRARY.LOAD_LIBRARY_INDEX,
-          id: shortid.generate(),
-          isLoading: true
-        };
-        dispatch(action);
-        console.info('*** load library index');
-        return Library.loadIndex(data.library);
-      })
-      .then(function (data) {
-        console.info('*** library index loaded');
-        action = {
-          type: LIBRARY.LOAD_LIBRARY_INDEX,
-          id: shortid.generate(),
-          isLoading: false,
-          data
-        };
-        dispatch(action);
-      });
+      .then(function (profile) {
+        if (profile.library && profile.library !== "") {
+          return Library.loadIndex(profile.library).then(function (library) {
+            return {profile, library};
+          });
+        } else {
+          return profile;
+        }
+      }),
   };
-}
+};
 
 /**
  * Load settings into memory.
@@ -68,6 +49,9 @@ function loadSettings() {
   };
 }
 
+/**
+ *
+ */
 function resetSettings() {}
 
 /**

@@ -1,32 +1,24 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Item from './item';
 import {FlexColumn, FlexRow} from '../layout';
-import {Group, Controls, Title} from './styles';
+import {Controls, Group, Title} from './styles';
 
 class GroupComponent extends React.Component {
+  /**
+   * Render the component.
+   * @returns {JSX.Element}
+   */
   render() {
     return (
       <Group>
-        {this.renderHeader()}
-        {this.renderBody()}
+        <FlexRow padding={'0 0 16px 0'}>
+          <Title>{this.props.title}</Title>
+          <Controls>&nbsp;</Controls>
+        </FlexRow>
+        <FlexColumn>{this.props.children}</FlexColumn>
       </Group>
     );
-  }
-
-  renderHeader() {
-    return (
-      <FlexRow padding={'0 0 8px 0'}>
-        <Title>{this.props.title}</Title>
-        <Controls>Controls</Controls>
-      </FlexRow>
-    );
-  }
-
-  renderBody() {
-    return (
-      <FlexColumn>{this.props.children}</FlexColumn>
-    );
-
   }
 }
 

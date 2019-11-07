@@ -1,16 +1,15 @@
-node_modules/
-
-# Build Folders
-build/
-cache/
-app/
-dist/
-
-# MacOS Finder
-.DS_Store
-
-# WebStorm Project Folder
 .idea
+app
+build
+build/package.json
+cache
+dist
+node_modules
 
-# Jest Snapshot Folder
+.DS_Store
 **/__snapshots__/
+*~
+*.gz
+*.log
+*.tar
+*.zip

@@ -1,10 +1,9 @@
 import { PROFILE } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
-  isLoading: false,
-  data: {
-    library: null
-  }
+  library: null,
+  recent: [],
+  settings: {}
 };
 
 /**
@@ -16,10 +15,10 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PROFILE.LOAD_PROFILE: {
-      return { ...state, data: action.data, isLoading: action.isLoading };
+      return Object.assign({}, state, action.payload);
     }
     case PROFILE.UPDATE_PROFILE: {
-      return { ...state, data: action.data, isLoading: action.isLoading };
+      return Object.assign({}, state, action.payload);
     }
     default:
       return state;

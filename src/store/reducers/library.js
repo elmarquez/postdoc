@@ -1,6 +1,5 @@
 import { LIBRARY } from "../actions/actionTypes";
 
-// projects is a map from the project ID to the project object
 const INITIAL_STATE = {
   files: [],
   isIndexing: false,
@@ -30,7 +29,9 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, ...action };
     }
     case LIBRARY.LOAD_LIBRARY_INDEX: {
-      return { ...state, ...action };
+      const nextstate = { ...state, files: action.data.files, isLoading: action.isLoading, tags: action.data.tags };
+      console.info('next library state', nextstate);
+      return { ...state, files: action.data.files, isLoading: action.isLoading, tags: action.data.tags };
     }
     case LIBRARY.UPDATE_FILE: {
       return { ...state, ...action };

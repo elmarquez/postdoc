@@ -92,13 +92,21 @@ function getFileHashes(files) {
   return Promise.all(promises);
 }
 
+function getFileMetadata(files) {
+  const promises = files.map((f) => {
+    // get last modified data, filename, extension, mimetype
+  });
+  return Promise.all(promises);
+}
+
 /**
  * Get project file tree.
  * @param {String} cwd - Project path
+ * @param {object} options - Options
  * @returns {Promise}
  */
-function getFileTree(cwd) {
-  const options = { absolute: true, cwd: cwd, nodir: true, silent: true };
+function getFileTree(cwd, options) {
+  options = { absolute: true, cwd: cwd, nodir: true, silent: true };
   return new Promise(function(resolve, reject) {
     glob("**/*", options, function(err, files) {
       if (err) {
