@@ -29,8 +29,6 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, ...action };
     }
     case LIBRARY.LOAD_LIBRARY_INDEX: {
-      const nextstate = { ...state, files: action.data.files, isLoading: action.isLoading, tags: action.data.tags };
-      console.info('next library state', nextstate);
       return { ...state, files: action.data.files, isLoading: action.isLoading, tags: action.data.tags };
     }
     case LIBRARY.UPDATE_FILE: {

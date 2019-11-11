@@ -8,7 +8,7 @@ import {FilePlus} from 'styled-icons/boxicons-solid/FilePlus';
 import {PrimitiveDot} from "styled-icons/octicons/PrimitiveDot/PrimitiveDot";
 
 import Accordion from '../../components/accordion';
-import ContentPanel from '../../components/content-panel';
+import ContentPanel from '../../components/content-panel/aggrid';
 import { FlexRow } from '../../components/layout';
 import { Collection, Group, Panel as OutlinePanel } from '../../components/outline-panel';
 import { loadApplicationState } from "../../store/actions/application";
@@ -76,7 +76,7 @@ class LibraryContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    application: state.application,
+    app: state.app,
     library: state.library,
     profile: state.profile,
     project: state.project

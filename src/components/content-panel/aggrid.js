@@ -1,6 +1,4 @@
 import Button from "@atlaskit/button";
-import Tag from "@atlaskit/tag";
-import TagGroup from "@atlaskit/tag-group";
 import {AgGridReact} from 'ag-grid-react';
 import PropTypes from "prop-types";
 import React from "react";
@@ -12,11 +10,8 @@ import { Body, ContentPanel } from "./styles";
 import ErrorBoundary from '../error-boundary';
 import {loadIndex, updateIndex} from "../../store/actions/library";
 
-
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-
-
 
 /**
  * Content editing and viewing panel.
@@ -63,17 +58,17 @@ class ContentPanelComponent extends React.Component {
     return (
       <ContentPanel>
         <Body className="ag-theme-balham">
-        <ErrorBoundary>
-          <AgGridReact
-            columnDefs={this.state.columnDefs}
-            frameworkComponents={{
-              tagEditor: TagEditor,
-              tagFormatter: TagFormatter
-            }}
-            pagination={true}
-            rowData={this.props.files}>
-          </AgGridReact>
-        </ErrorBoundary>
+          <ErrorBoundary>
+            <AgGridReact
+              columnDefs={this.state.columnDefs}
+              frameworkComponents={{
+                tagEditor: TagEditor,
+                tagFormatter: TagFormatter
+              }}
+              pagination={true}
+              rowData={this.props.files}>
+            </AgGridReact>
+          </ErrorBoundary>
         </Body>
       </ContentPanel>
     );

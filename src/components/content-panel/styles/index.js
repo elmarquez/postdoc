@@ -12,6 +12,8 @@ const ContentPanel = styled.div`
   flex-direction: column;
   flex-grow: 2;
   overflow: hidden;
+  
+  
 
   & .editor {
     align-items: stretch;
