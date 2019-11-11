@@ -65,21 +65,10 @@ function updateFile(fp) {
  * @param {String} fp - Library path
  * @returns {Object}
  */
-function updateIndex(fp) {
-  return function(dispatch) {
-    dispatch({
-      type: LIBRARY.UPDATE_INDEX,
-      id: shortid.generate(),
-      isLoading: true
-    });
-    Library.updateIndex(fp).then(function(data) {
-      dispatch({
-        type: LIBRARY.UPDATE_INDEX,
-        id: shortid.generate(),
-        data,
-        isLoading: false
-      });
-    });
+function updateIndex(fp, data) {
+  return {
+    type: LIBRARY.UPDATE_INDEX,
+    payload: Library.updateIndex(fp)
   };
 }
 
@@ -92,6 +81,19 @@ function updateTag(tag) {
   throw new Error("not implemented");
 }
 
+/**
+ * Write library index to the file system.
+ * @param {String} fp - Library path
+ * @param {Object} data - Index data
+ * @returns {Object}
+ */
+function writeIndex(fp, data) {
+  return {
+    type: LIBRARY.WRITE_INDEX,
+    payload: Library.saveIndex(fp)
+  };
+}
+
 export {
   addFile,
   addTag,
@@ -100,5 +102,6 @@ export {
   loadIndex,
   updateFile,
   updateIndex,
-  updateTag
+  updateTag,
+  writeIndex
 };

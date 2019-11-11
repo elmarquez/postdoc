@@ -258,6 +258,16 @@
     debug "^2.2.0"
     tslib "^1.9.3"
 
+"@atlaskit/textfield@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-3.1.2.tgz#32dae1e5575cc1898a057cea1f1520dae6e100e3"
+  integrity sha512-YAr6hZiMkXfvKPt6CHaN/NhnkFsdW8Ut7vgf11pJiND/TRd2c83el1tn/e3F4FpXhy0xqmEqB6el2qyc5w7T6Q==
+  dependencies:
+    "@atlaskit/analytics-next" "^6.3.1"
+    "@atlaskit/theme" "^9.2.4"
+    "@emotion/core" "^10.0.9"
+    tslib "^1.9.3"
+
 "@atlaskit/theme@^8.0.0", "@atlaskit/theme@^8.1.7":
   version "8.1.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-8.1.9.tgz#ddad6f0458a07cef6b5273dfd510067c8420484b"

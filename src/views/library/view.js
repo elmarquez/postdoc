@@ -12,6 +12,7 @@ import ContentPanel from '../../components/content-panel/aggrid';
 import { FlexRow } from '../../components/layout';
 import { Collection, Group, Panel as OutlinePanel } from '../../components/outline-panel';
 import { loadApplicationState } from "../../store/actions/application";
+import { writeIndex } from "../../store/actions/library";
 
 
 /**
@@ -24,6 +25,15 @@ import { loadApplicationState } from "../../store/actions/application";
 class LibraryContainer extends React.Component {
   onClick(e) {
     console.info('on click', e);
+  }
+
+  /**
+   * Handle content change.
+   * @param {Event} e - Change event
+   */
+  onContentChange() {
+    const library = this.props.library;
+    this.props.writeIndex(this.props.app.library, {});
   }
 
   /**
@@ -68,7 +78,7 @@ class LibraryContainer extends React.Component {
             </Collection>
           </Group>
         </OutlinePanel>
-        <ContentPanel {...this.props.library} />
+        <ContentPanel {...this.props.library} onChange={(e) => this.onContentChange(e)} />
       </FlexRow>
     );
   }
@@ -89,6 +99,7 @@ const mapStateToProps = state => {
  * @return {Object} Map of functions to be assigned to the component props
  */
 const mapDispatchToProps = dispatch => ({
+  writeIndex: (fp, data) => dispatch(writeIndex(fp, data))
 });
 
 export default connect(

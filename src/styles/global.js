@@ -56,6 +56,46 @@ const GlobalStyle = createGlobalStyle`
     color: rgb(23, 43, 77);
   }
   
+  .font-size-s {
+    font-size: small;
+  }
+
+  .font-size-xs {
+    font-size: x-small;
+  }
+  
+  .margin-bottom-l {
+    margin-bottom: 32px;
+  }
+
+  .margin-bottom-m {
+    margin-bottom: 24px;
+  }
+
+  .margin-bottom-s {
+    margin-bottom: 16px;
+  }
+
+  .margin-bottom-xs {
+    margin-bottom: 8px;
+  }
+  
+  .margin-top-l {
+    margin-top: 32px;
+  }
+
+  .margin-top-m {
+    margin-top: 24px;
+  }
+
+  .margin-top-s {
+    margin-top: 16px;
+  }
+
+  .margin-top-xs {
+    margin-top: 8px;
+  }
+
   .max-width-480 {
     max-width: 480px;
   }

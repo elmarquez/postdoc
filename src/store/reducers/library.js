@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   isIndexing: false,
   isLoading: false,
   lastUpdated: new Date(),
+  path: null,
   tags: []
 };
 
@@ -39,6 +40,9 @@ export default function(state = INITIAL_STATE, action) {
     }
     case LIBRARY.UPDATE_TAG: {
       return { ...state, ...action };
+    }
+    case LIBRARY.WRITE_INDEX: {
+      return { ...state, lastUpdated: new Date() };
     }
     default:
       return state;

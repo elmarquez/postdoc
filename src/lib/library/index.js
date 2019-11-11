@@ -1,4 +1,4 @@
-import Database, { loadFromDir } from "../database";
+import Database, { DATABASE_FILENAME, loadFromDir } from "../database";
 import path from "path";
 import Utils from "../utils";
 
@@ -74,10 +74,23 @@ function updateIndex(fp) {
 }
 
 /**
+ *
  * @param {String} fp - Path to library
  */
 function updateTag() {
   throw new Error("not implemented");
+}
+
+/**
+ * Write the index to file storage.
+ * @param {String} fp - Path to library
+ * @param {Object} data - Index data
+ * @returns {Promise}
+ */
+function writeIndex(fp, data) {
+  const p = path.join(fp, DATABASE_FILENAME);
+  const database = new Database(p, data);
+  return database.write();
 }
 
 export default {
@@ -89,5 +102,6 @@ export default {
   removeTag,
   updateFile,
   updateIndex,
-  updateTag
+  updateTag,
+  writeIndex
 };

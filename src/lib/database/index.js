@@ -83,6 +83,15 @@ class Database {
 }
 
 /**
+ * Get database file path.
+ * @param {String} dir - Project or library path
+ * @return {String} path to database file
+ */
+function getDatabasePath(dir) {
+  return path.join(dir, DATABASE_FILENAME);
+}
+
+/**
  * Load database
  * @param {String} fp - File path
  * @returns {Promise<Database>} data
@@ -113,6 +122,8 @@ function loadFromDir(fp) {
 export default Database;
 
 export {
+  DATABASE_FILENAME,
+  getDatabasePath,
   load,
   loadFromDir
 };
