@@ -31,17 +31,19 @@ class LibraryContainer extends React.Component {
     console.info('on click', e);
   }
 
-  /**
-   * Handle content change.
-   * @param {Event} e - Change event
-   */
-  onContentChange() {
-    const library = this.props.library;
-    this.props.writeIndex(this.props.app.library, {});
-  }
-
   onDocumentSelected(doc) {
     console.info('document selected', doc);
+  }
+
+  /**
+   * Handle library file record change.
+   * @param {Number} index - Index of file in library files collection
+   * @param {Object} data - Change event
+   */
+  onFileUpdated(index, data) {
+    console.info('file updated', index, data);
+    // const library = this.props.library;
+    // this.props.writeIndex(this.props.app.library, {});
   }
 
   /**
@@ -91,9 +93,10 @@ class LibraryContainer extends React.Component {
             </Collection>
           </Group>
         </OutlinePanel>
-        <ContentPanel {...this.props.library}
-          onChange={(e) => this.onContentChange(e)}
+        <ContentPanel
+          {...this.props.library}
           onDocumentSelected={(e) => this.onDocumentSelected(e)}
+          onFileUpdated={(index, data) => this.onFileUpdated(index, data)}
         />
         <EdgePanel panels={panels} />
       </FlexRow>

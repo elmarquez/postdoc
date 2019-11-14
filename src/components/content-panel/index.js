@@ -56,8 +56,10 @@ class ContentPanelComponent extends React.Component {
     this.setState({editing: true});
   }
 
-  onCellValueChanged(a, b, c) {
-    console.info('cell value changed', a, b, c);
+  onCellValueChanged(e) {
+    if (this.props.onFileUpdated) {
+      this.props.onFileUpdated(e.rowIndex, e.data);
+    }
     this.setState({editing: false});
   }
 
@@ -105,6 +107,7 @@ ContentPanelComponent.propTypes = {
   filter: PropTypes.func,
   isLoading: PropTypes.bool.isRequired,
   onDocumentSelected: PropTypes.func,
+  onFileUpdated: PropTypes.func,
   tags: PropTypes.array,
 };
 

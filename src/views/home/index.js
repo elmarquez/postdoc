@@ -1,6 +1,7 @@
 import { Github } from 'styled-icons/boxicons-logos/Github';
 import { Gitlab } from 'styled-icons/boxicons-logos/Gitlab';
 import React from 'react';
+import { Bacteria, Owl5 } from '../../components/icons';
 import { Home } from './styles';
 
 class HomeContainer extends React.Component {
@@ -18,6 +19,7 @@ class HomeContainer extends React.Component {
 
         <section>
           <h4>Project Repositories</h4>
+          <img src={Bacteria} />
 
           <div className={'project'}>
             <h6>Project Name</h6>
