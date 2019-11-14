@@ -67,7 +67,7 @@ export default function(state = INITIAL_STATE, action) {
     case LIBRARY.DELETE_TAG: {
       return { ...state, ...action };
     }
-    case LIBRARY.LOAD_LIBRARY_INDEX: {
+    case LIBRARY.LOAD_INDEX: {
       return Object.assign({}, state, {...action.payload});
     }
     case LIBRARY.UPDATE_FILE: {

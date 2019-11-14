@@ -30,12 +30,12 @@ const Header = styled.div`
 const NavigationBar = styled.div`
   align-items: stretch;
   background-color: ${COLOURS.BACKGROUND};
-  border-right: 1px solid #CCC;
+  border-right: rgba(0,0,0,0.4);
   color: whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 48px;
+  width: 64px;
   
   a {
     outline: none;

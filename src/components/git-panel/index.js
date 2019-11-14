@@ -1,9 +1,10 @@
 import React from "react";
+import { Body, ContentPanel, Footer, Header } from '../edge-panel/styles/content';
 
 /**
  * Git repository management panel.
  */
-class GitPanel extends React.Component {
+class GitPanelComponent extends React.Component {
   /**
    * Constructor.
    * @param {Object} props - Component properties
@@ -34,14 +35,18 @@ class GitPanel extends React.Component {
    */
   render() {
     return (
-      <div className={"git panel"}>
-        <div className={"header"}>
-          <div>Git Panel</div>
-        </div>
-        {this.renderUnstagedChanges()}
-        {this.renderStagedChanges()}
-        {this.renderCommit()}
-      </div>
+      <ContentPanel>
+        <Header>
+          Git Panel
+        </Header>
+        <Body>
+          {this.renderUnstagedChanges()}
+          {this.renderStagedChanges()}
+        </Body>
+        <Footer>
+          {this.renderCommit()}
+        </Footer>
+      </ContentPanel>
     );
   }
 
@@ -88,4 +93,4 @@ class GitPanel extends React.Component {
   }
 }
 
-export default GitPanel;
+export default GitPanelComponent;

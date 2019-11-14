@@ -1,9 +1,10 @@
 import React from 'react';
-import CheckBoxEditor from './checkbox';
-import DateEditor from './date';
-import MultiSelectEditor from './multiselect';
-import NumericEditor from './number';
-import SelectEditor from './select';
+import CheckBox from './checkbox';
+import DateTime from './date';
+import MultiSelect from './multiselect';
+import Number from './number';
+import Select from './select';
+import Tag from './tag';
 import TagGroupEditor from './tag-group';
 import TextEditor from './text';
 import ThreeDotMenuEditor from './three-dot-menu';
@@ -21,11 +22,11 @@ function withClickHandler(Component, onClick) {
 }
 
 export {
-  CheckBoxEditor,
-  DateEditor,
-  MultiSelectEditor,
-  NumericEditor,
-  SelectEditor,
+  CheckBox,
+  DateTime,
+  MultiSelect,
+  Number,
+  Select,
   TagGroupEditor,
   TextEditor,
   ThreeDotMenuEditor,

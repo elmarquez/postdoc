@@ -19,6 +19,16 @@ function addTag() {
 }
 
 /**
+ * Ensure that the library folder contains a subdirectory to hold thumbnail
+ * images.
+ * @param {String} fp - Directory path
+ * @return {Promise}
+ */
+function ensureThumbnailsDirectory(fp) {
+
+}
+
+/**
  * Load index into memory.
  * @param {String} fp - Path to library
  * @return {Promise}

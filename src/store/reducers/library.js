@@ -1,12 +1,13 @@
 import { LIBRARY } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
-  files: [],
+  data: {},
+  error: null,
   isIndexing: false,
   isLoading: false,
+  isWriting: false,
   lastUpdated: new Date(),
   path: null,
-  tags: []
 };
 
 /**
@@ -29,8 +30,14 @@ export default function(state = INITIAL_STATE, action) {
     case LIBRARY.DELETE_TAG: {
       return { ...state, ...action };
     }
-    case LIBRARY.LOAD_LIBRARY_INDEX: {
-      return { ...state, files: action.data.files, isLoading: action.isLoading, tags: action.data.tags };
+    case LIBRARY.LOAD_INDEX_FULFILLED: {
+      return { ...state, data: action.payload, isLoading: false };
+    }
+    case LIBRARY.LOAD_INDEX_PENDING: {
+      return { ...state, data: {}, error: null, isLoading: true };
+    }
+    case LIBRARY.LOAD_INDEX_REJECTED: {
+      return { ...state, data: {}, error: action.error, isLoading: false };
     }
     case LIBRARY.UPDATE_FILE: {
       return { ...state, ...action };
@@ -41,8 +48,14 @@ export default function(state = INITIAL_STATE, action) {
     case LIBRARY.UPDATE_TAG: {
       return { ...state, ...action };
     }
-    case LIBRARY.WRITE_INDEX: {
-      return { ...state, lastUpdated: new Date() };
+    case LIBRARY.WRITE_INDEX_FULFILLED: {
+      return { ...state, data: action.payload, error: null, isWriting: false, lastUpdated: new Date() };
+    }
+    case LIBRARY.WRITE_INDEX_PENDING: {
+      return { ...state, error: null, isWriting: true };
+    }
+    case LIBRARY.WRITE_INDEX_REJECTED: {
+      return { ...state, error: action.error, isWriting: false, lastUpdated: new Date() };
     }
     default:
       return state;

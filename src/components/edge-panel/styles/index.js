@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const EdgePanel = styled.div`
   align-items: stretch;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgb(239, 241, 244);
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

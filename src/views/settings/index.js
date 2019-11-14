@@ -21,10 +21,36 @@ class SettingsContainer extends React.Component {
     return (
       <div className={'max-width-480 padding-l'}>
         <h1>Settings</h1>
+        {this.renderAccountsForm()}
         {this.renderLibraryForm()}
         {this.renderProjectsForm()}
         {this.renderPluginsForm()}
       </div>
+    );
+  }
+
+  renderAccountsForm() {
+    return (
+      <section className={'margin-top-m'}>
+        <Form onSubmit={data => console.log('form data', data)}>
+          {({ formProps }) => (
+            <form {...formProps}>
+              <h4>Accounts</h4>
+              <p className={'font-size-xs margin-bottom-s'}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.
+              </p>
+              <Field name="libraryPath" defaultValue="" label="Path to library folder" isRequired>
+                {({ fieldProps }) => <TextField {...fieldProps} />}
+              </Field>
+              <Field name="libraryPath" defaultValue="" label="Path to library folder" isRequired>
+                {({ fieldProps }) => <TextField {...fieldProps} />}
+              </Field>
+            </form>
+          )}
+        </Form>
+      </section>
     );
   }
 

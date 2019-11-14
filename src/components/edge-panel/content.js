@@ -48,7 +48,10 @@ class ContentPanelComponent extends Component {
    * @return {JSX.Element}
    */
   renderBody() {
-    return <Body>{this.props.content.view}</Body>;
+    const Panel = this.props.content;
+    return (
+      <Body>{this.props.content.panel}</Body>
+    );
   }
 
   /**

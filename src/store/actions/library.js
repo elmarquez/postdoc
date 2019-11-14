@@ -46,8 +46,20 @@ function deleteTag(tag) {
  */
 function loadIndex(fp) {
   return {
-    type: LIBRARY.LOAD_LIBRARY_INDEX,
+    type: LIBRARY.LOAD_INDEX,
     payload: Library.loadIndex(fp)
+  };
+}
+
+/**
+ * Reindex the library, merge changes into the index file.
+ * @param {String} fp - Library path
+ * @returns {Object}
+ */
+function reindex(fp, data) {
+  return {
+    type: LIBRARY.UPDATE_INDEX,
+    payload: Library.updateIndex(fp)
   };
 }
 
@@ -68,7 +80,7 @@ function updateFile(fp) {
 function updateIndex(fp, data) {
   return {
     type: LIBRARY.UPDATE_INDEX,
-    payload: Library.updateIndex(fp)
+    payload: data
   };
 }
 
@@ -100,6 +112,7 @@ export {
   deleteFile,
   deleteTag,
   loadIndex,
+  reindex,
   updateFile,
   updateIndex,
   updateTag,

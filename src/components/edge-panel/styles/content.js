@@ -3,6 +3,7 @@ import { CONTENT_PANEL_WIDTH, TAB_PANEL_WIDTH } from '../constants';
 
 const Body = styled.div`
   flex-grow: 2;
+  overflow: scroll;
   padding: 2px;
 `;
 
@@ -17,6 +18,7 @@ const ContentPanel = styled.div`
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  flex-grow: 2;
   max-width: ${CONTENT_PANEL_WIDTH}px;
   min-width: ${CONTENT_PANEL_WIDTH}px;
   overflow: auto;
@@ -35,6 +37,7 @@ const Footer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
+  height: 32px;
   justify-content: space-between;
 `;
 
@@ -42,6 +45,7 @@ const Header = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
+  height: 32px;
   justify-content: space-between;
 `;
 

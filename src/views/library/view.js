@@ -8,9 +8,13 @@ import {FilePlus} from 'styled-icons/boxicons-solid/FilePlus';
 import {PrimitiveDot} from "styled-icons/octicons/PrimitiveDot/PrimitiveDot";
 
 import Accordion from '../../components/accordion';
-import ContentPanel from '../../components/content-panel/aggrid';
+import ContentPanel from '../../components/content-panel';
+import EdgePanel from '../../components/edge-panel';
+import GitPanel from '../../components/git-panel';
 import { FlexRow } from '../../components/layout';
 import { Collection, Group, Panel as OutlinePanel } from '../../components/outline-panel';
+import PropertiesPanel from '../../components/properties-panel';
+import ToolsPanel from '../../components/tools-panel';
 import { loadApplicationState } from "../../store/actions/application";
 import { writeIndex } from "../../store/actions/library";
 
@@ -34,6 +38,10 @@ class LibraryContainer extends React.Component {
   onContentChange() {
     const library = this.props.library;
     this.props.writeIndex(this.props.app.library, {});
+  }
+
+  onDocumentSelected(doc) {
+    console.info('document selected', doc);
   }
 
   /**
@@ -62,6 +70,11 @@ class LibraryContainer extends React.Component {
       {icon: <PrimitiveDot/>, label: '2017', onClick: (e) => this.onClick(e)},
       {icon: <PrimitiveDot/>, label: '2016', onClick: (e) => this.onClick(e)},
     ];
+    const panels = [
+      {title: "Properies", panel: (<PropertiesPanel />) },
+      {title: "Tools", panel: (<ToolsPanel />) },
+      {title: "Git", panel: (<GitPanel />) },
+    ];
     return (
       <FlexRow alignItems={'stretch'} flexGrow={2}>
         <OutlinePanel>
@@ -78,7 +91,11 @@ class LibraryContainer extends React.Component {
             </Collection>
           </Group>
         </OutlinePanel>
-        <ContentPanel {...this.props.library} onChange={(e) => this.onContentChange(e)} />
+        <ContentPanel {...this.props.library}
+          onChange={(e) => this.onContentChange(e)}
+          onDocumentSelected={(e) => this.onDocumentSelected(e)}
+        />
+        <EdgePanel panels={panels} />
       </FlexRow>
     );
   }

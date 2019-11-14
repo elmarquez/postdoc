@@ -21,6 +21,12 @@ export default function(state = INITIAL_STATE, action) {
     case APP.LOAD_APPLICATION_STATE_FULFILLED: {
       return Object.assign({}, state, action.payload);
     }
+    case APP.LOAD_APPLICATION_STATE_PENDING: {
+      return Object.assign({}, state, action.payload);
+    }
+    case APP.LOAD_APPLICATION_STATE_REJECTED: {
+      return Object.assign({}, state, action.payload);
+    }
     case APP.UPDATE_PREFERENCE_FULFILLED: {
       return Object.assign({}, state, action.payload);
     }

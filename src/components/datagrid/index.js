@@ -1,14 +1,13 @@
-import { CustomNoRowsOverlay } from '/components/data-grid/cell-renderers/index';
 import { AgGridReact } from 'ag-grid-react';
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import STRINGS from '../../constants/strings';
-import { ADDED_ROW, EDITED_ROW, INVALID_ROW } from '../..//constants/ui';
 import { DataGridWrapper } from './styles';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
+const DEFAULT_FRAMEWORK_COMPONENTS = {};
 
 /**
  * Data grid componnet.
@@ -29,15 +28,26 @@ class DataGrid extends React.PureComponent {
       onCellEditingStarted: this.onCellEditingStarted,
       onCellValueChanged: this.onCellValueChanged,
       onRowDoubleClicked: this.onRowDoubleClicked,
-      pagination: true,
-      paginationAutoPageSize: true,
-      rowClassRules: {
-        'invalid-row': `data.rowStatus === '${INVALID_ROW}'`,
-      },
+      // pagination: true,
+      // paginationAutoPageSize: true,
       rowSelection: 'single',
-      stopEditingWhenGridLosesFocus: true,
-      suppressFocusAfterRefresh: true,
+      // stopEditingWhenGridLosesFocus: true,
+      // suppressFocusAfterRefresh: true,
     };
+    this.state = {rows: []};
+  }
+
+  componentDidMount() {
+    this.setState({rows: this.props.rows || []})
+  }
+
+  componentDidUpdate(a, b) {
+    console.info('component did update', a, b);
+  }
+
+  getFrameworkComponents() {
+    let frameworkComponents = this.props.frameworkComponents || {};
+    return Object.assign({}, frameworkComponents);
   }
 
   /**
@@ -45,14 +55,9 @@ class DataGrid extends React.PureComponent {
    * @param {Object} params
    */
   onCellValueChanged(params) {
-    if (params.data.rowStatus === ADDED_ROW) {
-      return;
-    }
-    // bubble up the event only when an actual change was made to the data
-    if (String(params.oldValue) !== String(params.newValue)) {
-      const dataWithUpdatedState = params.data;
-      dataWithUpdatedState.rowStatus = EDITED_ROW;
-      params.api.updateRowData({ update: [dataWithUpdatedState] });
+    console.info('cell value changed', params);
+    if (this.props.onCellValueChanged) {
+      this.props.onCellValueChanged(params);
     }
   }
 
@@ -61,6 +66,7 @@ class DataGrid extends React.PureComponent {
    * @param {Object} params - Grid params
    */
   onGridReady(params) {
+    console.info('grid ready', params);
     this.api = params.api;
     this.columnApi = params.columnApi;
   }
@@ -70,6 +76,7 @@ class DataGrid extends React.PureComponent {
    * @param {Event} e - Event
    */
   onRowDoubleClicked(e) {
+    console.info('row double clicked', e);
     if (this.props.onRowDoubleClicked) {
       this.props.onRowDoubleClicked(e);
     }
@@ -81,54 +88,39 @@ class DataGrid extends React.PureComponent {
    */
   render() {
     const { isLoading, paginationPageSize } = this.props;
-    const columns = this.props.columns || [];
-    let frameworkComponents = this.props.frameworkComponents || {};
-    frameworkComponents = Object.assign(frameworkComponents, {
-      customNoRowsOverlay: CustomNoRowsOverlay,
-    });
+    let frameworkComponents = this.getFrameworkComponents();
     const rows = this.props.rows || [];
-    const defaultColDef = this.props.defaultColDef || {};
-    const columnTypes = this.props.columnTypes || {};
     const classes = ['ag-theme-balham', this.props.className].join(' ');
-    const noRowsOverlayComponentParams = {
-      noRowsMessage: () => {
-        return STRINGS.NO_DATA;
-      },
-      autoWidth: !this.props.domLayout,
-    };
     return (
-      <DataGridWrapper className={classes}>
-        <AgGridReact
-          columnDefs={columns}
-          columnTypes={columnTypes}
-          defaultColDef={defaultColDef}
-          domLayout={this.props.domLayout ? this.props.domLayout : 'normal'}
-          frameworkComponents={frameworkComponents}
-          gridOptions={this.gridOptions}
-          noRowsOverlayComponent='customNoRowsOverlay'
-          noRowsOverlayComponentParams={noRowsOverlayComponentParams}
-          onGridReady={this.onGridReady}
-          paginationAutoPageSize={!paginationPageSize}
-          paginationPageSize={paginationPageSize}
-          rowData={rows}
-          stopEditingWhenGridLosesFocus={true}
-        />
-      </DataGridWrapper>
+      <AgGridReact
+        className={classes}
+        // domLayout={this.props.domLayout ? this.props.domLayout : 'normal'}
+        frameworkComponents={frameworkComponents}
+        gridOptions={this.props.gridOptions}
+        // noRowsOverlayComponent='customNoRowsOverlay'
+        // noRowsOverlayComponentParams={noRowsOverlayComponentParams}
+        // onCellValueChanged={(e) => this.onCellValueChanged(e)}
+        onGridReady={(e) => this.onGridReady(e)}
+        onRowDoubleClicked={(e) => this.onRowDoubleClicked(e)}
+        paginationAutoPageSize={!paginationPageSize}
+        paginationPageSize={paginationPageSize}
+        rowData={rows}
+        // stopEditingWhenGridLosesFocus={true}
+      />
     );
   }
 }
 
 DataGrid.propTypes = {
-  columns: PropTypes.array.isRequired,
-  columnTypes: PropTypes.object,
-  defaultColDef: PropTypes.object,
   domLayout: PropTypes.string,
   frameworkComponents: PropTypes.object,
+  gridOptions: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
+  onCellValueChanged: PropTypes.func,
   onGridEdited: PropTypes.func,
   onRowDoubleClicked: PropTypes.func,
   paginationPageSize: PropTypes.number,
-  rows: PropTypes.array.isRequired,
+  rows: PropTypes.array,
 };
 
 export default DataGrid;
