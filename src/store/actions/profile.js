@@ -1,4 +1,4 @@
-import { PROFILE } from "./actionTypes";
+import { PROFILE } from "../types";
 import shortid from "shortid";
 import Profile from "../../lib/profile";
 

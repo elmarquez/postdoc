@@ -3,6 +3,7 @@ import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import React from 'react';
 import { FlexRow } from '../../components/layout';
+import { Panel } from './styles';
 
 // TODO
 // - library path
@@ -19,13 +20,15 @@ class SettingsContainer extends React.Component {
    */
   render() {
     return (
-      <div className={'max-width-480 padding-l'}>
-        <h1>Settings</h1>
-        {this.renderAccountsForm()}
-        {this.renderLibraryForm()}
-        {this.renderProjectsForm()}
-        {this.renderPluginsForm()}
-      </div>
+      <Panel>
+        <div className={'max-width-480 padding-l'}>
+          <h1>Settings</h1>
+          {this.renderAccountsForm()}
+          {this.renderLibraryForm()}
+          {this.renderProjectsForm()}
+          {this.renderPluginsForm()}
+        </div>
+      </Panel>
     );
   }
 

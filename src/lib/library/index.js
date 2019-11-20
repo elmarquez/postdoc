@@ -76,11 +76,10 @@ function updateFile() {
  * @returns {Promise<Database>}
  */
 function updateIndex(fp) {
-  return Database.loadFromDir(fp).then(function(db) {
-    return db.update().then(function(db) {
-      return db.write();
-    });
-  });
+  return loadFromDir(fp)
+    .then((db) =>  db.update())
+    .then((db) => db.write())
+    .then((db) => db.getData());
 }
 
 /**
@@ -98,6 +97,7 @@ function updateTag() {
  * @returns {Promise}
  */
 function writeIndex(fp, data) {
+  console.info('write index', fp, data);
   const p = path.join(fp, DATABASE_FILENAME);
   const database = new Database(p, data);
   return database.write();

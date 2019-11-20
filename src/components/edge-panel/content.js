@@ -33,9 +33,7 @@ class ContentPanelComponent extends Component {
     if (this.props.content !== null) {
       return (
         <ContentPanel floating={this.state.floating}>
-          {this.renderHeader()}
-          {this.renderBody()}
-          {this.renderFooter()}
+          {this.props.content.panel}
         </ContentPanel>
       );
     } else {
@@ -48,7 +46,6 @@ class ContentPanelComponent extends Component {
    * @return {JSX.Element}
    */
   renderBody() {
-    const Panel = this.props.content;
     return (
       <Body>{this.props.content.panel}</Body>
     );

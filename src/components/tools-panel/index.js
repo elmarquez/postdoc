@@ -3,14 +3,42 @@ import Button from '@atlaskit/button';
 import Select from '@atlaskit/select';
 import TextField from '@atlaskit/textfield';
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { FlexColumn, FlexRow } from '../layout';
 import { ErrorMessage } from './styles';
 import { Body, ContentPanel, Footer, Header } from '../edge-panel/styles/content';
+import { loadIndex, updateIndex, writeIndex } from "../../store/actions/library";
 
 /**
- * File properties panel.
+ * Tools properties panel.
  */
 class ToolsPanelComponent extends React.Component {
+
+  /**
+   * Handle load library action.
+   */
+  onLoadIndex() {
+    this.props.loadIndex(this.props.profile.data.library);
+  }
+
+  /**
+   * Handle update index action.
+   */
+  onUpdateIndex() {
+    this.props.updateIndex(this.props.profile.data.library, this.props.library.data);
+  }
+
+  /**
+   * Handle write index action.
+   */
+  onWriteIndex() {
+    this.props.writeIndex(this.props.profile.data.library, this.props.library.data);
+  }
+
+  /**
+   * Render the component.
+   * @returns {JSX.Element}
+   */
   render() {
     return (
       <ContentPanel>
@@ -21,77 +49,61 @@ class ToolsPanelComponent extends React.Component {
     );
   }
 
+  /**
+   * Render the component body.
+   * @returns {JSX.Element}
+   */
   renderBody() {
-    const publicationTypes = [
-      {label: "Journal", value: "journal"}
-    ];
     return (
       <Body>
-      Thumbnail image goes here
-      <h4>File</h4>
-
-      <section>
-        <h4>Citation</h4>
-
-        <Field name="type" label="Type">
-          {({ fieldProps: { id, ...rest }, error }) => (
-            <Fragment>
-              <Select
-                validationState={error ? 'error' : 'none'}
-                inputId={id}
-                {...rest}
-                options={publicationTypes}
-                isClearable
-              />
-              {error && <ErrorMessage>{error}</ErrorMessage>}
-            </Fragment>
-          )}
-        </Field>
-        <Field name="title" label="Title">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-        <Field name="author" label="Author">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-        <Field name="journal" label="Journal">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-
-
-      </section>
-
-
-      <section>
-        <Field name="tags" label="Tags">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-      </section>
-
-      <section>
-        <h4>Abstract</h4>
-        <Field name="abstract" label="Abstract">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-      </section>
-
-      <section>
-        <h4>Notes</h4>
-        <Field name="notes" label="Notes">
-          {({ fieldProps }) => <TextField {...fieldProps} />}
-        </Field>
-      </section>
-
+        <FlexColumn className={'padding-s'}>
+          <h4>Library</h4>
+          <Button appearance={'default'} onClick={() => this.onLoadIndex()}>Load Index</Button>
+          <Button appearance={'default'} onClick={() => this.onUpdateIndex()}>Update Index</Button>
+          <Button appearance={'default'} onClick={() => this.onWriteIndex()}>Write Index</Button>
+        </FlexColumn>
       </Body>
     );
   }
 
+  /**
+   * Render the component footer.
+   * @returns {JSX.Element}
+   */
   renderFooter() {
     return (<Footer>Footer</Footer>);
   }
 
+  /**
+   * Render the component header.
+   * @returns {JSX.Element}
+   */
   renderHeader() {
-    return (<Header>Header</Header>);
+    return (<Header>Tools</Header>);
   }
 }
 
-export default ToolsPanelComponent;
+const mapStateToProps = state => {
+  return {
+    app: state.app,
+    library: state.library,
+    profile: state.profile,
+    project: state.project
+  };
+};
+
+/**
+ * Map data store dispatch functions to component properties.
+ * @param {Function} dispatch - Redux dispatch function
+ * @return {Object} Map of functions to be assigned to the component props
+ */
+const mapDispatchToProps = dispatch => ({
+  loadIndex: (fp) => dispatch(loadIndex(fp)),
+  updateIndex: (fp, data) => dispatch(updateIndex(fp, data)),
+  writeIndex: (fp, data) => dispatch(writeIndex(fp, data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolsPanelComponent);

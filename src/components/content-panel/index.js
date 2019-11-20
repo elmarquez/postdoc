@@ -83,6 +83,7 @@ class ContentPanelComponent extends React.Component {
    * @returns {XML}
    */
   render() {
+    const rows = this.props.data.files || [];
     return (
       <ContentPanel>
         <Body className="ag-theme-balham">
@@ -93,7 +94,7 @@ class ContentPanelComponent extends React.Component {
               tagFormatter: TagFormatter
             }}
             gridOptions={this.state.gridOptions}
-            rowData={this.props.files}>
+            rowData={this.props.data.files}>
           </AgGridReact>
         </ErrorBoundary>
         </Body>
@@ -103,12 +104,11 @@ class ContentPanelComponent extends React.Component {
 }
 
 ContentPanelComponent.propTypes = {
-  files: PropTypes.array,
+  data: PropTypes.object.isRequired,
   filter: PropTypes.func,
   isLoading: PropTypes.bool.isRequired,
   onDocumentSelected: PropTypes.func,
   onFileUpdated: PropTypes.func,
-  tags: PropTypes.array,
 };
 
 export default ContentPanelComponent;

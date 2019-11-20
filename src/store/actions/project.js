@@ -1,4 +1,4 @@
-import { PROJECT } from "./actionTypes";
+import { PROJECT } from "../types";
 
 const PROJECT = {
   ADD_FILE: "ADD_PROJECT_FILE",

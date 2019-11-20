@@ -28,7 +28,7 @@ function ensureProfile(d) {
 function ensureProfileDirectory(d) {
   return utils.files.exists(d).then(function(exists) {
     if (!exists) {
-      console.info("Creating settings directory", d);
+      console.debug("Creating settings directory", d);
       return utils.files.ensureDir(d);
     }
   });
@@ -43,7 +43,7 @@ function ensureProfileSettings(d) {
   const settings = path.join(d, PROFILE_SETTINGS_FILENAME);
   return utils.files.exists(settings).then(function(exists) {
     if (!exists) {
-      console.info("Creating settings file", settings);
+      console.debug("Creating settings file", settings);
       return utils.files.ensureFile(settings, DEFAULT_PROFILE_SETTINGS);
     }
   });
@@ -57,7 +57,7 @@ function getProfile() {
   const profile = getProfileDirectoryPath();
   return ensureProfile(profile).then(function() {
     const settings = path.join(profile, PROFILE_SETTINGS_FILENAME);
-    console.info("Reading profile from", settings);
+    console.debug("Reading profile from", settings);
     return utils.files.readJSON(settings);
   });
 }

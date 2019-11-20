@@ -11,8 +11,8 @@ const PLATFORMS = {
 };
 
 /**
- * Create application menu bar.
- * @return {nw.Menu} menu bar
+ * Create application menu.
+ * @return {nw.Menu} menu
  */
 function createMenuBar() {
   // get the platform specific menubar configuration
@@ -41,6 +41,10 @@ function createMenuBar() {
   return menubar;
 }
 
+/**
+ * Get edit menu.
+ * @return {nw.Menu} menu
+ */
 function getEditMenu() {
   var menu = new nw.Menu();
   menu.append(new nw.MenuItem({ label: "Undo" }));
@@ -57,22 +61,44 @@ function getEditMenu() {
   return menu;
 }
 
+/**
+ * Get file menu.
+ * @return {nw.Menu} menu
+ */
 function getFileMenu() {
+  var createNewFileSubmenu = new nw.Menu();
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Project" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Project from Git Repository" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ type: "separator" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Directory" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "File" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ type: "separator" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Bibliography" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "AsciiDoc File" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "JSON File" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Markdown File" }));
+
+  var recentItemsSubmenu = new nw.Menu();
+  recentItemsSubmenu.append(new nw.MenuItem({ label: "Project 1" }));
+  recentItemsSubmenu.append(new nw.MenuItem({ label: "Project 2" }));
+
   var menu = new nw.Menu();
-  menu.append(new nw.MenuItem({ label: "New Project" }));
-  menu.append(new nw.MenuItem({ label: "New File" }));
-  menu.append(new nw.MenuItem({ type: "separator" }));
-  menu.append(new nw.MenuItem({ label: "Open" }));
+  menu.append(new nw.MenuItem({ label: "New", key: "N", modifiers: "cmd", submenu: createNewFileSubmenu }));
+  menu.append(new nw.MenuItem({ label: "Open", key: "O", modifiers: "cmd" }));
+  menu.append(new nw.MenuItem({ label: "Recent", submenu: recentItemsSubmenu }));
   menu.append(new nw.MenuItem({ type: "separator" }));
   menu.append(new nw.MenuItem({ label: "Properties" }));
-  menu.append(new nw.MenuItem({ label: "Save" }));
+  menu.append(new nw.MenuItem({ label: "Save", key: "S", modifiers: "cmd" }));
   menu.append(new nw.MenuItem({ label: "Save As" }));
-  menu.append(new nw.MenuItem({ label: "Save All" }));
   menu.append(new nw.MenuItem({ type: "separator" }));
   menu.append(new nw.MenuItem({ label: "Close" }));
   return menu;
 }
 
+/**
+ * Get Darwin application menu.
+ * @return {nw.Menu} menu
+ */
 function getMacApplicationMenu() {
   var menu = new nw.Menu();
   menu.append(new nw.MenuItem({ label: "About postdoc" }));
@@ -87,8 +113,8 @@ function getMacApplicationMenu() {
 }
 
 /**
- * Get Mac OS menu bar.
- * @return {nw.Menu} menu bar
+ * Get Darwin menu bar.
+ * @return {nw.Menu} menu
  */
 function getMacMenuBar() {
   const manifest = nw.App.manifest;
@@ -97,6 +123,10 @@ function getMacMenuBar() {
   return menubar;
 }
 
+/**
+ * Get tools menu.
+ * @return {nw.Menu} menu
+ */
 function getToolsMenu() {
   var menu = new nw.Menu();
   menu.append(new nw.MenuItem({ label: "Plugin" }));
@@ -110,6 +140,10 @@ function getToolsMenu() {
   return menu;
 }
 
+/**
+ * Get window menu.
+ * @return {nw.Menu} menu
+ */
 function getWindowMenu() {
   var menu = new nw.Menu();
   menu.append(new nw.MenuItem({ label: "Minimize" }));
@@ -123,6 +157,10 @@ function getWindowMenu() {
   return menu;
 }
 
+/**
+ * Get help menu.
+ * @return {nw.Menu} menu
+ */
 function getHelpMenu() {
   var menu = new nw.Menu();
   menu.append(new nw.MenuItem({ label: "Search" }));

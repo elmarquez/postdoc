@@ -16,7 +16,7 @@ import { Collection, Group, Panel as OutlinePanel } from '../../components/outli
 import PropertiesPanel from '../../components/properties-panel';
 import ToolsPanel from '../../components/tools-panel';
 import { loadApplicationState } from "../../store/actions/application";
-import { writeIndex } from "../../store/actions/library";
+import { loadIndex, writeIndex } from "../../store/actions/library";
 
 
 /**
@@ -27,10 +27,48 @@ import { writeIndex } from "../../store/actions/library";
  * Each document has an associated bibliographic entry.
  */
 class LibraryContainer extends React.Component {
+  /**
+   * Constructor
+   * @param {Object} props - Component properties
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLibraryDefined: false
+    };
+  }
+
+  /**
+   * Handle component lifecycle event.
+   */
+  componentDidMount() {
+    const profile = this.props.profile;
+    if (profile.data && profile.data.library !== null) {
+      this.props.loadIndex(profile.data.library);
+    }
+  }
+
+  /**
+   * Handle component lifecycle event.
+   * @param {Object} prev -
+   * @param {Object} next -
+   */
+  componentDidUpdate(prev, next) {
+    // console.info('component did update', prev, next);
+  }
+
+  /**
+   * Handle filter click.
+   * @param {Event} e - Event
+   */
   onClick(e) {
     console.info('on click', e);
   }
 
+  /**
+   * Handle document selection.
+   * @param {Object} doc - Document
+   */
   onDocumentSelected(doc) {
     console.info('document selected', doc);
   }
@@ -41,9 +79,11 @@ class LibraryContainer extends React.Component {
    * @param {Object} data - Change event
    */
   onFileUpdated(index, data) {
-    console.info('file updated', index, data);
-    // const library = this.props.library;
-    // this.props.writeIndex(this.props.app.library, {});
+    const library = this.props.library;
+    const files = [].concat(library.data.files);
+    files[index] = data;
+    const nextstate = Object.assign({}, library.data, {files});
+    this.props.writeIndex(this.props.profile.data.library, nextstate); // TODO move indexing into write option
   }
 
   /**
@@ -51,27 +91,29 @@ class LibraryContainer extends React.Component {
    * @returns {JSX.Element}
    */
   render() {
-    const fileControls = [
-      <FilePlus key={0}/>
-    ];
-    const fileTypes = [
-      {icon: <FilePlus/>, label: 'PDF', onClick: (e) => this.onClick(e)},
-      {icon: <FilePlus/>, label: 'Image', onClick: (e) => this.onClick(e)},
-      {icon: <FilePlus/>, label: 'JSON', onClick: (e) => this.onClick(e)},
-      {icon: <FilePlus/>, label: 'Text', onClick: (e) => this.onClick(e)},
-    ];
-    const tags = [
-      {icon: <PrimitiveDot/>, label: 'PDF', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: 'Image', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: 'JSON', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: 'Text', onClick: (e) => this.onClick(e)},
-    ];
-    const dates = [
-      {icon: <PrimitiveDot/>, label: '2019', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: '2018', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: '2017', onClick: (e) => this.onClick(e)},
-      {icon: <PrimitiveDot/>, label: '2016', onClick: (e) => this.onClick(e)},
-    ];
+    if (this.props.profile && this.props.profile.data && this.props.profile.data.library !== null) {
+      return this.renderFileCollectionView();
+    } else {
+      return this.renderPlaceholder();
+    }
+  }
+
+  /**
+   * Render the file collection view.
+   * @returns {JSX.Element}
+   */
+  renderFileCollectionView() {
+    const { files, mimetypes, tags, years } = this.props.library.data;
+    const fileControls = [ <FilePlus key={0}/> ];
+    const fileItems = mimetypes.map((t) => {
+      return {icon: <FilePlus/>, label: t, onClick: (e) => this.onClick(e, t)};
+    });
+    const tagItems = tags.map((t) => {
+      return {icon: <PrimitiveDot/>, label: t, onClick: (e) => this.onClick(e, t)};
+    });
+    const yearItems = years.map((d) => {
+      return {icon: <PrimitiveDot/>, label: d, onClick: (e) => this.onClick(e)};
+    });
     const panels = [
       {title: "Properies", panel: (<PropertiesPanel />) },
       {title: "Tools", panel: (<ToolsPanel />) },
@@ -81,9 +123,9 @@ class LibraryContainer extends React.Component {
       <FlexRow alignItems={'stretch'} flexGrow={2}>
         <OutlinePanel>
           <Group title={'Files'}>
-            <Collection title={'File Types'} items={fileTypes} />
-            <Collection title={'Tags'} items={tags} className={'tags'} />
-            <Collection title={'Date'} items={dates} />
+            <Collection title={'Types'} items={fileItems} />
+            <Collection title={'Tags'} items={tagItems} className={'tags'} />
+            <Collection title={'Date'} items={yearItems} />
           </Group>
           <Group title={'Resources'}>
             <Collection title={'Resources'} items={tags}>
@@ -100,6 +142,16 @@ class LibraryContainer extends React.Component {
         />
         <EdgePanel panels={panels} />
       </FlexRow>
+    );
+  }
+
+  /**
+   * Render the placeholder.
+   * @return {JSX.Element}
+   */
+  renderPlaceholder() {
+    return (
+      <div>Library placeholder should provide some kind of directory selection dialog</div>
     );
   }
 }
@@ -119,6 +171,7 @@ const mapStateToProps = state => {
  * @return {Object} Map of functions to be assigned to the component props
  */
 const mapDispatchToProps = dispatch => ({
+  loadIndex: (fp) => dispatch(loadIndex(fp)),
   writeIndex: (fp, data) => dispatch(writeIndex(fp, data))
 });
 

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 // eslint-disable-next-line
 import Inter from 'typeface-inter';
-
+import {Gradient1} from "../components/branding";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -54,6 +54,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
     border: none !important;
     color: rgb(23, 43, 77);
+  }
+  
+  .brand {
+    font-family: Roboto, PT Sans, Georgia, Times, Times New Roman, serif;
   }
   
   .font-size-s {

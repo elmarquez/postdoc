@@ -1,4 +1,4 @@
-import { LIBRARY } from "./actionTypes";
+import { LIBRARY } from "../types";
 import shortid from "shortid";
 import Library from "../../lib/library";
 import {Promise} from 'bluebird';
@@ -47,19 +47,8 @@ function deleteTag(tag) {
 function loadIndex(fp) {
   return {
     type: LIBRARY.LOAD_INDEX,
+    path: fp,
     payload: Library.loadIndex(fp)
-  };
-}
-
-/**
- * Reindex the library, merge changes into the index file.
- * @param {String} fp - Library path
- * @returns {Object}
- */
-function reindex(fp, data) {
-  return {
-    type: LIBRARY.UPDATE_INDEX,
-    payload: Library.updateIndex(fp)
   };
 }
 
@@ -73,14 +62,15 @@ function updateFile(fp) {
 }
 
 /**
- * Update library index.
+ * Reindex the library, merge changes into the existing index file.
  * @param {String} fp - Library path
  * @returns {Object}
  */
 function updateIndex(fp, data) {
   return {
     type: LIBRARY.UPDATE_INDEX,
-    payload: data
+    path: fp,
+    payload: Library.updateIndex(fp)
   };
 }
 
@@ -102,7 +92,8 @@ function updateTag(tag) {
 function writeIndex(fp, data) {
   return {
     type: LIBRARY.WRITE_INDEX,
-    payload: Library.saveIndex(fp)
+    path: fp,
+    payload: Library.writeIndex(fp)
   };
 }
 
@@ -112,7 +103,6 @@ export {
   deleteFile,
   deleteTag,
   loadIndex,
-  reindex,
   updateFile,
   updateIndex,
   updateTag,

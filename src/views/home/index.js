@@ -3,26 +3,18 @@ import { Gitlab } from 'styled-icons/boxicons-logos/Gitlab';
 import React from 'react';
 import { Bacteria, Owl5 } from '../../components/branding';
 import { FlexColumn, FlexRow } from '../../components/layout';
-import { Home } from './styles';
+import { Card, Home } from './styles';
 
 class HomeContainer extends React.Component {
   render() {
     return (
       <Home>
-        <FlexRow alignItems={'flex-start'} justifyContent={'flex-start'}>
-          <FlexColumn style={{maxWidth: 480, width: 480}}>
-            <section className={'margin-top-l'}>
-              <h2>postdoc</h2>
-              <p className={'font-size-xs max-width-480'}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
-              </p>
-            </section>
+        <FlexRow alignItems={'stretch'} justifyContent={'space-between'}>
+          <FlexColumn style={{flexBasis: '50%'}}>
             <section>
               <h4>Project Repositories</h4>
 
-              <div className={'project'}>
+              <Card>
                 <h6>Project Name</h6>
                 <Github style={{width: 24}}/>
                 <div className={'stats'}>
@@ -31,8 +23,8 @@ class HomeContainer extends React.Component {
                   contributors
                   GitHub
                 </div>
-              </div>
-              <div className={'project'}>
+              </Card>
+              <Card>
                 <h6>Project Name</h6>
                 <Github style={{width: 24}}/>
                 <div className={'stats'}>
@@ -41,8 +33,8 @@ class HomeContainer extends React.Component {
                   contributors
                   GitHub
                 </div>
-              </div>
-              <div className={'project'}>
+              </Card>
+              <Card>
                 <h6>Project Name</h6>
                 <div className={'stats'}>
                   pull requests
@@ -50,8 +42,8 @@ class HomeContainer extends React.Component {
                   contributors
                   GitHub
                 </div>
-              </div>
-              <div className={'project'}>
+              </Card>
+              <Card>
                 <h6>Project Name</h6>
                 <div className={'stats'}>
                   pull requests
@@ -59,15 +51,32 @@ class HomeContainer extends React.Component {
                   contributors
                   GitHub
                 </div>
-              </div>
+              </Card>
             </section>
           </FlexColumn>
-          <FlexColumn style={{maxWidth: 480, width: 480}}>
-            <img src={Bacteria} style={{maxWidth: 480}}/>
-            <section className={'credits'}>
-              Credits
+          <FlexColumn style={{flexBasis: '50%'}}>
+            <FlexRow alignItems={'center'} justifyContent={'center'}>
+              <img src={Owl5} style={{maxWidth: 320}}/>
+            </FlexRow>
+            <section className={'margin-top-l'}>
+              <h1 className={'brand'}>postdoc</h1>
+              <p className={'max-width-480'}>
+                For help, please visit:
+              </p>
+              <ul>
+                <li>the postdoc <a href="https://google.com" target={'_blank'}>Help and API documentation</a></li>
+                <li>the postdoc chat room on postdoc.gitter.com</li>
+                <li>postdoc.org web site, where you can search for plugins and developer documentation</li>
+              </ul>
+              <div>Show welcome guide when opening postdoc</div>
 
-              <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/turkkub" title="turkkub">turkkub</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/wanicon" title="wanicon">wanicon</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+              <div className={'monospace'}>Version 0.0.1</div>
+              <p>
+                Icons by
+                <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>,
+                <a href="https://www.flaticon.com/authors/turkkub" title="turkkub">turkkub</a>, and
+                <a href="https://www.flaticon.com/authors/wanicon" title="wanicon">wanicon</a>
+              </p>
             </section>
           </FlexColumn>
 

@@ -1,4 +1,4 @@
-import { APP, LIBRARY, PROFILE } from "./actionTypes";
+import { APP, LIBRARY, PROFILE } from "../types";
 import shortid from "shortid";
 import Library from "../../lib/library";
 import { loadIndex } from './library';
@@ -32,7 +32,7 @@ function loadApplicationState() {
             return {profile, library};
           });
         } else {
-          return profile;
+          return {profile};
         }
       }),
   };

@@ -1,42 +1,53 @@
-// import { combineReducers } from "redux";
-// import application from "./application";
-// import library from "./library";
-// import profile from "./profile";
-// import project from "./project";
-// export default combineReducers({ application, library, profile, project });
+import {APP, LIBRARY, PROFILE, PROJECT} from "../types";
 
-import {APP, LIBRARY, PROFILE, PROJECT} from "../actions/actionTypes";
+const APP_DEFAULT = {
+  error: null,
+  isDebugToolsVisible: false,
+  isOutlinePanelVisible: true,
+  isStatusBarVisible: true,
+};
 
-const INITIAL_STATE = {
-  app: {
-    isDebugToolsVisible: false,
-    isOutlinePanelVisible: true,
-    isStatusBarVisible: true,
-  },
-  library: {
-    files: [],
-    isIndexing: false,
-    isLoading: false,
-    lastUpdated: new Date(),
-    tags: []
-  },
-  profile: {
-    isLoading: false,
+const DATABASE_DEFAULT = {
+  files: [],
+  mimetypes: [],
+  tags: [],
+  years: []
+};
+
+const LIBRARY_DEFAULT = {
+  data: DATABASE_DEFAULT,
+  error: null,
+  isIndexing: false,
+  isLoading: false,
+  isWriting: false,
+  path: null,
+};
+
+const PROFILE_DEFAULT = {
+  data: {
     library: "",
-    recentProjects: [
-      { name: 'My Project', path: '/Users/dmarques/Documents/src/doc/postdoc' },
-      { name: 'My Project 2', path: '/Users/dmarques/Documents/src/doc' }
-    ],
+    recentProjects: [],
     settings: {}
   },
-  project: {
-    files: {},
-    isIndexing: false,
-    isLoading: false,
-    lastUpdated: new Date(),
-    path: "/Users/dmarques/Documents/src/fm/paper",
-    tags: {}
-  }
+  error: null,
+  isLoading: false,
+  isWriting: false,
+};
+
+const PROJECT_DEFAULT = {
+  data: DATABASE_DEFAULT,
+  error: null,
+  isIndexing: false,
+  isLoading: false,
+  isWriting: false,
+  path: "",
+};
+
+const INITIAL_STATE = {
+  app: APP_DEFAULT,
+  library: LIBRARY_DEFAULT,
+  profile: PROFILE_DEFAULT,
+  project: PROJECT_DEFAULT
 };
 
 /**
@@ -48,51 +59,91 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case APP.LOAD_APPLICATION_STATE_FULFILLED: {
-      const library = {...state.library, ...action.payload.library};
-      const profile = {...state.profile, ...action.payload.profile};
+      const library = {
+        ...state.library,
+        data: Object.assign({}, DATABASE_DEFAULT, {...action.payload.library}),
+        path: action.payload.profile.library,
+        isLoading: false
+      };
+      const profile = {
+        ...state.profile,
+        ...action.payload.profile,
+        isLoading: false
+      };
+      return Object.assign({}, state, {library, profile});
+    }
+    case APP.LOAD_APPLICATION_STATE_PENDING: {
+      const library = {...state.library, isLoading: true};
+      const profile = {...state.profile, isLoading: true};
       return Object.assign({}, state, {library: library, profile: profile});
     }
-    case APP.UPDATE_PREFERENCE_FULFILLED: {
-      return Object.assign({}, state, action.payload);
+    case APP.LOAD_APPLICATION_STATE_REJECTED: {
+      const error = action.payload.message;
+      const library = {...state.library, error, isLoading: false};
+      const profile = {...state.profile, error, isLoading: false};
+      return Object.assign({}, state, {library: library, profile: profile});
     }
-    case LIBRARY.ADD_FILE: {
-      return { ...state, ...action };
+    case LIBRARY.LOAD_INDEX_FULFILLED: {
+      const library = {
+        ...state.library,
+        data: { ...state.library.data, ...action.payload },
+        isLoading: false
+      };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.ADD_TAG: {
-      return { ...state, ...action };
+    case LIBRARY.LOAD_INDEX_PENDING: {
+      const library = {
+        ...state.library,
+        error: null,
+        isLoading: true,
+        path: state.profile.library
+      };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.DELETE_FILE: {
-      return { ...state, ...action };
+    case LIBRARY.LOAD_INDEX_REJECTED: {
+      const error = action.payload.message;
+      const library = { ...state.library, error, isLoading: false };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.DELETE_TAG: {
-      return { ...state, ...action };
+    case LIBRARY.UPDATE_INDEX_FULFILLED: {
+      const data =  { ...state.library.data, ...action.payload };
+      const library = { ...state.library, data, isIndexing: false };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.LOAD_INDEX: {
-      return Object.assign({}, state, {...action.payload});
+    case LIBRARY.UPDATE_INDEX_PENDING: {
+      const library = { ...state.library, error: null, isIndexing: true };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.UPDATE_FILE: {
-      return { ...state, ...action };
+    case LIBRARY.UPDATE_INDEX_REJECTED: {
+      const error = action.payload.message;
+      const library = { ...state.library, error, isIndexing: false };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.UPDATE_INDEX: {
-      return { ...state, ...action };
+    case LIBRARY.WRITE_INDEX_FULFILLED: {
+      const library = { ...state.library, isWriting: false };
+      return Object.assign({}, state, { library });
     }
-    case LIBRARY.UPDATE_TAG: {
-      return { ...state, ...action };
+    case LIBRARY.WRITE_INDEX_PENDING: {
+      const library = { ...state.library, error: null, isWriting: true };
+      return Object.assign({}, state, { library });
     }
-    case PROFILE.LOAD_PROFILE: {
-      return Object.assign({}, state, action.payload);
+    case LIBRARY.WRITE_INDEX_REJECTED: {
+      const error = action.payload.message;
+      const library = { ...state.library, error, isWriting: false };
+      return Object.assign({}, state, { library });
     }
-    case PROFILE.UPDATE_PROFILE: {
-      return Object.assign({}, state, action.payload);
+    case PROFILE.LOAD_PROFILE_FULFILLED: {
+      const profile = {...state.profile, data: action.payload, isLoading: false};
+      return Object.assign({}, state, {profile});
     }
-    case PROJECT.ADD_FILE: {
-      return state;
+    case PROFILE.LOAD_PROFILE_PENDING: {
+      const profile = {...state.profile, error: null, isLoading: true};
+      return Object.assign({}, state, {profile});
     }
-    case PROJECT.ADD_TAG: {
-      return state;
-    }
-    case PROJECT.CLONE_PROJECT: {
-      return state;
+    case PROFILE.LOAD_PROFILE_REJECTED: {
+      const error = action.payload.message;
+      const profile = {...state.profile, error, isLoading: false};
+      return Object.assign({}, state, {profile});
     }
     default:
       return state;

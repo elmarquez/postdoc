@@ -4,7 +4,6 @@ import { CONTENT_PANEL_WIDTH, TAB_PANEL_WIDTH } from '../constants';
 const Body = styled.div`
   flex-grow: 2;
   overflow: scroll;
-  padding: 2px;
 `;
 
 /**
@@ -14,7 +13,7 @@ const Body = styled.div`
  */
 const ContentPanel = styled.div`
   align-items: stretch;
-  background-color: rgba(0, 0, 0, 0.07);
+  background-color: rgb(242, 245, 245);
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -37,16 +36,20 @@ const Footer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
+  font-size: small;
   height: 32px;
   justify-content: space-between;
 `;
 
 const Header = styled.div`
   align-items: center;
+  border-bottom: 1px solid #BDC3C7;
   display: flex;
   flex-direction: row;
+  font-size: small;
   height: 32px;
   justify-content: space-between;
+  padding: 0 8px;
 `;
 
 export { Body, ContentPanel, Footer, Header };
