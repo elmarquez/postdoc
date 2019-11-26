@@ -65,6 +65,10 @@ function saveSettings() {
   };
 }
 
+function showModal() {
+  return {};
+}
+
 /**
  * Add project to recent projects list.
  * @param {Object} data -
@@ -98,6 +102,7 @@ export {
   loadSettings,
   resetSettings,
   saveSettings,
+  showModal,
   updateRecentProjects,
   updateSetting
 };

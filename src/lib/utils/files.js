@@ -258,7 +258,7 @@ function writeJSON(fp, obj) {
         if (err) {
           reject(err);
         } else {
-          console.debug("Wrote file", fp);
+          console.debug("Wrote file", fp, obj);
           resolve();
         }
       });

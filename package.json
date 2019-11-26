@@ -22,6 +22,7 @@
     "lowdb": "^1.0.0",
     "mime-types": "^2.1.25",
     "moment": "^2.24.0",
+    "nw-dialog": "^1.0.7",
     "nw-react-scripts": "2.1.1",
     "pdf-parse": "^1.1.1",
     "ramda": "^0.26.1",

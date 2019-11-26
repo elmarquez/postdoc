@@ -8056,6 +8056,11 @@ nw-builder@^3.5.7:
     update-notifier "^2.4.0"
     winresourcer "^0.9.0"
 
+nw-dialog@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/nw-dialog/-/nw-dialog-1.0.7.tgz#3533402d0fdbb65cc793113959084f7ba453b113"
+  integrity sha1-NTNALQ/btlzHkxE5WQhPe6RTsRM=
+
 nw-react-scripts@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/nw-react-scripts/-/nw-react-scripts-2.1.1.tgz#11fa57c8f6222b49cd046d532b14bd492a84a8ad"

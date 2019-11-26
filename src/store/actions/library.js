@@ -1,6 +1,7 @@
 import { LIBRARY } from "../types";
 import shortid from "shortid";
 import Library from "../../lib/library";
+import store from '../index';
 import {Promise} from 'bluebird';
 
 /**
@@ -89,11 +90,14 @@ function updateTag(tag) {
  * @param {Object} data - Index data
  * @returns {Object}
  */
-function writeIndex(fp, data) {
+function writeIndex() {
+  const state = store.getState();
+  const { library } = state.profile.data;
+  const { data } = state.library;
   return {
     type: LIBRARY.WRITE_INDEX,
-    path: fp,
-    payload: Library.writeIndex(fp)
+    path: library,
+    payload: Library.writeIndex(library, data)
   };
 }
 

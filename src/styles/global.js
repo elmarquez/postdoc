@@ -67,6 +67,9 @@ const GlobalStyle = createGlobalStyle`
   .font-size-xs {
     font-size: x-small;
   }
+  .hidden {
+    display: none;
+  }
   
   .margin-bottom-l {
     margin-bottom: 32px;
@@ -120,6 +123,10 @@ const GlobalStyle = createGlobalStyle`
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Opera and Firefox */
+  }
+  .offscreen {
+    position: fixed;
+    top: -100;
   }
   .padding-xs {
     padding: 4px;

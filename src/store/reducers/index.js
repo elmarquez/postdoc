@@ -105,6 +105,12 @@ export default function(state = INITIAL_STATE, action) {
       const library = { ...state.library, error, isLoading: false };
       return Object.assign({}, state, { library });
     }
+    case LIBRARY.UPDATE: {
+      console.info('library update!');
+      const data = Object.assign({}, state.library.data, action.payload);
+      const library = { ...state.library, data };
+      return Object.assign({}, state, {library});
+    }
     case LIBRARY.UPDATE_INDEX_FULFILLED: {
       const data =  { ...state.library.data, ...action.payload };
       const library = { ...state.library, data, isIndexing: false };

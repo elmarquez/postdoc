@@ -67,7 +67,7 @@ function getEditMenu() {
  */
 function getFileMenu() {
   var createNewFileSubmenu = new nw.Menu();
-  createNewFileSubmenu.append(new nw.MenuItem({ label: "Project" }));
+  createNewFileSubmenu.append(new nw.MenuItem({ label: "Project", click: actions.project.createProject }));
   createNewFileSubmenu.append(new nw.MenuItem({ label: "Project from Git Repository" }));
   createNewFileSubmenu.append(new nw.MenuItem({ type: "separator" }));
   createNewFileSubmenu.append(new nw.MenuItem({ label: "Directory" }));
