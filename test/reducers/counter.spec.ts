@@ -1,5 +1,5 @@
-import counter from '../../app/reducers/counter';
-import { CounterTypeKeys } from '../../app/actions/counter';
+import counter from '../../app/store/reducers/counter';
+import { CounterTypeKeys } from '../../app/store/actions/counter';
 
 describe('reducers', () => {
   describe('counter', () => {
