@@ -20,7 +20,7 @@ const loadProfile = () => {
  */
 const updateProfile = (data) => {
   return function(dispatch) {
-    Profile.updateSettings(data).then(function() {
+    Profile.updateProfileSettings(data).then(function() {
       dispatch({
         type: PROFILE.UPDATE_PROFILE,
         id: shortid.generate(),

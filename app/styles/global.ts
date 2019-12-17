@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-// eslint-disable-next-line
-import Inter from 'typeface-inter';
-import { Gradient1 } from '../components/branding';
+import 'typeface-inter/inter.css';
+// import { Gradient1 } from '../components/branding';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -24,30 +23,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
+    align-items: stretch;
     bottom: 0;
+    display: flex;
+    flex-direction: column;
     left: 0;
     position: fixed;
     right: 0;
     top: 0;
-    
-    > .switch-wrapper {
-      bottom: 0;
-      left: 0;
-      position: fixed;
-      right: 0;
-      top: 0;
-      
-      > div {
-        align-items: stretch;
-        bottom: 0;
-        display: flex;
-        flex-direction: row;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;        
-      }
-    }
   }
   
   .ag-theme-balham .ag-root {

@@ -1,7 +1,7 @@
-import files from './files';
-import fs from 'fs';
+import files from '../utils/files';
+import { exists, readFile } from 'fs';
 import git from 'simple-git';
-import path from 'path';
+import { basename, join } from 'path';
 import Promise from 'bluebird';
 
 /**
@@ -112,7 +112,7 @@ function load(cwd) {
  * @returns {Promise}
  */
 function loadFiles(cwd) {
-  return files.getFileTree(cwd);
+  return files.getFileTree(cwd, {});
 }
 
 /**
@@ -123,13 +123,13 @@ function loadFiles(cwd) {
  */
 function loadMetadata(cwd) {
   return new Promise(function(resolve, reject) {
-    let name = path.basename(cwd);
-    let p = path.join(cwd, 'project.json');
-    fs.exists(p, exists => {
+    let name = basename(cwd);
+    let p = join(cwd, 'project.json');
+    exists(p, exists => {
       if (!exists) {
         resolve({ name, version: '0.0.0', description: '' });
       } else {
-        fs.readFile(p, 'utf8', (err, data) => {
+        readFile(p, 'utf8', (err, data) => {
           if (err) {
             console.error(`Failed to load project.json`, err);
             resolve({ name });

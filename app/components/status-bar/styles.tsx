@@ -18,7 +18,10 @@ const StatusBar = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   font-size: x-small;
+  height: 24px;
   justify-content: space-between;
+  max-height: 24px;
+  min-height: 24px;
 `;
 
 export { StatusBar, Group, Item };

@@ -1,8 +1,7 @@
-import '@atlaskit/css-reset';
+import '@atlaskit/css-reset/dist/esm';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { AnimatedSwitch } from 'react-router-transition';
 
 import GlobalNavigationBar from '../../components/global-navigation';
 import StatusBar from '../../components/status-bar';
@@ -10,13 +9,12 @@ import { Project } from '../../lib';
 import { loadApplicationState } from '../../store/actions/application';
 import { loadProfile } from '../../store/actions/profile';
 import GlobalStyles from '../../styles/global';
-import LibraryRoutes from '../library';
-import ProjectsRoutes from '../project';
+// import LibraryRoutes from '../library';
+// import ProjectsRoutes from '../project';
 import HelpRoutes from '../help';
 import HomeRoutes from '../home';
-import SettingsRoutes from '../settings';
+// import SettingsRoutes from '../settings';
 import { View, Workspace } from './styles';
-import FileDialog from '../../components/modals/file';
 
 export interface AppProps {
   application: Object,
@@ -66,13 +64,13 @@ class AppComponent extends React.Component<AppProps, AppState> {
    * Handle lifecycle event.
    */
   componentDidMount() {
-    const self = this;
+    // const self = this;
     // setup the application window
-    const window = {};
+    // const window = {};
     // dispatch data loading events
-    self.props.loadProfile();
+    // self.props.loadProfile();
     // set window state
-    self.setState({ window });
+    // self.setState({ window });
   }
 
   onUpdateIndex() {
@@ -98,23 +96,15 @@ class AppComponent extends React.Component<AppProps, AppState> {
     return (
       <React.Fragment>
         <GlobalStyles />
-        <FileDialog />
         <HashRouter>
-          <AnimatedSwitch
-            atActive={{ opacity: 1 }}
-            atEnter={{ opacity: 0 }}
-            atLeave={{ opacity: 0 }}
-            className="switch-wrapper"
-          >
-            <Workspace>
-              <GlobalNavigationBar />
-              {this.renderView()}
-            </Workspace>
-            <StatusBar
-              project={this.state.project}
-              visible={this.state.panels.statusbar}
-            />
-          </AnimatedSwitch>
+          <Workspace>
+            <GlobalNavigationBar />
+            {this.renderView()}
+          </Workspace>
+          <StatusBar
+            project={this.state.project}
+            visible={this.state.panels.statusbar}
+          />
         </HashRouter>
       </React.Fragment>
     );
@@ -126,9 +116,9 @@ class AppComponent extends React.Component<AppProps, AppState> {
         <Switch>
           <Route path="/home" component={HomeRoutes} exact={true} />
           <Route path="/help" component={HelpRoutes} />
-          <Route path="/library" component={LibraryRoutes} />
-          <Route path="/projects" component={ProjectsRoutes} />
-          <Route path="/settings" component={SettingsRoutes} />
+          {/* <Route path="/library" component={LibraryRoutes} /> */}
+          {/* <Route path="/projects" component={ProjectsRoutes} /> */}
+          {/* <Route path="/settings" component={SettingsRoutes} /> */}
           <Redirect to="/home" />
         </Switch>
       </View>

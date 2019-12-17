@@ -1,7 +1,7 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import glob from 'glob';
 import hasha from 'hasha';
-import path from 'path';
+import * as path from 'path';
 import Promise from 'bluebird';
 
 const HASH_ALGO = {
@@ -15,7 +15,7 @@ const HASH_ALGO = {
  * @param {Integer} mode - Directory permissions
  * @return {Promise}
  */
-function ensureDir(p, mode) {
+function ensureDir(p:string, mode?:number) {
   return exists(p)
     .then(function(exists) {
       if (!exists) {
@@ -40,7 +40,7 @@ function ensureDir(p, mode) {
  * @param {Object} data - Default data
  * @return {Promise}
  */
-function ensureFile(file, data) {
+function ensureFile(file:string, data:Object) {
   return exists(file).then(function(exists) {
     if (!exists) {
       return writeJSON(file, data);
@@ -55,7 +55,7 @@ function ensureFile(file, data) {
  * @param {String} p - File path
  * @return {Promise<Boolean>}
  */
-function exists(f) {
+function exists(f:string) {
   return new Promise(function(resolve, reject) {
     fs.access(f, fs.constants.F_OK, err => {
       if (err) {
@@ -72,7 +72,7 @@ function exists(f) {
  * @param {Array} files - File paths
  * @return {Promise}
  */
-function getDirStats(files) {
+function getDirStats(files:Array<string>) {
   let promises = files.map(f => getFileStats(f));
   return Promise.all(promises);
 }
@@ -82,7 +82,7 @@ function getDirStats(files) {
  * @param {Array} files - Files
  * @return {Promise|Array} file list with hashes
  */
-function getFileHashes(files) {
+function getFileHashes(files:Array<string>) {
   const cfg = { algorithm: HASH_ALGO.SHA256 };
   var promises = files.map(f => {
     return hasha.fromFile(f, cfg).then(hash => {
@@ -92,7 +92,7 @@ function getFileHashes(files) {
   return Promise.all(promises);
 }
 
-function getFileMetadata(files) {
+function getFileMetadata(files:Array<string>) {
   const promises = files.map(f => {
     // get last modified data, filename, extension, mimetype
   });
@@ -105,7 +105,7 @@ function getFileMetadata(files) {
  * @param {object} options - Options
  * @returns {Promise}
  */
-function getFileTree(cwd, options) {
+function getFileTree(cwd:string, options:Object) {
   options = { absolute: true, cwd: cwd, nodir: true, silent: true };
   return new Promise(function(resolve, reject) {
     glob('**/*', options, function(err, files) {
@@ -123,7 +123,7 @@ function getFileTree(cwd, options) {
  * @param {String} dir - Directory path
  * @return {Promise}
  */
-function getFiles(dir) {
+function getFiles(dir:string) {
   return new Promise(function(resolve, reject) {
     fs.readdir(dir, function(err, files) {
       if (err) {
@@ -141,7 +141,7 @@ function getFiles(dir) {
  * @param {String} f - File path
  * @return {Object
  */
-function getFileStats(f) {
+function getFileStats(f:string) {
   return new Promise(function(resolve, reject) {
     fs.stat(f, (err, stats) => {
       if (err) {
@@ -158,7 +158,7 @@ function getFileStats(f) {
  * @param {Array} files - Files
  * @return {Promise}
  */
-function getStats(files) {
+function getStats(files:Array<string>) {
   let promises = files.map(f => getFileStats(f));
   return Promise.all(promises);
 }
@@ -168,7 +168,7 @@ function getStats(files) {
  * @param {String} p - Path to file
  * @return {Promise<Boolean>}
  */
-function isWriteable(p) {
+function isWriteable(p:string) {
   return new Promise(function(resolve, reject) {
     fs.access(p, fs.constants.W_OK | fs.constants.W_OK, err => {
       if (err) {
@@ -186,7 +186,7 @@ function isWriteable(p) {
  * @param {Integer} mode - File system permissions
  * @return {Promise}
  */
-function mkdir(p, mode) {
+function mkdir(p:string, mode:number) {
   return new Promise(function(resolve, reject) {
     fs.mkdir(p, { recursive: true }, function(err) {
       if (err) {
@@ -209,7 +209,7 @@ function mkdir(p, mode) {
  * @param {String} f - Path to file
  * @return {Promise<Object>}
  */
-function readJSON(f) {
+function readJSON(f:string) {
   return new Promise(function(resolve, reject) {
     fs.readFile(f, 'utf8', function(err, data) {
       if (err) {
@@ -226,7 +226,7 @@ function readJSON(f) {
   });
 }
 
-function removeDirectories(files) {
+function removeDirectories(files:Array<any>) {
   let visible = files.filter(f => !f.stats.isDirectory());
   return Promise.resolve(visible);
 }
@@ -236,7 +236,7 @@ function removeDirectories(files) {
  * @param {Array} files - Files
  * @returns {Promise}
  */
-function removeHiddenFiles(files) {
+function removeHiddenFiles(files:Array<string>) {
   let visible = files.filter(f => {
     let basename = path.basename(f);
     return basename[0] !== '.';
@@ -250,7 +250,7 @@ function removeHiddenFiles(files) {
  * @param {Object} obj - Data
  * @return {Promise}
  */
-function writeJSON(fp, obj) {
+function writeJSON(fp:string, obj:Object) {
   return new Promise(function(resolve, reject) {
     try {
       let data = JSON.stringify(obj);
@@ -278,7 +278,7 @@ export default {
   getFileStats,
   getFileTree,
   getStats,
-  isAccessible: isWriteable,
+  isWriteable,
   mkdir,
   readJSON,
   removeDirectories,

@@ -1,5 +1,5 @@
-import os from 'os';
-import path from 'path';
+import { homedir } from 'os';
+import { join } from 'path';
 import utils from '../utils';
 
 const DEFAULT_PROFILE_SETTINGS = {
@@ -40,7 +40,7 @@ function ensureProfileDirectory(d) {
  * @return {Promise}
  */
 function ensureProfileSettings(d) {
-  const settings = path.join(d, PROFILE_SETTINGS_FILENAME);
+  const settings = join(d, PROFILE_SETTINGS_FILENAME);
   return utils.files.exists(settings).then(function(exists) {
     if (!exists) {
       console.debug('Creating settings file', settings);
@@ -56,7 +56,7 @@ function ensureProfileSettings(d) {
 function getProfile() {
   const profile = getProfileDirectoryPath();
   return ensureProfile(profile).then(function() {
-    const settings = path.join(profile, PROFILE_SETTINGS_FILENAME);
+    const settings = join(profile, PROFILE_SETTINGS_FILENAME);
     console.debug('Reading profile from', settings);
     return utils.files.readJSON(settings);
   });
@@ -67,8 +67,8 @@ function getProfile() {
  * @return {String} absolute directory path
  */
 function getProfileDirectoryPath() {
-  const home = os.homedir();
-  return path.join(home, PROFILE_FOLDER_NAME);
+  const home = homedir();
+  return join(home, PROFILE_FOLDER_NAME);
 }
 
 /**
@@ -78,7 +78,7 @@ function getProfileDirectoryPath() {
  */
 function updateProfileSettings(data) {
   const parent = getProfileDirectoryPath();
-  const settings = path.join(parent, PROFILE_SETTINGS_FILENAME);
+  const settings = join(parent, PROFILE_SETTINGS_FILENAME);
   return utils.files.writeJSON(settings, data);
 }
 
@@ -86,7 +86,7 @@ export default {
   ensureProfile,
   ensureProfileDirectory,
   ensureProfileSettings,
-  getProfile: getProfile,
+  getProfile,
   getProfileDirectoryPath,
   updateProfileSettings
 };

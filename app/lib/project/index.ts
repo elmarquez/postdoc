@@ -1,18 +1,16 @@
-import Database from '../database';
-import path from 'path';
+import { loadFromDir } from '../database';
+import { join } from 'path';
 import Utils from '../utils';
 
 const PROJECT_SETTINGS_FILE = 'project.json';
 
 function getSettings(fp) {
-  const p = path.join(fp, PROJECT_SETTINGS_FILE);
+  const p = join(fp, PROJECT_SETTINGS_FILE);
   return Utils.files.readJSON(p);
 }
 
 export function updateIndex(fp) {
-  return Database.loadFromDir(fp)
-    .updateIndex()
-    .write();
+  return loadFromDir(fp).updateIndex().write();
 }
 
 export default {
