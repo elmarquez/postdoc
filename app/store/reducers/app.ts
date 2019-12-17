@@ -1,4 +1,4 @@
-import { APP, LIBRARY, PROFILE, PROJECT } from '../types';
+import { APP } from '../types';
 
 const DATABASE_DEFAULT = {
   files: [],
@@ -10,10 +10,12 @@ const DATABASE_DEFAULT = {
 const INITIAL_STATE = {
   data: {},
   error: null,
+  library: {},
   isDebugToolsVisible: false,
   isOutlinePanelVisible: true,
   isPending: false,
-  isStatusBarVisible: true
+  isStatusBarVisible: true,
+  profile: {}
 };
 
 /**

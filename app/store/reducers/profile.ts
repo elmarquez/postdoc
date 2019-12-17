@@ -1,4 +1,4 @@
-import { APP, LIBRARY, PROFILE, PROJECT } from '../types';
+import { PROFILE } from '../types';
 
 const INITIAL_STATE = {
   data: {
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
  * @param {String} action - Action type
  * @returns {Object} next state
  */
-export default function(state = INITIAL_STATE, action) {
+export default function(state:any = INITIAL_STATE, action) {
   switch (action.type) {
     case PROFILE.LOAD_PROFILE_FULFILLED: {
       const profile = {

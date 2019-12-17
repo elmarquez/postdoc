@@ -1,7 +1,11 @@
+import { createHashHistory } from 'history';
 import { applyMiddleware, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise-middleware';
-import rootReducer from './reducers';
+import { createRootReducer } from './reducers';
+
+const history = createHashHistory();
+const rootReducer = createRootReducer(history);
 
 var middlewares = [promise];
 if (process.env.NODE_ENV === `development`) {

@@ -1,4 +1,4 @@
-import { connectRouter } from 'connected-react-router';
+// import { connectRouter } from 'connected-react-router';
 import { combineReducers } from 'redux';
 
 import app from './app';
@@ -10,12 +10,12 @@ import profile from './profile';
  * @param {*} history - Router history
  * @returns {Reducer}
  */
-function createRootReducer(history) {
+function createRootReducer(history: any) {
   return combineReducers({
     app,
     library,
     profile,
-    router: connectRouter(history)
+    // router: connectRouter(history)
   });
 }
 

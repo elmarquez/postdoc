@@ -1,4 +1,4 @@
-import { APP, LIBRARY, PROFILE, PROJECT } from '../types';
+import { LIBRARY } from '../types';
 
 const DATABASE_DEFAULT = {
   files: [],
@@ -11,9 +11,10 @@ const INITIAL_STATE = {
   data: DATABASE_DEFAULT,
   error: null,
   isIndexing: false,
-  isLoading: false,
-  isWriting: false,
-  path: null
+  isPending: false,
+  library: {},
+  path: null,
+  profile: {}
 };
 
 /**
@@ -25,34 +26,38 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LIBRARY.LOAD_INDEX_FULFILLED: {
+      const data: any = state.library;
       const library = {
         ...state.library,
-        data: { ...state.library.data, ...action.payload },
-        isLoading: false
+        data: { ...data, ...action.payload },
+        isPending: false
       };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.LOAD_INDEX_PENDING: {
+      const profile: any = state.profile;
       const library = {
         ...state.library,
         error: null,
-        isLoading: true,
-        path: state.profile.library
+        isPending: true,
+        path: profile.library
       };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.LOAD_INDEX_REJECTED: {
       const error = action.payload.message;
-      const library = { ...state.library, error, isLoading: false };
+      const library = { ...state.library, error, isPending: false };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.UPDATE: {
-      const data = Object.assign({}, state.library.data, action.payload);
+      const current: any = state.library;
+      const data = Object.assign({}, current.data, action.payload);
       const library = { ...state.library, data };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.UPDATE_INDEX_FULFILLED: {
-      const data = { ...state.library.data, ...action.payload };
+      const current: any = state.library;
+      const data = { ...current.data, ...action.payload };
       const library = { ...state.library, data, isIndexing: false };
       return Object.assign({}, state, { library });
     }
@@ -66,16 +71,16 @@ export default function(state = INITIAL_STATE, action) {
       return Object.assign({}, state, { library });
     }
     case LIBRARY.WRITE_INDEX_FULFILLED: {
-      const library = { ...state.library, isWriting: false };
+      const library = { ...state.library, isPending: false };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.WRITE_INDEX_PENDING: {
-      const library = { ...state.library, error: null, isWriting: true };
+      const library = { ...state.library, error: null, isPending: true };
       return Object.assign({}, state, { library });
     }
     case LIBRARY.WRITE_INDEX_REJECTED: {
       const error = action.payload.message;
-      const library = { ...state.library, error, isWriting: false };
+      const library = { ...state.library, error, isPending: false };
       return Object.assign({}, state, { library });
     }
     default:
