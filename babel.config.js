@@ -23,6 +23,7 @@ module.exports = api => {
       [
         require('@babel/preset-env'),
         {
+          corejs: { version: 3, proposals: true },
           targets: { electron: require('electron/package.json').version },
           useBuiltIns: 'usage'
         }

@@ -15,11 +15,11 @@ import ThreeDotMenuEditor from './three-dot-menu';
  * @param {function} onClick - Click handler
  * @return {function}
  */
-function withClickHandler(Component, onClick) {
+const withClickHandler = (Component, onClick) => {
   return function(props) {
     return <Component {...props} onClick={(e, data) => onClick(e, data)} />;
   };
-}
+};
 
 export {
   CheckBox,

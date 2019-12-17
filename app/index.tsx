@@ -1,28 +1,18 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
-import { configureStore, history } from './store/configureStore';
-import './app.global.css';
+import { Provider } from 'react-redux';
+import App from './views/app';
+import store from './store';
 
-const store = configureStore();
-
-render(
-  <AppContainer>
-    <Root store={store} history={history} />
-  </AppContainer>,
-  document.getElementById('root')
+/**
+ * Application
+ * @param {object} props - Component properties
+ * @constructor
+ */
+const Application = (props) => (
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
-if ((module as any).hot) {
-  (module as any).hot.accept('./containers/Root', () => {
-    // eslint-disable-next-line global-require
-    const NextRoot = require('./containers/Root').default;
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}
+render(<Application />, document.getElementById('root'));

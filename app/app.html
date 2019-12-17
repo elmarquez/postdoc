@@ -36,9 +36,7 @@
         );
 
         document.write(
-          scripts
-            .map(script => `<script defer src="${script}"><\/script>`)
-            .join('')
+          scripts.map(script => `<script defer src="${script}"><\/script>`).join('')
         );
       }
     </script>

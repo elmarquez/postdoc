@@ -6,7 +6,7 @@ import project from '../../lib/project';
 import utils from '../../lib/utils';
 import Accordion from '../accordion';
 import { Body, Footer, Header, OutlinePanel, TreeItem as TI } from './styles';
-import { loadIndex, updateIndex } from '../../src/store/actions/library';
+import { loadIndex, updateIndex } from '../../store/actions/library';
 
 /**
  * Outline panel.

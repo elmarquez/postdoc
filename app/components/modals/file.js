@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { loadApplicationState } from '../../src/store/actions/application';
-import { loadProfile } from '../../src/store/actions/profile';
+import { loadApplicationState } from '../../store/actions/application';
+import { loadProfile } from '../../store/actions/profile';
 
 const TYPE = {
   FILE: 0,

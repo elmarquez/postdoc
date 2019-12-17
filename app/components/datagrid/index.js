@@ -1,6 +1,6 @@
 import { AgGridReact } from 'ag-grid-react';
 import { PropTypes } from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 import STRINGS from '../../constants/strings';
 import { DataGridWrapper } from './styles';
 
