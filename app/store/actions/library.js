@@ -2,7 +2,6 @@ import shortid from 'shortid';
 import { Promise } from 'bluebird';
 import { LIBRARY } from '../types';
 import Library from '../../lib/library';
-import store from '../index';
 
 /**
  * Add file.
@@ -91,14 +90,7 @@ function updateTag(tag) {
  * @returns {Object}
  */
 function writeIndex() {
-  const state = store.getState();
-  const { library } = state.profile.data;
-  const { data } = state.library;
-  return {
-    type: LIBRARY.WRITE_INDEX,
-    path: library,
-    payload: Library.writeIndex(library, data)
-  };
+  throw new Error('not implemented');
 }
 
 export {

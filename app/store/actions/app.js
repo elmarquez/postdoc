@@ -1,6 +1,6 @@
 import shortid from 'shortid';
 import { Promise } from 'bluebird';
-import { APP, LIBRARY, PROFILE } from '../types';
+import { APP } from '../types';
 import Library from '../../lib/library';
 import { loadIndex } from './library';
 import Profile from '../../lib/profile';

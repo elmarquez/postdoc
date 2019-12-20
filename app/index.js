@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
-import { configureStore, history } from './store/configureStore';
-import './app.global.css';
+import Root from './views/root';
+import { configureStore, history } from './store';
 
 const store = configureStore();
 

@@ -26,6 +26,7 @@ module.exports = {
     "no-unused-vars": "warn",
     "no-useless-constructor": "warn",
     "prefer-promise-reject-errors": "warn",
+    "prettier/prettier": "warn",
     "promise/always-return": "warn",
     "promise/catch-or-return": "warn",
     "radix": "warn",

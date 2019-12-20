@@ -1,14 +1,19 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
+import { createHashHistory } from 'history';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
-import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import promise from 'redux-promise-middleware';
+
+// actions
+import appActions from './actions/app';
+import libraryActions from './actions/library';
+import profileActions from './actions/profile';
+import projectActions from './actions/project';
+
+// reducers
+import { createRootReducer } from './reducers';
 
 const history = createHashHistory();
-
 const rootReducer = createRootReducer(history);
 
 const configureStore = initialState => {
@@ -17,7 +22,7 @@ const configureStore = initialState => {
   const enhancers = [];
 
   // Thunk Middleware
-  middleware.push(thunk);
+  middleware.push(promise);
 
   // Logging Middleware
   const logger = createLogger({
@@ -36,7 +41,10 @@ const configureStore = initialState => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
+    ...appActions,
+    ...libraryActions,
+    ...profileActions,
+    ...projectActions,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -58,9 +66,9 @@ const configureStore = initialState => {
 
   if (module.hot) {
     module.hot.accept(
-      '../reducers',
+      './reducers',
       // eslint-disable-next-line global-require
-      () => store.replaceReducer(require('../reducers').default)
+      () => store.replaceReducer(require('./reducers').default)
     );
   }
 
