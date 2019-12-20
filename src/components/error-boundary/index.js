@@ -1,7 +1,7 @@
 import React from 'react';
-import {FlexColumn} from '../layout';
+import { FlexColumn } from '../layout';
 import Placeholder from '../placeholder';
-import {ErrorIcon, Message} from "./styles";
+import { ErrorIcon, Message } from './styles';
 
 /**
  * Generic error boundary component.
@@ -43,16 +43,15 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Placeholder className={'error'}>
-          <FlexColumn alignItems={'center'}>
+        <Placeholder className="error">
+          <FlexColumn alignItems="center">
             <ErrorIcon />
             <Message>An error occurred while rendering the view.</Message>
           </FlexColumn>
         </Placeholder>
       );
-    } else {
-      return this.props.children;
     }
+    return this.props.children;
   }
 }
 

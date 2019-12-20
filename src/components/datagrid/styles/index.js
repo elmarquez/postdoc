@@ -4,11 +4,11 @@ import { Save } from 'styled-icons/fa-regular/Save';
 import { Trash } from 'styled-icons/boxicons-regular/Trash';
 
 const Container = styled.div`
-  width: ${(props) => (props.width ? `${props.width}px` : '100%')};
+  width: ${props => (props.width ? `${props.width}px` : '100%')};
 `;
 
 const InputContainer = styled.input`
-  width: ${(props) => (props.width ? `${props.width}px` : '100%')};
+  width: ${props => (props.width ? `${props.width}px` : '100%')};
 `;
 
 const InvalidStatus = styled(ErrorCircle)`
@@ -26,7 +26,6 @@ const MiniButton = styled.div`
     background-color: #ebedf0;
   }
 `;
-
 
 const SaveIcon = styled(Save)`
   color: #6c788d;
@@ -56,7 +55,7 @@ const ThreeDotMenu = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  height: ${(props) => (props.height ? props.height : '100%')};
+  height: ${props => (props.height ? props.height : '100%')};
   opacity: 0.6;
 
   &:hover {
@@ -91,5 +90,5 @@ export {
   Tag,
   TagGroup,
   ThreeDotMenu,
-  TrashIcon,
+  TrashIcon
 };

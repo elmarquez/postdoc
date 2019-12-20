@@ -5,9 +5,7 @@ import React from 'react';
  */
 class FormModalComponent extends React.Component {
   render() {
-    return (
-      <form>form modal</form>
-    );
+    return <form>form modal</form>;
   }
 }
 

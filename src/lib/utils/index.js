@@ -1,9 +1,9 @@
 /**
  * Utility functions.
  */
-import files from "./files";
-import fs from "fs";
-import Promise from "bluebird";
+import fs from 'fs';
+import Promise from 'bluebird';
+import files from './files';
 
 /**
  * Load JSON file.
@@ -12,12 +12,12 @@ import Promise from "bluebird";
  */
 function loadJSON(p) {
   return new Promise(function(resolve, reject) {
-    fs.readFile(p, "utf8", (err, data) => {
+    fs.readFile(p, 'utf8', (err, data) => {
       if (err) {
         reject(err);
       } else {
         try {
-          let json = JSON.parse(data);
+          const json = JSON.parse(data);
           resolve(json);
         } catch (e) {
           reject(e);
@@ -28,7 +28,7 @@ function loadJSON(p) {
 }
 
 function loadJSONSync(p) {
-  let data = fs.readFileSync(p, "utf8");
+  const data = fs.readFileSync(p, 'utf8');
   return JSON.parse(data);
 }
 

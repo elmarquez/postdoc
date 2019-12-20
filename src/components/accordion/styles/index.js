@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ChevronDown } from 'styled-icons/boxicons-regular/ChevronDown';
 import { ChevronRight } from 'styled-icons/boxicons-regular/ChevronRight';
-import {FlexColumn, FlexRow} from '../../layout';
+import { FlexColumn, FlexRow } from '../../layout';
 
 const Accordion = styled(FlexColumn)``;
 
@@ -23,12 +23,11 @@ const Controls = styled.div`
   flex-grow: 2;
   justify-content: flex-end;
   margin-left: 4px;
-  
+
   svg {
     width: 16px;
   }
 `;
-
 
 const Header = styled(FlexRow)`
   margin-left: -4px;
@@ -40,5 +39,12 @@ const Title = styled.div`
   font-weight: 400;
 `;
 
-
-export { Accordion, Body, ChevronIconDown, ChevronIconRight, Controls, Header, Title };
+export {
+  Accordion,
+  Body,
+  ChevronIconDown,
+  ChevronIconRight,
+  Controls,
+  Header,
+  Title
+};

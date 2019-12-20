@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { PrimitiveDot } from 'styled-icons/octicons/PrimitiveDot';
 import COLOURS from '../../../constants/colours';
-import {PrimitiveDot} from 'styled-icons/octicons/PrimitiveDot';
 
-import {FlexColumn, FlexRow} from '../../layout';
+import { FlexColumn, FlexRow } from '../../layout';
 
 const Body = styled.div`
   flex-grow: 2;
@@ -16,14 +16,14 @@ const Controls = styled.div`
 `;
 
 const Footer = styled(FlexRow)`
-  border-top: 1px solid rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   height: 32px;
   padding: 12px 8px;
 `;
 
 const Group = styled(FlexColumn)`
   margin: 0 8px 24px 8px;
-  
+
   .accordion {
     margin-bottom: 16px;
   }
@@ -57,12 +57,4 @@ const Title = styled.div`
   text-transform: uppercase;
 `;
 
-export {
-  Body,
-  Controls,
-  Footer,
-  Group,
-  Header,
-  OutlinePanel,
-  Title,
-};
+export { Body, Controls, Footer, Group, Header, OutlinePanel, Title };

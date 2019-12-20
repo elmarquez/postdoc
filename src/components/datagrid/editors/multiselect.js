@@ -15,7 +15,7 @@ export default class MultiSelectEditor extends React.Component {
     super(props);
     this.select = React.createRef();
     this.state = {
-      value: [],
+      value: []
     };
   }
 
@@ -54,7 +54,7 @@ export default class MultiSelectEditor extends React.Component {
     }
     this.setState(
       {
-        value: newData || [],
+        value: newData || []
       },
       () => {
         if (this.props.stopEditing) {
@@ -72,13 +72,13 @@ export default class MultiSelectEditor extends React.Component {
     return (
       <Container width={this.props.colDef.width}>
         <Select
-          ref={(select) => {
+          ref={select => {
             this.select = select;
           }}
           isMulti
           options={this.props.options}
           defaultValue={this.props.defaultValue}
-          onChange={(v) => this.onSelectChange(v)}
+          onChange={v => this.onSelectChange(v)}
         />
       </Container>
     );
@@ -89,7 +89,7 @@ MultiSelectEditor.propTypes = {
   colDef: PropTypes.object,
   options: PropTypes.array.isRequired,
   defaultValue: PropTypes.array.isRequired,
-  stopEditing: PropTypes.func,
+  stopEditing: PropTypes.func
 };
 
 /**
@@ -113,4 +113,4 @@ MultiSelectEditor.propTypes = {
         width: 200,
       },
       }
- **/
+ * */

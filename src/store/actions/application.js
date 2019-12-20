@@ -1,9 +1,9 @@
-import { APP, LIBRARY, PROFILE } from "../types";
-import shortid from "shortid";
-import Library from "../../lib/library";
+import shortid from 'shortid';
+import { Promise } from 'bluebird';
+import { APP, LIBRARY, PROFILE } from '../types';
+import Library from '../../lib/library';
 import { loadIndex } from './library';
-import Profile from "../../lib/profile";
-import {Promise} from 'bluebird';
+import Profile from '../../lib/profile';
 
 /**
  * Delete settings.
@@ -13,7 +13,7 @@ import {Promise} from 'bluebird';
 function deleteSetting(settingId) {
   return {
     type: APP.DELETE_SETTING,
-    id: shortid.generate(),
+    id: shortid.generate()
   };
 }
 
@@ -24,19 +24,16 @@ function deleteSetting(settingId) {
 function loadApplicationState() {
   return {
     type: APP.LOAD_APPLICATION_STATE,
-    payload: Profile
-      .getProfile()
-      .then(function (profile) {
-        if (profile.library && profile.library !== "") {
-          return Library.loadIndex(profile.library).then(function (library) {
-            return {profile, library};
-          });
-        } else {
-          return {profile};
-        }
-      }),
+    payload: Profile.getProfile().then(function(profile) {
+      if (profile.library && profile.library !== '') {
+        return Library.loadIndex(profile.library).then(function(library) {
+          return { profile, library };
+        });
+      }
+      return { profile };
+    })
   };
-};
+}
 
 /**
  * Load settings into memory.

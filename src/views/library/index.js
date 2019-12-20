@@ -13,7 +13,7 @@ class LibraryViewRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path={'/library'} component={LibraryView} />
+        <Route path="/library" component={LibraryView} />
       </Switch>
     );
   }

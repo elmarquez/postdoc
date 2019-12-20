@@ -9,14 +9,14 @@ const KEY = {
   ARROW_LEFT: 37,
   BACKSPACE: 8,
   DELETE: 46,
-  F2: 113,
+  F2: 113
 };
 
-//TODO: Grab these defaults from a constants file
+// TODO: Grab these defaults from a constants file
 const DEFAULT_ATTRS = {
   min: 0,
   max: 100,
-  step: 1,
+  step: 1
 };
 
 /**
@@ -40,7 +40,9 @@ class NumericEditor extends React.Component {
    * @return {{highlightAllOnFocus: boolean, value: string}}
    */
   static createInitialState(props) {
-    const inputAttrs = props.colDef.attributes ? clone(props.colDef.attributes) : DEFAULT_ATTRS;
+    const inputAttrs = props.colDef.attributes
+      ? clone(props.colDef.attributes)
+      : DEFAULT_ATTRS;
     let startValue;
     let highlightAllOnFocus = true;
     if (props.keyPress === KEY.BACKSPACE || props.keyPress === KEY.DELETE) {
@@ -61,7 +63,7 @@ class NumericEditor extends React.Component {
     return {
       value: startValue,
       highlightAllOnFocus,
-      inputAttrs,
+      inputAttrs
     };
   }
 
@@ -71,7 +73,8 @@ class NumericEditor extends React.Component {
    * @return {boolean}
    */
   static isKeyPressedNumeric(event) {
-    const charCode = typeof event.which === 'undefined' ? event.keyCode : event.which;
+    const charCode =
+      typeof event.which === 'undefined' ? event.keyCode : event.which;
     const charStr = event.key ? event.key : String.fromCharCode(charCode);
     return !!/\d/.test(charStr);
   }
@@ -82,7 +85,9 @@ class NumericEditor extends React.Component {
    */
   static onKeyDown(event) {
     const isArrow =
-      [KEY.ARROW_LEFT, KEY.ARROW_RIGHT, KEY.ARROW_UP, KEY.ARROW_DOWN].indexOf(event.keyCode) > -1;
+      [KEY.ARROW_LEFT, KEY.ARROW_RIGHT, KEY.ARROW_UP, KEY.ARROW_DOWN].indexOf(
+        event.keyCode
+      ) > -1;
     if (isArrow || NumericEditor.deleteOrBackspace(event)) {
       event.stopPropagation();
       return;
@@ -114,7 +119,7 @@ class NumericEditor extends React.Component {
       eInput.select();
 
       this.setState({
-        highlightAllOnFocus: false,
+        highlightAllOnFocus: false
       });
     }
   }
@@ -133,7 +138,9 @@ class NumericEditor extends React.Component {
    * @return {boolean}
    */
   isCancelBeforeStart() {
-    return this.props.charPress && '1234567890'.indexOf(this.props.charPress) < 0;
+    return (
+      this.props.charPress && '1234567890'.indexOf(this.props.charPress) < 0
+    );
   }
 
   /**
@@ -143,7 +150,7 @@ class NumericEditor extends React.Component {
    * @return {boolean}
    */
   isCancelAfterEnd() {
-    const min = this.state.inputAttrs.min;
+    const { min } = this.state.inputAttrs;
     // const max = this.state.inputAttrs.max;
     // return this.state.value < min || this.state.value > max;
     return this.state.value < min;
@@ -166,7 +173,7 @@ class NumericEditor extends React.Component {
       <InputContainer
         ref={this.numericInput}
         value={this.state.value}
-        type='number'
+        type="number"
         onChange={this.handleChange}
         onKeyDown={NumericEditor.onKeyDown}
         {...this.state.inputAttrs}

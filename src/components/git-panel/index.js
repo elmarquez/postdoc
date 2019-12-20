@@ -1,5 +1,10 @@
-import React from "react";
-import { Body, ContentPanel, Footer, Header } from '../edge-panel/styles/content';
+import React from 'react';
+import {
+  Body,
+  ContentPanel,
+  Footer,
+  Header
+} from '../edge-panel/styles/content';
 
 /**
  * Git repository management panel.
@@ -12,8 +17,8 @@ class GitPanelComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      branch: "master",
-      commit: "This is a sample commit message",
+      branch: 'master',
+      commit: 'This is a sample commit message',
       commits: 98,
       files: [],
       remote: {},
@@ -26,7 +31,7 @@ class GitPanelComponent extends React.Component {
    * @param a
    */
   handleTextAreaValueChange(a, b) {
-    console.info("text area value change", a, b);
+    console.info('text area value change', a, b);
   }
 
   /**
@@ -36,16 +41,12 @@ class GitPanelComponent extends React.Component {
   render() {
     return (
       <ContentPanel>
-        <Header>
-          Git Panel
-        </Header>
+        <Header>Git Panel</Header>
         <Body>
           {this.renderUnstagedChanges()}
           {this.renderStagedChanges()}
         </Body>
-        <Footer>
-          {this.renderCommit()}
-        </Footer>
+        <Footer>{this.renderCommit()}</Footer>
       </ContentPanel>
     );
   }
@@ -56,12 +57,12 @@ class GitPanelComponent extends React.Component {
    */
   renderCommit() {
     return (
-      <div className={"commit"}>
+      <div className="commit">
         Commit message
         <textarea
           onChange={this.handleTextAreaValueChange}
           value={this.state.commit}
-        ></textarea>
+        />
       </div>
     );
   }
@@ -72,9 +73,9 @@ class GitPanelComponent extends React.Component {
    */
   renderStagedChanges() {
     return (
-      <div className={"staged changes"}>
-        <div className={"header"}>Staged Changes</div>
-        <div className={"body"}>Staged changes</div>
+      <div className="staged changes">
+        <div className="header">Staged Changes</div>
+        <div className="body">Staged changes</div>
       </div>
     );
   }
@@ -85,9 +86,9 @@ class GitPanelComponent extends React.Component {
    */
   renderUnstagedChanges() {
     return (
-      <div className={"unstaged changes"}>
-        <div className={"header"}>Unstaged Changes</div>
-        <div className={"body"}>Unstaged changes</div>
+      <div className="unstaged changes">
+        <div className="header">Unstaged Changes</div>
+        <div className="body">Unstaged changes</div>
       </div>
     );
   }

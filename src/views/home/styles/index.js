@@ -15,7 +15,4 @@ const Home = styled.div`
   padding: 32px;
 `;
 
-export {
-  Card,
-  Home,
-};
+export { Card, Home };

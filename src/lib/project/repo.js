@@ -1,8 +1,8 @@
-import files from "./files";
-import fs from "fs";
-import git from "simple-git";
-import path from "path";
-import Promise from "bluebird";
+import fs from 'fs';
+import git from 'simple-git';
+import path from 'path';
+import Promise from 'bluebird';
+import files from './files';
 
 /**
  * Add files to staging.
@@ -11,7 +11,7 @@ import Promise from "bluebird";
  * @returns {Promise}
  */
 function add(cwd, files) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -20,7 +20,7 @@ function add(cwd, files) {
  * @returns {Promise}
  */
 function commit(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -29,7 +29,7 @@ function commit(cwd) {
  * @returns {Promise}
  */
 function getBranches(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -38,7 +38,7 @@ function getBranches(cwd) {
  * @returns {Promise}
  */
 function getCurrentBranch(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -65,7 +65,7 @@ function getLog(cwd, branch) {
  * @returns {Promise}
  */
 function getRemotes(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -74,7 +74,7 @@ function getRemotes(cwd) {
  * @returns {Promise}
  */
 function getStagedChanges(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -83,7 +83,7 @@ function getStagedChanges(cwd) {
  * @returns {Promise}
  */
 function init(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -92,7 +92,7 @@ function init(cwd) {
  * @returns {Promise}
  */
 function isGitRepository(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -123,19 +123,19 @@ function loadFiles(cwd) {
  */
 function loadMetadata(cwd) {
   return new Promise(function(resolve, reject) {
-    let name = path.basename(cwd);
-    let p = path.join(cwd, "project.json");
+    const name = path.basename(cwd);
+    const p = path.join(cwd, 'project.json');
     fs.exists(p, exists => {
       if (!exists) {
-        resolve({ name, version: "0.0.0", description: "" });
+        resolve({ name, version: '0.0.0', description: '' });
       } else {
-        fs.readFile(p, "utf8", (err, data) => {
+        fs.readFile(p, 'utf8', (err, data) => {
           if (err) {
             console.error(`Failed to load project.json`, err);
             resolve({ name });
           } else {
             try {
-              let json = JSON.parse(data);
+              const json = JSON.parse(data);
               resolve(json);
             } catch (e) {
               reject(e);
@@ -171,7 +171,7 @@ function pull(cwd) {
  * @returns {Promise}
  */
 function setBranch(cwd, branch) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -182,7 +182,7 @@ function setBranch(cwd, branch) {
  * @returns {Promise}
  */
 function setRemote(cwd, url, name) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -191,7 +191,7 @@ function setRemote(cwd, url, name) {
  * @returns {Promise}
  */
 function stash(cwd) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 module.exports = {

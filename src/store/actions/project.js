@@ -1,20 +1,4 @@
-import { PROJECT } from "../types";
-
-const PROJECT = {
-  ADD_FILE: "ADD_PROJECT_FILE",
-  ADD_RECENT_PROJECT: "ADD_RECENT_PROJECT",
-  ADD_TAG: "ADD_PROJECT_TAG",
-  CLONE_PROJECT: "CLONE_PROJECT",
-  CREATE_PROJECT: "CREATE_PROJECT",
-  DELETE_FILE: "DELETE_PROJECT_FILE",
-  DELETE_PROJECT: "DELETE_PROJECT",
-  DELETE_TAG: "DELETE_PROJECT_TAG",
-  LOAD_PROJECT: "LOAD_PROJECT",
-  REMOVE_RECENT_PROJECT: "REMOVE_RECENT_PROJECT",
-  UPDATE_FILE: "UPDATE_PROJECT_FILE",
-  UPDATE_INDEX: "UPDATE_PROJECT_INDEX",
-  UPDATE_TAG: "UPDATE_PROJECT_TAG"
-};
+import { PROJECT } from '../types';
 
 function addFile(fp, data) {
   return {
@@ -105,4 +89,13 @@ function updateScenario(id, data) {
   };
 }
 
-export { createScenario, deleteScenario, updateScenario };
+export {
+  addFile,
+  addRecentProject,
+  addTag,
+  createProject,
+  deleteProject,
+  loadProject,
+  removeRecentProject,
+  updateScenario
+};

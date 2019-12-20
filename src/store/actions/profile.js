@@ -1,6 +1,6 @@
-import { PROFILE } from "../types";
-import shortid from "shortid";
-import Profile from "../../lib/profile";
+import shortid from 'shortid';
+import { PROFILE } from '../types';
+import Profile from '../../lib/profile';
 
 /**
  * Load profile into memory.

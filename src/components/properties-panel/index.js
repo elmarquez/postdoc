@@ -5,7 +5,12 @@ import TextField from '@atlaskit/textfield';
 import React, { Fragment } from 'react';
 import { FlexColumn, FlexRow } from '../layout';
 import { ErrorMessage } from './styles';
-import { Body, ContentPanel, Footer, Header } from '../edge-panel/styles/content';
+import {
+  Body,
+  ContentPanel,
+  Footer,
+  Header
+} from '../edge-panel/styles/content';
 
 /**
  * File properties panel.
@@ -22,20 +27,17 @@ class PropertiesPanelComponent extends React.Component {
   }
 
   renderBody() {
-    const publicationTypes = [
-      {label: "Journal", value: "journal"}
-    ];
+    const publicationTypes = [{ label: 'Journal', value: 'journal' }];
     return (
       <Body>
         Thumbnail image goes here
         <h4>File</h4>
-
         <section>
           <h4>Citation</h4>
 
           <Field name="type" label="Type">
             {({ fieldProps: { id, ...rest }, error }) => (
-              <Fragment>
+              <>
                 <Select
                   validationState={error ? 'error' : 'none'}
                   inputId={id}
@@ -44,7 +46,7 @@ class PropertiesPanelComponent extends React.Component {
                   isClearable
                 />
                 {error && <ErrorMessage>{error}</ErrorMessage>}
-              </Fragment>
+              </>
             )}
           </Field>
           <Field name="title" label="Title">
@@ -56,41 +58,34 @@ class PropertiesPanelComponent extends React.Component {
           <Field name="journal" label="Journal">
             {({ fieldProps }) => <TextField {...fieldProps} />}
           </Field>
-
-
         </section>
-
-
         <section>
           <Field name="tags" label="Tags">
             {({ fieldProps }) => <TextField {...fieldProps} />}
           </Field>
         </section>
-
         <section>
           <h4>Abstract</h4>
           <Field name="abstract" label="Abstract">
             {({ fieldProps }) => <TextField {...fieldProps} />}
           </Field>
         </section>
-
         <section>
           <h4>Notes</h4>
           <Field name="notes" label="Notes">
             {({ fieldProps }) => <TextField {...fieldProps} />}
           </Field>
         </section>
-
       </Body>
     );
   }
 
   renderFooter() {
-    return (<Footer>Footer</Footer>);
+    return <Footer>Footer</Footer>;
   }
 
   renderHeader() {
-    return (<Header>Header</Header>);
+    return <Header>Header</Header>;
   }
 }
 

@@ -1,9 +1,9 @@
 import { shallow, mount, render } from 'enzyme';
 import jest from 'jest';
 import React from 'react';
+import { expect } from 'chai';
 import EdgePanel from '../index';
 import TabComponent from '../tab';
-import { expect } from 'chai';
 
 class PanelComponent extends React.Component {
   render() {

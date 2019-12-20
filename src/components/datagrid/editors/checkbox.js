@@ -13,12 +13,12 @@ export default function CheckBoxRenderer({ editable, colDef, node, value }) {
     }
   };
 
-  return <input type='checkbox' checked={value} onChange={onCheckBoxChange} />;
+  return <input type="checkbox" checked={value} onChange={onCheckBoxChange} />;
 }
 
 CheckBoxRenderer.propTypes = {
   editable: PropTypes.bool,
   colDef: PropTypes.object,
   node: PropTypes.object,
-  value: PropTypes.bool,
+  value: PropTypes.bool
 };

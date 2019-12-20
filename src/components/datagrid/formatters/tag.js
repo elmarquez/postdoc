@@ -1,6 +1,6 @@
-import Tag from "@atlaskit/tag";
-import TagGroup from "@atlaskit/tag-group";
-import React from "react";
+import Tag from '@atlaskit/tag';
+import TagGroup from '@atlaskit/tag-group';
+import React from 'react';
 
 class TagFormatter extends React.Component {
   render() {
@@ -10,9 +10,7 @@ class TagFormatter extends React.Component {
       items = value;
     }
     const tags = items.map((t, key) => <Tag text={t} key={key} />);
-    return (
-      <TagGroup>{tags}</TagGroup>
-    )
+    return <TagGroup>{tags}</TagGroup>;
   }
 }
 

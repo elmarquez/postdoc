@@ -1,12 +1,10 @@
-"use strict";
-
-var _createClass = (function() {
+const _createClass = (function() {
   function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
+    for (let i = 0; i < props.length; i++) {
+      const descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
       descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
+      if ('value' in descriptor) descriptor.writable = true;
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
@@ -17,11 +15,11 @@ var _createClass = (function() {
   };
 })();
 
-var _react = require("react");
+const _react = require('react');
 
-var _react2 = _interopRequireDefault(_react);
+const _react2 = _interopRequireDefault(_react);
 
-require("./styles.css");
+require('./styles.css');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -29,7 +27,7 @@ function _interopRequireDefault(obj) {
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
+    throw new TypeError('Cannot call a class as a function');
   }
 }
 
@@ -39,16 +37,15 @@ function _possibleConstructorReturn(self, call) {
       "this hasn't been initialised - super() hasn't been called"
     );
   }
-  return call && (typeof call === "object" || typeof call === "function")
+  return call && (typeof call === 'object' || typeof call === 'function')
     ? call
     : self;
 }
 
 function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
+  if (typeof superClass !== 'function' && superClass !== null) {
     throw new TypeError(
-      "Super expression must either be null or a function, not " +
-        typeof superClass
+      `Super expression must either be null or a function, not ${typeof superClass}`
     );
   }
   subClass.prototype = Object.create(superClass && superClass.prototype, {
@@ -68,7 +65,7 @@ function _inherits(subClass, superClass) {
 /**
  * Resize control.
  */
-var Resize = (function(_React$Component) {
+const Resize = (function(_React$Component) {
   _inherits(Resize, _React$Component);
 
   /**
@@ -91,12 +88,12 @@ var Resize = (function(_React$Component) {
 
   _createClass(Resize, [
     {
-      key: "render",
+      key: 'render',
       value: function render() {
         return _react2.default.createElement(
-          "div",
-          { className: "resize" },
-          "\xA0"
+          'div',
+          { className: 'resize' },
+          '\xA0'
         );
       }
     }
@@ -104,4 +101,4 @@ var Resize = (function(_React$Component) {
 
   return Resize;
 })(_react2.default.Component);
-//# sourceMappingURL=index.js.map
+// # sourceMappingURL=index.js.map

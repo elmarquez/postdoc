@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Item from './item';
-import {FlexColumn, FlexRow} from '../layout';
-import {Controls, Group, Title} from './styles';
+import { FlexColumn, FlexRow } from '../layout';
+import { Controls, Group, Title } from './styles';
 
 class GroupComponent extends React.Component {
   /**
@@ -12,7 +12,7 @@ class GroupComponent extends React.Component {
   render() {
     return (
       <Group>
-        <FlexRow padding={'0 0 16px 0'}>
+        <FlexRow padding="0 0 16px 0">
           <Title>{this.props.title}</Title>
           <Controls>&nbsp;</Controls>
         </FlexRow>

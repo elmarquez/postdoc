@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import {PrimitiveDot} from "styled-icons/octicons/PrimitiveDot/PrimitiveDot";
-import { FlexColumn, FlexRow } from "../../layout";
+import { PrimitiveDot } from 'styled-icons/octicons/PrimitiveDot/PrimitiveDot';
+import { FlexColumn, FlexRow } from '../../layout';
 
 const Collection = styled(FlexColumn)``;
 
@@ -10,7 +10,7 @@ const Controls = styled.div`
 `;
 
 const DotIcon = styled(PrimitiveDot)`
-  fill: ${(props) => props.fill ? props.fill : 'inherit'};
+  fill: ${props => (props.fill ? props.fill : 'inherit')};
   height: 8px;
 `;
 
@@ -31,12 +31,4 @@ const Title = styled.div`
   text-transform: uppercase;
 `;
 
-export {
-  Collection,
-  Controls,
-  DotIcon,
-  Icon,
-  Item,
-  Label,
-  Title
-};
+export { Collection, Controls, DotIcon, Icon, Item, Label, Title };

@@ -17,7 +17,7 @@ class DateCellEditor extends React.Component {
     super(props);
     this.state = {
       value: props.value,
-      isOpen: false,
+      isOpen: false
     };
     this.datePicker = React.createRef();
     this.onChange = this.onChange.bind(this);
@@ -38,7 +38,7 @@ class DateCellEditor extends React.Component {
    */
   afterGuiAttached() {
     this.setState({
-      isOpen: true,
+      isOpen: true
     });
   }
 
@@ -60,7 +60,7 @@ class DateCellEditor extends React.Component {
       this.setState(
         {
           value: moment(date).format(DATES.BACKEND_DATE_FORMAT),
-          isOpen: false,
+          isOpen: false
         },
         () => {
           this.props.stopEditing();
@@ -101,8 +101,8 @@ class DateCellEditor extends React.Component {
       <Container width={this.props.colDef.width}>
         <DatePicker
           ref={this.onContainerRef}
-          autoFocus={true}
-          id={'gridDatePicker'}
+          autoFocus
+          id="gridDatePicker"
           dateFormat={DATES.BACKEND_DATE_FORMAT}
           parseInputValue={this.parseInputValue}
           value={value}
@@ -117,7 +117,7 @@ class DateCellEditor extends React.Component {
 DateCellEditor.propTypes = {
   colDef: PropTypes.object,
   value: PropTypes.string,
-  stopEditing: PropTypes.func,
+  stopEditing: PropTypes.func
 };
 
 export default DateCellEditor;

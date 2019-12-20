@@ -1,5 +1,5 @@
-import React from "react";
-import { StatusBar, Group, Item } from "./styles";
+import React from 'react';
+import { StatusBar, Group, Item } from './styles';
 
 /**
  * Application status bar.
@@ -37,7 +37,7 @@ class StatusBarComponent extends React.Component {
           <Item>GitHub</Item>
           <Item>Git (201)</Item>
           <Item>
-            1 update <span className="ti-github"></span>
+            1 update <span className="ti-github" />
           </Item>
         </Group>
       </StatusBar>

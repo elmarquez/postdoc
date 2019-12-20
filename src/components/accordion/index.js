@@ -1,6 +1,13 @@
 import React from 'react';
-import {Accordion, Body, ChevronIconDown, ChevronIconRight, Controls, Header, Title} from './styles';
-
+import {
+  Accordion,
+  Body,
+  ChevronIconDown,
+  ChevronIconRight,
+  Controls,
+  Header,
+  Title
+} from './styles';
 
 /**
  *
@@ -12,7 +19,7 @@ class AccordionComponent extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {collapsed: false};
+    this.state = { collapsed: false };
   }
 
   /**
@@ -20,7 +27,7 @@ class AccordionComponent extends React.Component {
    */
   onToggleCollapse() {
     const collapsed = !this.state.collapsed;
-    this.setState({collapsed});
+    this.setState({ collapsed });
   }
 
   /**
@@ -29,7 +36,7 @@ class AccordionComponent extends React.Component {
    */
   render() {
     return (
-      <Accordion className={'accordion'}>
+      <Accordion className="accordion">
         {this.renderHeader()}
         {this.renderBody()}
       </Accordion>
@@ -42,9 +49,7 @@ class AccordionComponent extends React.Component {
    */
   renderBody() {
     if (!this.state.collapsed) {
-      return (
-        <Body>{this.props.children}</Body>
-      );
+      return <Body>{this.props.children}</Body>;
     }
   }
 
@@ -67,7 +72,7 @@ class AccordionComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderIcon() {
-    return (this.state.collapsed) ? <ChevronIconRight /> : <ChevronIconDown />;
+    return this.state.collapsed ? <ChevronIconRight /> : <ChevronIconDown />;
   }
 }
 

@@ -14,7 +14,7 @@ class TabsPanelComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: this.props.selection || null,
+      selection: this.props.selection || null
     };
   }
 
@@ -30,7 +30,7 @@ class TabsPanelComponent extends Component {
     // tell the parent component which item we've selected
     if (this.props.onTabClick) {
       const item = this.props.items
-        .filter((e) => e.title === selection)
+        .filter(e => e.title === selection)
         .reduce((obj, e) => e, null);
       this.props.onTabClick(item);
     }
@@ -42,13 +42,13 @@ class TabsPanelComponent extends Component {
    */
   render() {
     const items = this.props.items || [];
-    let tabs = items.map((panel, key) => {
+    const tabs = items.map((panel, key) => {
       return (
         <TabComponent
           icon={panel.icon}
           key={key}
           label={panel.title}
-          onClick={(id) => this.onTabClick(id)}
+          onClick={id => this.onTabClick(id)}
           selected={this.state.selection === panel.title}
         />
       );
@@ -60,7 +60,7 @@ class TabsPanelComponent extends Component {
 TabsPanelComponent.propTypes = {
   items: PropTypes.array,
   onTabClick: PropTypes.func,
-  selection: PropTypes.string,
+  selection: PropTypes.string
 };
 
 export default TabsPanelComponent;

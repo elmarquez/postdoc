@@ -10,7 +10,7 @@ import BreadcrumbComponent from '../../breadcrumbs/breadcrumb';
 describe('Edge panel tab', () => {
   it('renders the icon', () => {
     const icon = <span>icon</span>;
-    const wrapper = mount(<TabComponent icon={icon} label={'TEST'} />);
+    const wrapper = mount(<TabComponent icon={icon} label="TEST" />);
     const props = wrapper.props();
     expect(props.hasOwnProperty('icon')).to.equal(true);
   });
@@ -26,22 +26,24 @@ describe('Edge panel tab', () => {
   it('calls the click handler', () => {
     let count = 0;
     const clickHandler = function() {
-      count = count + 1;
+      count += 1;
     };
-    const wrapper = mount(<TabComponent label={'TEST'} onClick={() => clickHandler()} />);
-    let component = wrapper.find(TabComponent);
+    const wrapper = mount(
+      <TabComponent label="TEST" onClick={() => clickHandler()} />
+    );
+    const component = wrapper.find(TabComponent);
     component.simulate('click');
     expect(count).to.equal(1);
   });
 
   it('changes the display state when in selected state', () => {
-    let wrapper = mount(<TabComponent label={'TEST'} selected={true} />);
+    let wrapper = mount(<TabComponent label="TEST" selected />);
     let component = wrapper.find(TabComponent);
     let props = component.props();
     expect(props.hasOwnProperty('selected')).to.equal(true);
     expect(props.selected).to.equal(true);
 
-    wrapper = mount(<TabComponent label={'TEST'} selected={false} />);
+    wrapper = mount(<TabComponent label="TEST" selected={false} />);
     component = wrapper.find(TabComponent);
     props = component.props();
     expect(props.selected).to.equal(false);

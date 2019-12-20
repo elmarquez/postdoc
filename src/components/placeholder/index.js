@@ -5,7 +5,7 @@ import { Image, Body, Placeholder, Title } from './styles';
 
 // some predefined placeholder icons
 const ICONS = {
-  ALERT_TRIANGLE: AlertTriangle,
+  ALERT_TRIANGLE: AlertTriangle
 };
 
 /**
@@ -31,7 +31,11 @@ class PlaceholderComponent extends React.Component {
    * @return {JSX.Element}
    */
   renderBody() {
-    return <Body>{this.props.children || this.props.message || 'Resource Not Found'}</Body>;
+    return (
+      <Body>
+        {this.props.children || this.props.message || 'Resource Not Found'}
+      </Body>
+    );
   }
 
   /**
@@ -64,7 +68,10 @@ PlaceholderComponent.propTypes = {
   // image: PropTypes.array,
   message: PropTypes.string,
   title: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default PlaceholderComponent;

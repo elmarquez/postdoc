@@ -1,10 +1,10 @@
-import {APP, LIBRARY, PROFILE, PROJECT} from "../types";
+import { APP, LIBRARY, PROFILE, PROJECT } from '../types';
 
 const APP_DEFAULT = {
   error: null,
   isDebugToolsVisible: false,
   isOutlinePanelVisible: true,
-  isStatusBarVisible: true,
+  isStatusBarVisible: true
 };
 
 const DATABASE_DEFAULT = {
@@ -20,18 +20,18 @@ const LIBRARY_DEFAULT = {
   isIndexing: false,
   isLoading: false,
   isWriting: false,
-  path: null,
+  path: null
 };
 
 const PROFILE_DEFAULT = {
   data: {
-    library: "",
+    library: '',
     recentProjects: [],
     settings: {}
   },
   error: null,
   isLoading: false,
-  isWriting: false,
+  isWriting: false
 };
 
 const PROJECT_DEFAULT = {
@@ -40,7 +40,7 @@ const PROJECT_DEFAULT = {
   isIndexing: false,
   isLoading: false,
   isWriting: false,
-  path: "",
+  path: ''
 };
 
 const INITIAL_STATE = {
@@ -61,7 +61,7 @@ export default function(state = INITIAL_STATE, action) {
     case APP.LOAD_APPLICATION_STATE_FULFILLED: {
       const library = {
         ...state.library,
-        data: Object.assign({}, DATABASE_DEFAULT, {...action.payload.library}),
+        data: { ...DATABASE_DEFAULT, ...action.payload.library },
         path: action.payload.profile.library,
         isLoading: false
       };
@@ -70,18 +70,18 @@ export default function(state = INITIAL_STATE, action) {
         ...action.payload.profile,
         isLoading: false
       };
-      return Object.assign({}, state, {library, profile});
+      return { ...state, library, profile };
     }
     case APP.LOAD_APPLICATION_STATE_PENDING: {
-      const library = {...state.library, isLoading: true};
-      const profile = {...state.profile, isLoading: true};
-      return Object.assign({}, state, {library: library, profile: profile});
+      const library = { ...state.library, isLoading: true };
+      const profile = { ...state.profile, isLoading: true };
+      return { ...state, library, profile };
     }
     case APP.LOAD_APPLICATION_STATE_REJECTED: {
       const error = action.payload.message;
-      const library = {...state.library, error, isLoading: false};
-      const profile = {...state.profile, error, isLoading: false};
-      return Object.assign({}, state, {library: library, profile: profile});
+      const library = { ...state.library, error, isLoading: false };
+      const profile = { ...state.profile, error, isLoading: false };
+      return { ...state, library, profile };
     }
     case LIBRARY.LOAD_INDEX_FULFILLED: {
       const library = {
@@ -89,7 +89,7 @@ export default function(state = INITIAL_STATE, action) {
         data: { ...state.library.data, ...action.payload },
         isLoading: false
       };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.LOAD_INDEX_PENDING: {
       const library = {
@@ -98,58 +98,62 @@ export default function(state = INITIAL_STATE, action) {
         isLoading: true,
         path: state.profile.library
       };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.LOAD_INDEX_REJECTED: {
       const error = action.payload.message;
       const library = { ...state.library, error, isLoading: false };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.UPDATE: {
       console.info('library update!');
-      const data = Object.assign({}, state.library.data, action.payload);
+      const data = { ...state.library.data, ...action.payload };
       const library = { ...state.library, data };
-      return Object.assign({}, state, {library});
+      return { ...state, library };
     }
     case LIBRARY.UPDATE_INDEX_FULFILLED: {
-      const data =  { ...state.library.data, ...action.payload };
+      const data = { ...state.library.data, ...action.payload };
       const library = { ...state.library, data, isIndexing: false };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.UPDATE_INDEX_PENDING: {
       const library = { ...state.library, error: null, isIndexing: true };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.UPDATE_INDEX_REJECTED: {
       const error = action.payload.message;
       const library = { ...state.library, error, isIndexing: false };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.WRITE_INDEX_FULFILLED: {
       const library = { ...state.library, isWriting: false };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.WRITE_INDEX_PENDING: {
       const library = { ...state.library, error: null, isWriting: true };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case LIBRARY.WRITE_INDEX_REJECTED: {
       const error = action.payload.message;
       const library = { ...state.library, error, isWriting: false };
-      return Object.assign({}, state, { library });
+      return { ...state, library };
     }
     case PROFILE.LOAD_PROFILE_FULFILLED: {
-      const profile = {...state.profile, data: action.payload, isLoading: false};
-      return Object.assign({}, state, {profile});
+      const profile = {
+        ...state.profile,
+        data: action.payload,
+        isLoading: false
+      };
+      return { ...state, profile };
     }
     case PROFILE.LOAD_PROFILE_PENDING: {
-      const profile = {...state.profile, error: null, isLoading: true};
-      return Object.assign({}, state, {profile});
+      const profile = { ...state.profile, error: null, isLoading: true };
+      return { ...state, profile };
     }
     case PROFILE.LOAD_PROFILE_REJECTED: {
       const error = action.payload.message;
-      const profile = {...state.profile, error, isLoading: false};
-      return Object.assign({}, state, {profile});
+      const profile = { ...state.profile, error, isLoading: false };
+      return { ...state, profile };
     }
     default:
       return state;

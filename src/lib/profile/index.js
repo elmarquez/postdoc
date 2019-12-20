@@ -1,13 +1,13 @@
-import os from "os";
-import path from "path";
-import utils from "../utils";
+import os from 'os';
+import path from 'path';
+import utils from '../utils';
 
 const DEFAULT_PROFILE_SETTINGS = {
-  library: "/Users/dmarques/Documents/Research",
+  library: '/Users/dmarques/Documents/Research',
   recent: []
 };
-const PROFILE_FOLDER_NAME = ".postdoc";
-const PROFILE_SETTINGS_FILENAME = "settings.json";
+const PROFILE_FOLDER_NAME = '.postdoc';
+const PROFILE_SETTINGS_FILENAME = 'settings.json';
 
 /**
  * Ensure that the minimum user profile setup exists.
@@ -28,7 +28,7 @@ function ensureProfile(d) {
 function ensureProfileDirectory(d) {
   return utils.files.exists(d).then(function(exists) {
     if (!exists) {
-      console.debug("Creating settings directory", d);
+      console.debug('Creating settings directory', d);
       return utils.files.ensureDir(d);
     }
   });
@@ -43,7 +43,7 @@ function ensureProfileSettings(d) {
   const settings = path.join(d, PROFILE_SETTINGS_FILENAME);
   return utils.files.exists(settings).then(function(exists) {
     if (!exists) {
-      console.debug("Creating settings file", settings);
+      console.debug('Creating settings file', settings);
       return utils.files.ensureFile(settings, DEFAULT_PROFILE_SETTINGS);
     }
   });
@@ -57,7 +57,7 @@ function getProfile() {
   const profile = getProfileDirectoryPath();
   return ensureProfile(profile).then(function() {
     const settings = path.join(profile, PROFILE_SETTINGS_FILENAME);
-    console.debug("Reading profile from", settings);
+    console.debug('Reading profile from', settings);
     return utils.files.readJSON(settings);
   });
 }
@@ -86,7 +86,7 @@ export default {
   ensureProfile,
   ensureProfileDirectory,
   ensureProfileSettings,
-  getProfile: getProfile,
+  getProfile,
   getProfileDirectoryPath,
   updateProfileSettings
 };

@@ -1,8 +1,8 @@
-import { LIBRARY } from "../types";
-import shortid from "shortid";
-import Library from "../../lib/library";
+import shortid from 'shortid';
+import { Promise } from 'bluebird';
+import { LIBRARY } from '../types';
+import Library from '../../lib/library';
 import store from '../index';
-import {Promise} from 'bluebird';
 
 /**
  * Add file.
@@ -19,7 +19,7 @@ function addFile(fp) {
  * @returns {Object}
  */
 function addTag(tag) {
-  return { type: LIBRARY.ADD_FILE, id: shortid.generate(), tag: tag };
+  return { type: LIBRARY.ADD_FILE, id: shortid.generate(), tag };
 }
 
 /**
@@ -37,7 +37,7 @@ function deleteFile(fp) {
  * @returns {Object}
  */
 function deleteTag(tag) {
-  return { type: LIBRARY.DELETE_TAG, id: shortid.generate(), tag: tag };
+  return { type: LIBRARY.DELETE_TAG, id: shortid.generate(), tag };
 }
 
 /**
@@ -59,7 +59,7 @@ function loadIndex(fp) {
  * @returns {Object}
  */
 function updateFile(fp) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -81,7 +81,7 @@ function updateIndex(fp, data) {
  * @return {Object}
  */
 function updateTag(tag) {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**

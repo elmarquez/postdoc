@@ -8,12 +8,4 @@ import Owl1 from './svg/009-owl-1.svg';
 import Owl5 from './svg/013-owl-5.svg';
 
 // NOTE: usage of icons requires attribution for author
-export {
-  Bacteria,
-  Gradient1,
-  Scientist1,
-  Scientist2,
-  Student,
-  Owl1,
-  Owl5,
-};
+export { Bacteria, Gradient1, Scientist1, Scientist2, Student, Owl1, Owl5 };

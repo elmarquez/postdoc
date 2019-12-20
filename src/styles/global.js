@@ -1,7 +1,7 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 // eslint-disable-next-line
 import Inter from 'typeface-inter';
-import {Gradient1} from "../components/branding";
+// import { Gradient1 } from '../components/branding';
 
 const GlobalStyle = createGlobalStyle`
   * {

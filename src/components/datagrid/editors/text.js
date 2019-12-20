@@ -1,5 +1,4 @@
 class TextEditor {
-
   /**
    * focus and select can be done after the gui is attached
    */
@@ -33,7 +32,7 @@ class TextEditor {
   /**
    * Gets called once before the renderer is used.
    */
-  init (params) {
+  init(params) {
     this.eInput = document.createElement('input');
     this.eInput.value = params.value;
   }

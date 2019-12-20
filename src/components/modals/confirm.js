@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 /**
  * Confirmation modal dialog.
  */
@@ -10,9 +9,7 @@ class ConfirmActionModalComponent extends React.Component {
    * @return {JSX.Element}
    */
   render() {
-    return (
-      <div>Modal dialog</div>
-    );
+    return <div>Modal dialog</div>;
   }
 }
 

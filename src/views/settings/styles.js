@@ -6,6 +6,4 @@ const Panel = styled.div`
   overflow: scroll;
 `;
 
-export {
-  Panel
-};
+export { Panel };

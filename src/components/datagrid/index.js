@@ -30,15 +30,15 @@ class DataGrid extends React.PureComponent {
       onRowDoubleClicked: this.onRowDoubleClicked,
       // pagination: true,
       // paginationAutoPageSize: true,
-      rowSelection: 'single',
+      rowSelection: 'single'
       // stopEditingWhenGridLosesFocus: true,
       // suppressFocusAfterRefresh: true,
     };
-    this.state = {rows: []};
+    this.state = { rows: [] };
   }
 
   componentDidMount() {
-    this.setState({rows: this.props.rows || []})
+    this.setState({ rows: this.props.rows || [] });
   }
 
   componentDidUpdate(a, b) {
@@ -46,8 +46,8 @@ class DataGrid extends React.PureComponent {
   }
 
   getFrameworkComponents() {
-    let frameworkComponents = this.props.frameworkComponents || {};
-    return Object.assign({}, frameworkComponents);
+    const frameworkComponents = this.props.frameworkComponents || {};
+    return { ...frameworkComponents };
   }
 
   /**
@@ -88,7 +88,7 @@ class DataGrid extends React.PureComponent {
    */
   render() {
     const { isLoading, paginationPageSize } = this.props;
-    let frameworkComponents = this.getFrameworkComponents();
+    const frameworkComponents = this.getFrameworkComponents();
     const rows = this.props.rows || [];
     const classes = ['ag-theme-balham', this.props.className].join(' ');
     return (
@@ -100,8 +100,8 @@ class DataGrid extends React.PureComponent {
         // noRowsOverlayComponent='customNoRowsOverlay'
         // noRowsOverlayComponentParams={noRowsOverlayComponentParams}
         // onCellValueChanged={(e) => this.onCellValueChanged(e)}
-        onGridReady={(e) => this.onGridReady(e)}
-        onRowDoubleClicked={(e) => this.onRowDoubleClicked(e)}
+        onGridReady={e => this.onGridReady(e)}
+        onRowDoubleClicked={e => this.onRowDoubleClicked(e)}
         paginationAutoPageSize={!paginationPageSize}
         paginationPageSize={paginationPageSize}
         rowData={rows}
@@ -120,7 +120,7 @@ DataGrid.propTypes = {
   onGridEdited: PropTypes.func,
   onRowDoubleClicked: PropTypes.func,
   paginationPageSize: PropTypes.number,
-  rows: PropTypes.array,
+  rows: PropTypes.array
 };
 
 export default DataGrid;

@@ -11,13 +11,13 @@ import { ThreeDotMenu } from '../styles';
  */
 function ThreeDotMenuRenderer(props) {
   const { node } = props;
-  const onClick = (e) => {
+  const onClick = e => {
     if (props.hasOwnProperty('onClick')) {
       props.onClick(e, node.data);
     }
   };
   return (
-    <ThreeDotMenu height={`${node.rowHeight}px`} onClick={(e) => onClick(e)}>
+    <ThreeDotMenu height={`${node.rowHeight}px`} onClick={e => onClick(e)}>
       <MoreHorizontal />
     </ThreeDotMenu>
   );
@@ -28,7 +28,7 @@ ThreeDotMenuRenderer.propTypes = {
   editable: PropTypes.bool,
   node: PropTypes.object,
   onClick: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.string
 };
 
 export default ThreeDotMenuRenderer;

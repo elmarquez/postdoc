@@ -1,13 +1,12 @@
-import fs from "fs";
-import path from "path";
-import React from "react";
-import { connect } from "react-redux";
-import project from "../../lib/project";
-import utils from "../../lib/utils";
+import fs from 'fs';
+import path from 'path';
+import React from 'react';
+import { connect } from 'react-redux';
+import project from '../../lib/project';
+import utils from '../../lib/utils';
 import Accordion from '../accordion';
-import { Body, Footer, Header, OutlinePanel, TreeItem as TI } from "./styles";
-import { loadIndex, updateIndex } from "../../store/actions/library";
-
+import { Body, Footer, Header, OutlinePanel, TreeItem as TI } from './styles';
+import { loadIndex, updateIndex } from '../../store/actions/library';
 
 /**
  * Outline panel.
@@ -30,19 +29,18 @@ class OutlinePanelComponent extends React.Component {
    * @returns {String} mimetype
    */
   getFileItemMimetype(f) {
-    return "application/octet-stream";
+    return 'application/octet-stream';
   }
 
   onProjectOpen(prj) {
-    let self = this;
+    const self = this;
     if (!prj) {
-      return;
     } else {
       project
         .load(prj)
         .then(p => {
           // let data = p.metadata;
-          let items = p.files
+          const items = p.files
             .map(f => {
               return {
                 id: f.path,
@@ -73,8 +71,8 @@ class OutlinePanelComponent extends React.Component {
               // TODO add file metadata
             }
           };
-          let tree = { rootId: prj, items };
-          let projects = [{ label: path.basename(prj), value: prj }];
+          const tree = { rootId: prj, items };
+          const projects = [{ label: path.basename(prj), value: prj }];
           self.setState({ project: tree, projects });
         })
         .catch(err => {
@@ -89,7 +87,7 @@ class OutlinePanelComponent extends React.Component {
    */
   render() {
     return (
-      <OutlinePanel className={'noselect'}>
+      <OutlinePanel className="noselect">
         <Body>{this.props.children}</Body>
       </OutlinePanel>
     );
@@ -104,10 +102,7 @@ class OutlinePanelComponent extends React.Component {
    * @returns {XML}
    */
   renderHeader() {
-    return (
-      <Header>
-      </Header>
-    );
+    return <Header />;
   }
 }
 
@@ -126,8 +121,8 @@ const mapStateToProps = state => {
  * @return {Object} Map of functions to be assigned to the component props
  */
 const mapDispatchToProps = dispatch => ({
-  loadIndex: (fp) => dispatch(loadIndex(fp)),
-  updateIndex: (fp) => dispatch(updateIndex(fp))
+  loadIndex: fp => dispatch(loadIndex(fp)),
+  updateIndex: fp => dispatch(updateIndex(fp))
 });
 
 export default connect(

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class TagEditor extends React.Component {
   constructor(props) {
@@ -13,14 +13,13 @@ class TagEditor extends React.Component {
   }
 
   getValue() {
-    let value = this.inputRef.current.value;
+    const { value } = this.inputRef.current;
     if (Array.isArray(value)) {
       return value;
-    } else {
-      let arr = value.split(',').map(el => el.trim());
-      return arr;
     }
-  };
+    const arr = value.split(',').map(el => el.trim());
+    return arr;
+  }
 
   onKeyDown(event) {
     if (event.keyCode === 39 || event.keyCode === 37) {
@@ -39,7 +38,7 @@ class TagEditor extends React.Component {
   }
 
   render() {
-    let value = this.props.value;
+    let { value } = this.props;
     if (value) {
       value = value.join(', ');
     } else {
@@ -50,7 +49,8 @@ class TagEditor extends React.Component {
         defaultValue={this.props.value}
         onKeyDown={this.onKeyDown}
         onKeyPress={this.onKeyPress}
-        ref={this.inputRef}/>
+        ref={this.inputRef}
+      />
     );
   }
 }

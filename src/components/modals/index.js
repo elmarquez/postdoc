@@ -1,5 +1,3 @@
 import Confirm from './confirm';
 
-export {
-  Confirm,
-};
+export { Confirm };

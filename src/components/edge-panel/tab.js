@@ -37,7 +37,7 @@ class TabComponent extends Component {
    */
   renderIcon() {
     if (this.props.icon !== null) {
-      return <span className={'icon'}>{this.props.icon}</span>;
+      return <span className="icon">{this.props.icon}</span>;
     }
   }
 }
@@ -45,7 +45,7 @@ class TabComponent extends Component {
 TabComponent.propTypes = {
   icon: PropTypes.element,
   label: PropTypes.string,
-  selected: PropTypes.bool,
+  selected: PropTypes.bool
 };
 
 export default TabComponent;

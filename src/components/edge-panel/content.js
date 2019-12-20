@@ -13,7 +13,7 @@ class ContentPanelComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      floating: false,
+      floating: false
     };
   }
 
@@ -36,9 +36,8 @@ class ContentPanelComponent extends Component {
           {this.props.content.panel}
         </ContentPanel>
       );
-    } else {
-      return <Fragment />;
     }
+    return <></>;
   }
 
   /**
@@ -46,9 +45,7 @@ class ContentPanelComponent extends Component {
    * @return {JSX.Element}
    */
   renderBody() {
-    return (
-      <Body>{this.props.content.panel}</Body>
-    );
+    return <Body>{this.props.content.panel}</Body>;
   }
 
   /**
@@ -68,10 +65,11 @@ class ContentPanelComponent extends Component {
   renderHeader() {
     if (this.props.header !== undefined) {
       return <Header>{this.props.header}</Header>;
-    } else if (this.props.title !== undefined) {
+    }
+    if (this.props.title !== undefined) {
       return (
         <Header>
-          <span className={'title'}>{this.props.title}</span>
+          <span className="title">{this.props.title}</span>
         </Header>
       );
     }
@@ -83,7 +81,7 @@ ContentPanelComponent.propTypes = {
   floating: PropTypes.bool,
   footer: PropTypes.element,
   header: PropTypes.element,
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default ContentPanelComponent;

@@ -43,7 +43,7 @@ const Footer = styled.div`
 
 const Header = styled.div`
   align-items: center;
-  border-bottom: 1px solid #BDC3C7;
+  border-bottom: 1px solid #bdc3c7;
   display: flex;
   flex-direction: row;
   font-size: small;

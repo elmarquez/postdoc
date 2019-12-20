@@ -6,7 +6,7 @@ const EDGE_PANEL_POSITION = {
   BOTTOM: 'bottom',
   LEFT: 'left',
   RIGHT: 'right',
-  TOP: 'top',
+  TOP: 'top'
 };
 
 // the width or depth of the tab panel, depending on which screen edge the

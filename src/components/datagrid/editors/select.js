@@ -14,7 +14,7 @@ export default class SelectEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value,
+      value: props.value
     };
     this.select = React.createRef();
   }
@@ -50,7 +50,7 @@ export default class SelectEditor extends React.Component {
   onSelectChange(data) {
     this.setState(
       {
-        value: data.value,
+        value: data.value
       },
       () => {
         this.props.stopEditing();
@@ -66,12 +66,12 @@ export default class SelectEditor extends React.Component {
     return (
       <Container width={this.props.colDef.width}>
         <Select
-          ref={(select) => {
+          ref={select => {
             this.select = select;
           }}
           options={this.props.values}
           defaultValue={{ label: this.props.value, value: this.props.value }}
-          onChange={(v) => this.onSelectChange(v)}
+          onChange={v => this.onSelectChange(v)}
         />
       </Container>
     );
@@ -82,5 +82,5 @@ SelectEditor.propTypes = {
   colDef: PropTypes.object,
   values: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
-  stopEditing: PropTypes.func,
+  stopEditing: PropTypes.func
 };

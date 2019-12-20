@@ -1,12 +1,12 @@
-import fs from "fs";
-import glob from "glob";
-import hasha from "hasha";
-import path from "path";
-import Promise from "bluebird";
+import fs from 'fs';
+import glob from 'glob';
+import hasha from 'hasha';
+import path from 'path';
+import Promise from 'bluebird';
 
 const HASH_ALGO = {
-  MD5: "md5",
-  SHA256: "sha256"
+  MD5: 'md5',
+  SHA256: 'sha256'
 };
 
 /**
@@ -22,13 +22,12 @@ function ensureDir(p, mode) {
         return mkdir(p, mode || 0o700).then(function() {
           return isWriteable(p);
         });
-      } else {
-        return isWriteable(p);
       }
+      return isWriteable(p);
     })
     .then(function(accessible) {
       if (!accessible) {
-        return Promise.reject("path is not writeable");
+        return Promise.reject('path is not writeable');
       }
     });
 }
@@ -44,9 +43,8 @@ function ensureFile(file, data) {
   return exists(file).then(function(exists) {
     if (!exists) {
       return writeJSON(file, data);
-    } else {
-      return Promise.resolve();
     }
+    return Promise.resolve();
   });
 }
 
@@ -73,7 +71,7 @@ function exists(f) {
  * @return {Promise}
  */
 function getDirStats(files) {
-  let promises = files.map(f => getFileStats(f));
+  const promises = files.map(f => getFileStats(f));
   return Promise.all(promises);
 }
 
@@ -84,16 +82,16 @@ function getDirStats(files) {
  */
 function getFileHashes(files) {
   const cfg = { algorithm: HASH_ALGO.SHA256 };
-  var promises = files.map(f => {
+  const promises = files.map(f => {
     return hasha.fromFile(f, cfg).then(hash => {
-      return { path: f, hash: hash };
+      return { path: f, hash };
     });
   });
   return Promise.all(promises);
 }
 
 function getFileMetadata(files) {
-  const promises = files.map((f) => {
+  const promises = files.map(f => {
     // get last modified data, filename, extension, mimetype
   });
   return Promise.all(promises);
@@ -106,9 +104,9 @@ function getFileMetadata(files) {
  * @returns {Promise}
  */
 function getFileTree(cwd, options) {
-  options = { absolute: true, cwd: cwd, nodir: true, silent: true };
+  options = { absolute: true, cwd, nodir: true, silent: true };
   return new Promise(function(resolve, reject) {
-    glob("**/*", options, function(err, files) {
+    glob('**/*', options, function(err, files) {
       if (err) {
         reject(err);
       } else {
@@ -129,7 +127,7 @@ function getFiles(dir) {
       if (err) {
         reject(err);
       } else {
-        let fullpaths = files.map(f => path.join(dir, f));
+        const fullpaths = files.map(f => path.join(dir, f));
         resolve(fullpaths);
       }
     });
@@ -159,7 +157,7 @@ function getFileStats(f) {
  * @return {Promise}
  */
 function getStats(files) {
-  let promises = files.map(f => getFileStats(f));
+  const promises = files.map(f => getFileStats(f));
   return Promise.all(promises);
 }
 
@@ -211,12 +209,12 @@ function mkdir(p, mode) {
  */
 function readJSON(f) {
   return new Promise(function(resolve, reject) {
-    fs.readFile(f, "utf8", function(err, data) {
+    fs.readFile(f, 'utf8', function(err, data) {
       if (err) {
         reject(err);
       } else {
         try {
-          let obj = JSON.parse(data);
+          const obj = JSON.parse(data);
           resolve(obj);
         } catch (err) {
           reject(err);
@@ -227,7 +225,7 @@ function readJSON(f) {
 }
 
 function removeDirectories(files) {
-  let visible = files.filter(f => !f.stats.isDirectory());
+  const visible = files.filter(f => !f.stats.isDirectory());
   return Promise.resolve(visible);
 }
 
@@ -237,9 +235,9 @@ function removeDirectories(files) {
  * @returns {Promise}
  */
 function removeHiddenFiles(files) {
-  let visible = files.filter(f => {
-    let basename = path.basename(f);
-    return basename[0] !== ".";
+  const visible = files.filter(f => {
+    const basename = path.basename(f);
+    return basename[0] !== '.';
   });
   return Promise.resolve(visible);
 }
@@ -253,12 +251,12 @@ function removeHiddenFiles(files) {
 function writeJSON(fp, obj) {
   return new Promise(function(resolve, reject) {
     try {
-      let data = JSON.stringify(obj);
-      fs.writeFile(fp, data, "utf8", function(err) {
+      const data = JSON.stringify(obj);
+      fs.writeFile(fp, data, 'utf8', function(err) {
         if (err) {
           reject(err);
         } else {
-          console.debug("Wrote file", fp, obj);
+          console.debug('Wrote file', fp, obj);
           resolve();
         }
       });

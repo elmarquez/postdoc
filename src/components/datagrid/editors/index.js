@@ -30,5 +30,5 @@ export {
   TagGroupEditor,
   TextEditor,
   ThreeDotMenuEditor,
-  withClickHandler,
+  withClickHandler
 };

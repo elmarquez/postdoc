@@ -31,7 +31,7 @@ function hexToRGB(hexString) {
  * @return {*} Hexadecimal colour string
  */
 function getColourFromString(s) {
-  return '#' + intToRGB(hashCode(s));
+  return `#${intToRGB(hashCode(s))}`;
 }
 
 /**
@@ -54,12 +54,11 @@ function rgbToHex(rgb) {
   if (rgbDigits.length === 3) {
     return rgbDigits.reduce((color, num) => {
       const hex = parseInt(num).toString(16);
-      color += hex.length === 1 ? '0' + hex : hex;
+      color += hex.length === 1 ? `0${hex}` : hex;
       return color;
     }, '#');
-  } else {
-    return '#ffffff';
   }
+  return '#ffffff';
 }
 
 export default {
@@ -67,5 +66,5 @@ export default {
   hashCode,
   hexToRGB,
   intToRGB,
-  rgbToHex,
+  rgbToHex
 };

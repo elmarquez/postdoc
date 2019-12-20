@@ -3,7 +3,6 @@ import { app, Menu, shell, BrowserWindow } from 'electron';
 const { NODE_ENV, DEBUG_PROD } = process.env;
 
 export default class MenuBuilder {
-
   constructor(mainWindow) {
     this.mainWindow = mainWindow;
   }

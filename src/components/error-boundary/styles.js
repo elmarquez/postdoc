@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Error} from 'styled-icons/boxicons-regular/Error';
+import { Error } from 'styled-icons/boxicons-regular/Error';
 
 const ErrorIcon = styled(Error)`
   fill: tomato;
@@ -12,7 +12,4 @@ const Message = styled.div`
   text-align: center;
 `;
 
-export {
-  ErrorIcon,
-  Message,
-};
+export { ErrorIcon, Message };

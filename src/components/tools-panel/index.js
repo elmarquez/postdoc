@@ -6,14 +6,22 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { FlexColumn, FlexRow } from '../layout';
 import { ErrorMessage } from './styles';
-import { Body, ContentPanel, Footer, Header } from '../edge-panel/styles/content';
-import { loadIndex, updateIndex, writeIndex } from "../../store/actions/library";
+import {
+  Body,
+  ContentPanel,
+  Footer,
+  Header
+} from '../edge-panel/styles/content';
+import {
+  loadIndex,
+  updateIndex,
+  writeIndex
+} from '../../store/actions/library';
 
 /**
  * Tools properties panel.
  */
 class ToolsPanelComponent extends React.Component {
-
   /**
    * Handle load library action.
    */
@@ -25,14 +33,20 @@ class ToolsPanelComponent extends React.Component {
    * Handle update index action.
    */
   onUpdateIndex() {
-    this.props.updateIndex(this.props.profile.data.library, this.props.library.data);
+    this.props.updateIndex(
+      this.props.profile.data.library,
+      this.props.library.data
+    );
   }
 
   /**
    * Handle write index action.
    */
   onWriteIndex() {
-    this.props.writeIndex(this.props.profile.data.library, this.props.library.data);
+    this.props.writeIndex(
+      this.props.profile.data.library,
+      this.props.library.data
+    );
   }
 
   /**
@@ -56,11 +70,17 @@ class ToolsPanelComponent extends React.Component {
   renderBody() {
     return (
       <Body>
-        <FlexColumn className={'padding-s'}>
+        <FlexColumn className="padding-s">
           <h4>Library</h4>
-          <Button appearance={'default'} onClick={() => this.onLoadIndex()}>Load Index</Button>
-          <Button appearance={'default'} onClick={() => this.onUpdateIndex()}>Update Index</Button>
-          <Button appearance={'default'} onClick={() => this.onWriteIndex()}>Write Index</Button>
+          <Button appearance="default" onClick={() => this.onLoadIndex()}>
+            Load Index
+          </Button>
+          <Button appearance="default" onClick={() => this.onUpdateIndex()}>
+            Update Index
+          </Button>
+          <Button appearance="default" onClick={() => this.onWriteIndex()}>
+            Write Index
+          </Button>
         </FlexColumn>
       </Body>
     );
@@ -71,7 +91,7 @@ class ToolsPanelComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderFooter() {
-    return (<Footer>Footer</Footer>);
+    return <Footer>Footer</Footer>;
   }
 
   /**
@@ -79,7 +99,7 @@ class ToolsPanelComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderHeader() {
-    return (<Header>Tools</Header>);
+    return <Header>Tools</Header>;
   }
 }
 
@@ -98,7 +118,7 @@ const mapStateToProps = state => {
  * @return {Object} Map of functions to be assigned to the component props
  */
 const mapDispatchToProps = dispatch => ({
-  loadIndex: (fp) => dispatch(loadIndex(fp)),
+  loadIndex: fp => dispatch(loadIndex(fp)),
   updateIndex: (fp, data) => dispatch(updateIndex(fp, data)),
   writeIndex: (fp, data) => dispatch(writeIndex(fp, data))
 });

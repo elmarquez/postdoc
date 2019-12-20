@@ -1,21 +1,21 @@
-import Database, { DATABASE_FILENAME, loadFromDir } from "../database";
-import path from "path";
-import Utils from "../utils";
+import path from 'path';
+import Database, { DATABASE_FILENAME, loadFromDir } from '../database';
+import Utils from '../utils';
 
-const LIBRARY_SETTINGS_FILE = "library.json";
+const LIBRARY_SETTINGS_FILE = 'library.json';
 
 /**
  * @param {String} fp - Path to library
  */
 function addFile() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
  * @param {String} fp - Path to library
  */
 function addTag() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -24,9 +24,7 @@ function addTag() {
  * @param {String} fp - Directory path
  * @return {Promise}
  */
-function ensureThumbnailsDirectory(fp) {
-
-}
+function ensureThumbnailsDirectory(fp) {}
 
 /**
  * Load index into memory.
@@ -35,7 +33,7 @@ function ensureThumbnailsDirectory(fp) {
  */
 function loadIndex(fp) {
   return loadFromDir(fp).then(function(db) {
-    return {files: db.getFiles(), tags: db.getTags()};
+    return { files: db.getFiles(), tags: db.getTags() };
   });
 }
 
@@ -53,21 +51,21 @@ function loadSettings(fp) {
  * @param {String} fp - Path to library
  */
 function removeFile() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
  * @param {String} fp - Path to library
  */
 function removeTag() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
  * @param {String} fp - Path to library
  */
 function updateFile() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**
@@ -77,9 +75,9 @@ function updateFile() {
  */
 function updateIndex(fp) {
   return loadFromDir(fp)
-    .then((db) =>  db.update())
-    .then((db) => db.write())
-    .then((db) => db.getData());
+    .then(db => db.update())
+    .then(db => db.write())
+    .then(db => db.getData());
 }
 
 /**
@@ -87,7 +85,7 @@ function updateIndex(fp) {
  * @param {String} fp - Path to library
  */
 function updateTag() {
-  throw new Error("not implemented");
+  throw new Error('not implemented');
 }
 
 /**

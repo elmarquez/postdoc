@@ -13,7 +13,7 @@ class EdgePanelComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedPanelIndex: null,
+      selectedPanelIndex: null
     };
   }
 
@@ -24,7 +24,7 @@ class EdgePanelComponent extends React.Component {
   onPanelSelection(panel) {
     let index;
     if (panel) {
-      index = this.props.panels.findIndex((item) => item.title === panel.title);
+      index = this.props.panels.findIndex(item => item.title === panel.title);
     } else {
       index = null;
     }
@@ -39,11 +39,13 @@ class EdgePanelComponent extends React.Component {
     return (
       <EdgePanel>
         {this.state.selectedPanelIndex !== null && (
-          <ContentPanelComponent content={this.props.panels[this.state.selectedPanelIndex]} />
+          <ContentPanelComponent
+            content={this.props.panels[this.state.selectedPanelIndex]}
+          />
         )}
         <ToolbarComponent
           items={this.props.panels}
-          onPanelSelection={(panel) => this.onPanelSelection(panel)}
+          onPanelSelection={panel => this.onPanelSelection(panel)}
         />
       </EdgePanel>
     );
@@ -52,7 +54,7 @@ class EdgePanelComponent extends React.Component {
 
 EdgePanelComponent.propTypes = {
   panels: PropTypes.array,
-  position: PropTypes.string,
+  position: PropTypes.string
 };
 
 export default EdgePanelComponent;

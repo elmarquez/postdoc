@@ -21,7 +21,7 @@ class TagGroupEditor extends React.Component {
 
 TagGroupEditor.propTypes = {
   node: PropTypes.object,
-  onDeleteClick: PropTypes.func,
+  onDeleteClick: PropTypes.func
 };
 
 export default TagGroupEditor;

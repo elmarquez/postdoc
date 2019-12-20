@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {loadApplicationState} from "../../store/actions/application";
-import {loadProfile} from "../../store/actions/profile";
+import { loadApplicationState } from '../../store/actions/application';
+import { loadProfile } from '../../store/actions/profile';
 
 const TYPE = {
   FILE: 0,
@@ -30,9 +30,8 @@ class FileSelectionModalComponent extends React.Component {
     const isFolder = this.props.folder ? this.props.folder : false;
     if (isFolder) {
       return this.renderFolderSelectionModal();
-    } else {
-      return this.renderFileSelectionModal();
     }
+    return this.renderFileSelectionModal();
   }
 
   /**
@@ -40,15 +39,16 @@ class FileSelectionModalComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderFileSelectionModal() {
-    const accept = this.props.accept ? this.props.accept.join(',') : "";
+    const accept = this.props.accept ? this.props.accept.join(',') : '';
     return (
       <input
         accept={accept}
-        className={'offscreen hidden'}
+        className="offscreen hidden"
         id="filepicker"
         multiple={this.props.multiple || false}
         name="fileList"
-        type="file" />
+        type="file"
+      />
     );
   }
 
@@ -57,17 +57,18 @@ class FileSelectionModalComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderFolderSelectionModal() {
-    const accept = this.props.accept ? this.props.accept.join(',') : "";
+    const accept = this.props.accept ? this.props.accept.join(',') : '';
     return (
       <input
         accept={accept}
-        className={'offscreen hidden'}
+        className="offscreen hidden"
         id="filepicker"
         name="fileList"
         onChange={this.onChange.bind(this)}
         multiple={this.props.multiple || false}
         type="file"
-        nwdirectory />
+        nwdirectory
+      />
     );
   }
 }
@@ -95,8 +96,7 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => ({
   loadApplicationState: () => dispatch(loadApplicationState()),
-  loadProfile: () => dispatch(loadProfile()),
+  loadProfile: () => dispatch(loadProfile())
 });
-
 
 export default FileSelectionModalComponent;

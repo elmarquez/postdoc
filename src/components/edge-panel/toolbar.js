@@ -41,7 +41,7 @@ class ToolbarComponent extends Component {
       <Body>
         <TabsPanelComponent
           items={this.props.items}
-          onTabClick={(item) => this.onPanelSelection(item)}
+          onTabClick={item => this.onPanelSelection(item)}
           selection={this.props.selection}
         />
       </Body>
@@ -74,7 +74,7 @@ ToolbarComponent.propTypes = {
   header: PropTypes.element,
   items: PropTypes.array,
   onPanelSelection: PropTypes.func,
-  selection: PropTypes.string,
+  selection: PropTypes.string
 };
 
 export default ToolbarComponent;

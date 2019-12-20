@@ -1,16 +1,20 @@
-import Button from "@atlaskit/button";
-import Tag from "@atlaskit/tag";
-import TagGroup from "@atlaskit/tag-group";
-import {AgGridReact} from 'ag-grid-react';
-import PropTypes from "prop-types";
-import React from "react";
-import CodeMirror from "react-codemirror";
-import DataGrid from "../datagrid";
-import TagEditor from "../datagrid/editors/tag";
-import TagFormatter from "../datagrid/formatters/tag";
-import { Body, ContentPanel } from "./styles";
+import Button from '@atlaskit/button';
+import Tag from '@atlaskit/tag';
+import TagGroup from '@atlaskit/tag-group';
+import { AgGridReact } from 'ag-grid-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import CodeMirror from 'react-codemirror';
+import DataGrid from '../datagrid';
+import TagEditor from '../datagrid/editors/tag';
+import TagFormatter from '../datagrid/formatters/tag';
+import { Body, ContentPanel } from './styles';
 import ErrorBoundary from '../error-boundary';
-import {loadIndex, updateIndex, writeIndex} from "../../store/actions/library";
+import {
+  loadIndex,
+  updateIndex,
+  writeIndex
+} from '../../store/actions/library';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -27,21 +31,21 @@ class ContentPanelComponent extends React.Component {
       editing: false,
       gridOptions: {
         columnDefs: [
-          { field: "filename", headerName: "Filename", resizable: true },
-          { field: "extension", headerName: "Extension" },
-          { field: "lastUpdated", headerName: "Last Updated" },
+          { field: 'filename', headerName: 'Filename', resizable: true },
+          { field: 'extension', headerName: 'Extension' },
+          { field: 'lastUpdated', headerName: 'Last Updated' },
           {
             cellEditor: 'tagEditor',
             cellRenderer: 'tagFormatter',
             editable: true,
-            field: "tags",
-            headerName: "Tags",
+            field: 'tags',
+            headerName: 'Tags',
             resizable: true
           },
-          { field: "mimetype", headerName: "Type" },
-          { field: "hash", headerName: "Hash" },
-          { field: "citation", headerName: "Citation", resizable: true },
-          { field: "path", headerName: "Path", resizable: true },
+          { field: 'mimetype', headerName: 'Type' },
+          { field: 'hash', headerName: 'Hash' },
+          { field: 'citation', headerName: 'Citation', resizable: true },
+          { field: 'path', headerName: 'Path', resizable: true }
         ],
         onCellEditingStarted: this.onCellEditingStarted.bind(this),
         onCellValueChanged: this.onCellValueChanged.bind(this),
@@ -49,21 +53,21 @@ class ContentPanelComponent extends React.Component {
         pagination: true,
         rowSelection: 'single'
       }
-    }
+    };
   }
 
   onCellEditingStarted(a, b, c) {
-    this.setState({editing: true});
+    this.setState({ editing: true });
   }
 
   onCellValueChanged(e) {
     if (this.props.onFileUpdated) {
       this.props.onFileUpdated(e.rowIndex, e.data);
     }
-    this.setState({editing: false});
+    this.setState({ editing: false });
   }
 
-  onGridReady (params) {
+  onGridReady(params) {
     this.api = params.api;
     this.columnApi = params.columnApi;
   }
@@ -87,16 +91,16 @@ class ContentPanelComponent extends React.Component {
     return (
       <ContentPanel>
         <Body className="ag-theme-balham">
-        <ErrorBoundary>
-          <AgGridReact
-            frameworkComponents={{
-              tagEditor: TagEditor,
-              tagFormatter: TagFormatter
-            }}
-            gridOptions={this.state.gridOptions}
-            rowData={this.props.data.files}>
-          </AgGridReact>
-        </ErrorBoundary>
+          <ErrorBoundary>
+            <AgGridReact
+              frameworkComponents={{
+                tagEditor: TagEditor,
+                tagFormatter: TagFormatter
+              }}
+              gridOptions={this.state.gridOptions}
+              rowData={this.props.data.files}
+            />
+          </ErrorBoundary>
         </Body>
       </ContentPanel>
     );
@@ -108,7 +112,7 @@ ContentPanelComponent.propTypes = {
   filter: PropTypes.func,
   isLoading: PropTypes.bool.isRequired,
   onDocumentSelected: PropTypes.func,
-  onFileUpdated: PropTypes.func,
+  onFileUpdated: PropTypes.func
 };
 
 export default ContentPanelComponent;

@@ -1,9 +1,9 @@
 import mimetypes from 'mime-types';
 import moment from 'moment';
-import path from "path";
-import Utils from "../utils";
+import path from 'path';
+import Utils from '../utils';
 
-const DATABASE_FILENAME = ".postdoc.json";
+const DATABASE_FILENAME = '.postdoc.json';
 const DEFAULT_INDEX = {
   files: [],
   lastUpdated: null,
@@ -12,7 +12,7 @@ const DEFAULT_INDEX = {
   thumbnails: {},
   years: []
 };
-const THUMBNAILS_DIRECTORY = ".preview";
+const THUMBNAILS_DIRECTORY = '.preview';
 
 /**
  * Convenience methods for working with a library file index. Methods that
@@ -104,11 +104,10 @@ class Database {
     const self = this;
     const now = new Date();
     const nowIso = now.toISOString();
-    console.debug("Starting index update", nowIso);
+    console.debug('Starting index update', nowIso);
     const fp = self.getParentDirectory();
-    return Utils
-      .files
-      .getFileTree(fp, {absolute: false})
+    return Utils.files
+      .getFileTree(fp, { absolute: false })
       .then(Utils.files.getFileHashes)
       .then(function(files) {
         self._data.files = files.map(f => {
@@ -130,7 +129,7 @@ class Database {
         // console.debug('deleted files', deletedFiles);
         // TODO merge with existing index
         const finishTime = new Date();
-        console.debug("Finished index update", finishTime.toISOString());
+        console.debug('Finished index update', finishTime.toISOString());
         //
         return self;
       });
@@ -143,20 +142,23 @@ class Database {
    */
   updateSecondaryIndicies() {
     const self = this;
-    console.debug("Updating secondary indidices");
-    const files = self._data.files;
+    console.debug('Updating secondary indidices');
+    const { files } = self._data;
     // update tag, types, years sets
-    let data = files.reduce((map, f) => {
-      if (f.mimetype) {
-        map.mimetypes.add(f.mimetype);
-      }
-      f.tags.forEach((t) => {
-        map.tags.add(t);
-      });
-      let year = moment(f.lastModified).format('YYYY');
-      map.years.add(year);
-      return map;
-    }, {files, mimetypes: new Set(), tags: new Set(), years: new Set()});
+    const data = files.reduce(
+      (map, f) => {
+        if (f.mimetype) {
+          map.mimetypes.add(f.mimetype);
+        }
+        f.tags.forEach(t => {
+          map.tags.add(t);
+        });
+        const year = moment(f.lastModified).format('YYYY');
+        map.years.add(year);
+        return map;
+      },
+      { files, mimetypes: new Set(), tags: new Set(), years: new Set() }
+    );
     // transform sets to arrays
     data.mimetypes = Array.from(data.mimetypes).sort();
     data.tags = Array.from(data.tags).sort();
@@ -179,12 +181,9 @@ class Database {
    */
   write() {
     const self = this;
-    return Utils
-      .files
-      .writeJSON(this._path, this._data)
-      .then(function() {
-        return self;
-      });
+    return Utils.files.writeJSON(this._path, this._data).then(function() {
+      return self;
+    });
   }
 }
 
@@ -207,11 +206,10 @@ function load(fp) {
     console.debug('Loading database from', fp);
     if (!exists) {
       return new Database(fp);
-    } else {
-      return Utils.files.readJSON(fp).then(function(data) {
-        return new Database(fp, data);
-      });
     }
+    return Utils.files.readJSON(fp).then(function(data) {
+      return new Database(fp, data);
+    });
   });
 }
 
@@ -227,9 +225,4 @@ function loadFromDir(fp) {
 
 export default Database;
 
-export {
-  DATABASE_FILENAME,
-  getDatabasePath,
-  load,
-  loadFromDir
-};
+export { DATABASE_FILENAME, getDatabasePath, load, loadFromDir };
