@@ -42,9 +42,7 @@ dist
 dll
 main.js
 main.js.map
-target
-yarn-error.log
 
 .idea
-.vscode
 npm-debug.log.*
+.*.dockerfile
