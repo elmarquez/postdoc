@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { Circle } from 'styled-icons/boxicons-regular/Circle';
 import { Figma } from 'styled-icons/boxicons-logos/Figma';
@@ -8,7 +7,7 @@ import { HelpCircle } from 'styled-icons/boxicons-regular/HelpCircle';
 import { Hexagon } from 'styled-icons/feather/Hexagon';
 import { PlusCircle } from 'styled-icons/boxicons-regular/PlusCircle';
 import { Slider } from 'styled-icons/boxicons-regular/Slider';
-import { Bacteria, Owl5 } from '../branding';
+import { Bacteria } from '../branding';
 import { Body, Footer, Header, NavigationBar } from './styles';
 
 /**
@@ -32,18 +31,18 @@ class GlobalNavigationBarComponent extends React.Component {
   renderBody() {
     return (
       <Body>
-        <Link to="/library">
+        <div to="/library">
           <Folder className="icon" />
-        </Link>
-        <Link to="/projects">
+        </div>
+        <div to="/projects">
           <Hexagon className="icon" />
-        </Link>
-        <Link to="/projects">
+        </div>
+        <div to="/projects">
           <Hexagon className="icon" />
-        </Link>
-        <Link to="/projects">
+        </div>
+        <div to="/projects">
           <Hexagon className="icon" />
-        </Link>
+        </div>
         <PlusCircle className="icon" />
       </Body>
     );
@@ -52,9 +51,9 @@ class GlobalNavigationBarComponent extends React.Component {
   renderFooter() {
     return (
       <Footer>
-        <Link to="/settings">
+        <div to="/settings">
           <Slider className="icon" />
-        </Link>
+        </div>
       </Footer>
     );
   }
@@ -62,9 +61,9 @@ class GlobalNavigationBarComponent extends React.Component {
   renderHeader() {
     return (
       <Header>
-        <Link to="/home">
-          <img className="icon" src={Owl5} />
-        </Link>
+        <div to="/home">
+          <img className="icon" src={Bacteria} />
+        </div>
       </Header>
     );
   }

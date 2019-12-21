@@ -5,6 +5,7 @@ const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: ${props => (props.flexGrow ? props.flexGrow : 1)};
+  width: ${props => (props.width ? `${props.width}px` : '')};
 `;
 
 const FlexRow = styled.div`

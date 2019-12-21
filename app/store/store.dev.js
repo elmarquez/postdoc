@@ -5,10 +5,10 @@ import { createLogger } from 'redux-logger';
 import promise from 'redux-promise-middleware';
 
 // actions
-import appActions from './actions/app';
-import libraryActions from './actions/library';
-import profileActions from './actions/profile';
-import projectActions from './actions/project';
+import * as appActions from './actions/app';
+import * as libraryActions from './actions/library';
+import * as profileActions from './actions/profile';
+import * as projectActions from './actions/project';
 
 // reducers
 import { createRootReducer } from './reducers';

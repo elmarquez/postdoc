@@ -15,7 +15,13 @@ import MenuBuilder from './menu';
 const { env, platform } = process;
 const { DEBUG_PROD, NODE_ENV, START_MINIMIZED, UPGRADE_EXTENSIONS } = env;
 
+/**
+ * Application updater.
+ */
 export default class AppUpdater {
+  /**
+   * Constructor
+   */
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
@@ -34,6 +40,9 @@ if (NODE_ENV === 'development' || DEBUG_PROD === 'true') {
   require('electron-debug')();
 }
 
+/**
+ * Install application extensions.
+ */
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!UPGRADE_EXTENSIONS;
@@ -44,25 +53,29 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
+/**
+ * Create application window.
+ */
 const createWindow = async () => {
   if (NODE_ENV === 'development' || DEBUG_PROD === 'true') {
     await installExtensions();
   }
 
   mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
     height: 728,
+    show: false,
+    title: 'postdoc',
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    width: 1024
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.webContents.on('did-finish-load', function() {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
@@ -74,7 +87,7 @@ const createWindow = async () => {
     }
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on('closed', function() {
     mainWindow = null;
   });
 
@@ -87,21 +100,26 @@ const createWindow = async () => {
 };
 
 /**
- * Add event listeners...
+ * Handle application activate event.
  */
+app.on('activate', function() {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) createWindow();
+});
 
-app.on('window-all-closed', () => {
+/**
+ * Handle application ready event.
+ */
+app.on('ready', createWindow);
+
+/**
+ * Handle application window-all-closed event.
+ */
+app.on('window-all-closed', function() {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (platform !== 'darwin') {
     app.quit();
   }
-});
-
-app.on('ready', createWindow);
-
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
 });

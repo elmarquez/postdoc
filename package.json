@@ -31,28 +31,9 @@
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.js",
     "test-watch": "yarn test --watch"
   },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "cross-env NODE_ENV=development eslint --cache --format=pretty",
-      "git add"
-    ],
-    "{*.json,.{babelrc,eslintrc,prettierrc,stylelintrc}}": [
-      "prettier --ignore-path .eslintignore --parser json --write",
-      "git add"
-    ],
-    "*.{css,scss}": [
-      "stylelint --ignore-path .eslintignore --syntax scss --fix",
-      "prettier --ignore-path .eslintignore --single-quote --write",
-      "git add"
-    ],
-    "*.{html,md,yml}": [
-      "prettier --ignore-path .eslintignore --single-quote --write",
-      "git add"
-    ]
-  },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "postdoc",
+    "appId": "io.github.elmarquez.postdoc",
     "files": [
       "dist/",
       "node_modules/",
@@ -109,7 +90,7 @@
     "email": "dmarq.ezz@gmail.com",
     "url": "https://www.davismarques.com"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/elmarquez/postdoc/issues"
   },
@@ -226,6 +207,7 @@
     "@hot-loader/react-dom": "^16.11.0",
     "ag-grid-community": "^21.2.2",
     "ag-grid-react": "^21.2.2",
+    "antd": "^3.26.3",
     "bluebird": "^3.5.3",
     "connected-react-router": "^6.6.1",
     "core-js": "^3.5.0",
@@ -251,6 +233,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-router-transition": "^2.0.0",
+    "react-split-pane": "^0.1.89",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.2",
