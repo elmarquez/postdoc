@@ -5,7 +5,6 @@ import Root from './views/root';
 import { configureStore, history } from './store';
 
 const store = configureStore();
-
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
 render(

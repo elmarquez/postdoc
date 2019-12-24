@@ -10,7 +10,8 @@
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
+import pkg from './package.json';
+import MenuBuilder from './components/menu';
 
 const { env, platform } = process;
 const { DEBUG_PROD, NODE_ENV, START_MINIMIZED, UPGRADE_EXTENSIONS } = env;
@@ -122,4 +123,17 @@ app.on('window-all-closed', function() {
   if (platform !== 'darwin') {
     app.quit();
   }
+});
+
+// set application name
+app.name = pkg.name;
+
+// Set application metadata.
+app.setAboutPanelOptions({
+  applicationName: pkg.name,
+  applicationVersion: pkg.version,
+  version: pkg.version,
+  authors: 'Davis Marques',
+  copyright: 'Copyright (c) 2019-present Davis Marques',
+  website: 'https://elmarquez.github.io/postdoc'
 });

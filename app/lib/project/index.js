@@ -1,21 +1,125 @@
 import path from 'path';
-import Database from '../database';
+import Database, { DATABASE_FILENAME, loadFromDir } from '../database';
 import Utils from '../utils';
 
-const PROJECT_SETTINGS_FILE = 'project.json';
+const LIBRARY_SETTINGS_FILE = 'library.json';
 
-function getSettings(fp) {
-  const p = path.join(fp, PROJECT_SETTINGS_FILE);
+/**
+ * @param {String} fp - Path to library
+ */
+function addFile() {
+  throw new Error('not implemented');
+}
+
+/**
+ * @param {String} fp - Path to library
+ */
+function addTag() {
+  throw new Error('not implemented');
+}
+
+/**
+ * Ensure that the library folder contains a subdirectory to hold thumbnail
+ * images.
+ * @param {String} fp - Directory path
+ * @return {Promise}
+ */
+function ensureThumbnailsDirectory(fp) {}
+
+/**
+ * Load file tree.
+ * @param {string} fp - Directory path
+ * @returns {Promise}
+ */
+function loadFileTree(fp) {
+  return Utils.tree.getDirectoryTree(fp);
+}
+
+/**
+ * Load index into memory.
+ * @param {String} fp - Path to library
+ * @return {Promise}
+ */
+function loadIndex(fp) {
+  return loadFromDir(fp).then(function(db) {
+    return { files: db.getFiles(), tags: db.getTags() };
+  });
+}
+
+/**
+ * Load settings into memory.
+ * @param {String} fp - Path to library
+ * @return {Promise}
+ */
+function loadSettings(fp) {
+  const p = path.join(fp, LIBRARY_SETTINGS_FILE);
   return Utils.files.readJSON(p);
 }
 
+/**
+ * @param {String} fp - Path to library
+ */
+function removeFile() {
+  throw new Error('not implemented');
+}
+
+/**
+ * @param {String} fp - Path to library
+ */
+function removeTag() {
+  throw new Error('not implemented');
+}
+
+/**
+ * @param {String} fp - Path to library
+ */
+function updateFile() {
+  throw new Error('not implemented');
+}
+
+/**
+ * Update the library index.
+ * @param {String} fp - Path to library
+ * @returns {Promise<Database>}
+ */
 function updateIndex(fp) {
-  return Database.loadFromDir(fp)
-    .updateIndex()
-    .write();
+  return loadFromDir(fp)
+    .then(db => db.update())
+    .then(db => db.write())
+    .then(db => db.getData());
+}
+
+/**
+ *
+ * @param {String} fp - Path to library
+ */
+function updateTag() {
+  throw new Error('not implemented');
+}
+
+/**
+ * Write the index to file storage.
+ * @param {String} fp - Path to library
+ * @param {Object} data - Index data
+ * @returns {Promise}
+ */
+function writeIndex(fp, data) {
+  console.info('write index', fp, data);
+  const p = path.join(fp, DATABASE_FILENAME);
+  const database = new Database(p, data);
+  return database.write();
 }
 
 export default {
-  getSettings,
-  updateIndex
+  addFile,
+  addTag,
+  loadFileTree,
+  loadIndex,
+  loadSettings,
+  removeFile,
+  removeTag,
+  updateFile,
+  updateIndex,
+  updateTag,
+  writeIndex
 };

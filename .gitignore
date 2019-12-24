@@ -48,3 +48,5 @@ yarn-error.log
 .idea
 .vscode
 npm-debug.log.*
+
+NOTES.md

@@ -20,7 +20,7 @@ import {
 import PropertiesPanel from '../../components/properties-panel';
 import ToolsPanel from '../../components/tools-panel';
 import { loadApplicationState } from '../../store/actions/application';
-import { loadIndex, writeIndex } from '../../store/actions/library';
+import { loadIndex, writeIndex } from '../../store/actions/project';
 
 /**
  * Library view. A library is a collection of research resources owned by a

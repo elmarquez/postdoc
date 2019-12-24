@@ -11,7 +11,7 @@ import {
  * @return {electron.Menu}
  */
 function buildMenu(mainWindow) {
-  const subMenuAbout = getAboutMenu(mainWindow);
+  const aboutMenu = getAboutMenu(mainWindow);
   const fileMenu = getFileMenu(mainWindow);
   const subMenuEdit = getEditMenu(mainWindow);
   const subMenuViewDev = getViewMenuDev(mainWindow);
@@ -22,7 +22,7 @@ function buildMenu(mainWindow) {
   const subMenuView =
     process.env.NODE_ENV === 'development' ? subMenuViewDev : subMenuViewProd;
 
-  return [subMenuAbout, fileMenu, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+  return [aboutMenu, fileMenu, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
 }
 
 /**
@@ -39,8 +39,8 @@ function getAboutMenu() {
         type: 'separator'
       },
       {
-        label: 'Services',
-        submenu: []
+        label: 'Preferences',
+        selector: 'preferences:'
       },
       {
         type: 'separator'

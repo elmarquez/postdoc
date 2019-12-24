@@ -4,6 +4,7 @@
 import fs from 'fs';
 import Promise from 'bluebird';
 import files from './files';
+import tree from './tree';
 
 /**
  * Load JSON file.
@@ -35,5 +36,6 @@ function loadJSONSync(p) {
 export default {
   files,
   loadJSON,
-  loadJSONSync
+  loadJSONSync,
+  tree
 };

@@ -107,7 +107,7 @@ class Database {
     console.debug('Starting index update', nowIso);
     const fp = self.getParentDirectory();
     return Utils.files
-      .getFileTree(fp, { absolute: false })
+      .getFileList(fp, { absolute: false })
       .then(Utils.files.getFileHashes)
       .then(function(files) {
         self._data.files = files.map(f => {

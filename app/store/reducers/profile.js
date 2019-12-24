@@ -16,13 +16,13 @@ export default function(state = INITIAL_STATE, action) {
     const { payload, type } = action;
     switch (action.type) {
       case PROFILE.LOAD_PROFILE_FULFILLED: {
-        return { ...state, data: payload.data, isPending: false };
+        return { ...state, data: payload, isPending: false };
       }
       case PROFILE.LOAD_PROFILE_PENDING: {
         return { ...state, error: null, isPending: true };
       }
       case PROFILE.LOAD_PROFILE_REJECTED: {
-        return { ...state, error: payload.statusMessage, isPending: false };
+        return { ...state, error: payload, isPending: false };
       }
       default:
         return state;

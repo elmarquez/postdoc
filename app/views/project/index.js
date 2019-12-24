@@ -1,12 +1,16 @@
 import React from 'react';
-import ContentPanel from '../../components/content-panel';
+import { Route, Switch } from 'react-router-dom';
+import ProjectView from './view';
 
-class ProjectContainer extends React.Component {
-  onUpdateIndex() {}
+/**
+ * Project routes.
+ */
+const ProjectViewRoutes = (props) => {
+  return (
+    <Switch>
+      <Route path="/projects" component={ProjectView} />
+    </Switch>
+  );
+};
 
-  render() {
-    return <ContentPanel onUpdateIndex={() => this.onUpdateIndex()} />;
-  }
-}
-
-export default ProjectContainer;
+export default ProjectViewRoutes;

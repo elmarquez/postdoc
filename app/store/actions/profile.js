@@ -1,4 +1,3 @@
-import shortid from 'shortid';
 import { PROFILE } from '../types';
 import Profile from '../../lib/profile';
 
@@ -19,14 +18,9 @@ function loadProfile() {
  * @returns {Object}
  */
 function updateProfile(data) {
-  return function(dispatch) {
-    Profile.updateSettings(data).then(function() {
-      dispatch({
-        type: PROFILE.UPDATE_PROFILE,
-        id: shortid.generate(),
-        data
-      });
-    });
+  return {
+    type: PROFILE.UPDATE_PROFILE,
+    payload: Profile.updateSettings(data)
   };
 }
 

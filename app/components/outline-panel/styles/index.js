@@ -4,10 +4,26 @@ import COLOURS from '../../../constants/colours';
 
 import { FlexColumn, FlexRow } from '../../layout';
 
+const WIDTH = 16;
+
 const Body = styled.div`
   flex-grow: 2;
   overflow: auto;
   padding: 16px 8px;
+  
+  .ant-tree {
+    li {
+      padding: 0;
+    }
+    .ant-tree-iconEle > svg {
+      height: ${WIDTH}px;
+      margin-right: 8px;
+      width: ${WIDTH}px;
+    }
+  }
+  .ant-tree-child-tree > li:first-child {
+    padding-top: 0;
+  }
 `;
 
 const Controls = styled.div`

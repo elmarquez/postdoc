@@ -16,7 +16,7 @@ import {
   loadIndex,
   updateIndex,
   writeIndex
-} from '../../store/actions/library';
+} from '../../store/actions/project';
 
 /**
  * Tools properties panel.

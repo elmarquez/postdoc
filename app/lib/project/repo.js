@@ -112,7 +112,7 @@ function load(cwd) {
  * @returns {Promise}
  */
 function loadFiles(cwd) {
-  return files.getFileTree(cwd);
+  return files.getFileList(cwd);
 }
 
 /**

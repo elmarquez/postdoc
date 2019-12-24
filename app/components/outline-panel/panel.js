@@ -1,13 +1,12 @@
 import { Tree } from 'antd';
-import fs from 'fs';
-import path from 'path';
+import { equals } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
-import project from '../../lib/project';
-import utils from '../../lib/utils';
-import Accordion from '../accordion';
-import { Body, Footer, Header, OutlinePanel, TreeItem as TI } from './styles';
-import { loadIndex, updateIndex } from '../../store/actions/library';
+import { File } from 'styled-icons/fa-solid/File';
+import { Folder } from 'styled-icons/fa-solid/Folder';
+import { Body, Footer, Header, OutlinePanel } from './styles';
+import { loadIndex, updateIndex } from '../../store/actions/project';
+import Project from '../../lib/project';
 
 const { TreeNode } = Tree;
 
@@ -17,13 +16,45 @@ const { TreeNode } = Tree;
 class OutlinePanelComponent extends React.Component {
   /**
    * Constructor.
-   * @param {Object} props Component properties
+   * @param {Object} props - Component properties
    */
   constructor(props) {
     super(props);
     this.state = {
-      filter: null
+      autoExpandParent: true,
+      // checkable: false,
+      // checkedKeys: [],
+      expandedKeys: [],
+      // filter: null,
+      selectedKeys: [],
+      showIcon: true,
+      showLine: false,
+      tree: []
     };
+  }
+
+  /**
+   * Handle componentDidUpdate lifecycle event.
+   * @param {object} prevProps - Previous component properties
+   */
+  componentDidUpdate(prevProps) {
+    const self = this;
+    if (!equals(self.props, prevProps)) {
+      const { profile } = self.props;
+      if (profile.data && profile.data.library) {
+        const { library } = profile.data;
+        if (library !== '') {
+          Project
+            .loadFileTree(library)
+            .then(function(tree) {
+              self.setState({ expandedKeys: [tree[0].key], tree });
+            })
+            .catch(function(err) {
+              console.error(err);
+            });
+        }
+      }
+    }
   }
 
   /**
@@ -35,123 +66,58 @@ class OutlinePanelComponent extends React.Component {
     return 'application/octet-stream';
   }
 
-  onDragEnter = info => {
-    console.log(info);
-    // expandedKeys 需要受控时设置
-    // this.setState({
-    //   expandedKeys: info.expandedKeys,
-    // });
-  };
+  /**
+   * Get file icon.
+   * @param {object} item - File metadata
+   * @returns {*}
+   */
+  getIcon(item) {
+    return <File />;
+  }
 
-  onDrop = info => {
-    console.log(info);
-    const dropKey = info.node.props.eventKey;
-    const dragKey = info.dragNode.props.eventKey;
-    const dropPos = info.node.props.pos.split('-');
-    const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
-
-    const loop = (data, key, callback) => {
-      data.forEach((item, index, arr) => {
-        if (item.key === key) {
-          return callback(item, index, arr);
-        }
-        if (item.children) {
-          return loop(item.children, key, callback);
-        }
-      });
-    };
-    const data = [...this.state.gData];
-
-    // Find dragObject
-    let dragObj;
-    loop(data, dragKey, (item, index, arr) => {
-      arr.splice(index, 1);
-      dragObj = item;
-    });
-
-    if (!info.dropToGap) {
-      // Drop on the content
-      loop(data, dropKey, item => {
-        item.children = item.children || [];
-        // where to insert 示例添加到尾部，可以是随意位置
-        item.children.push(dragObj);
-      });
-    } else if (
-      (info.node.props.children || []).length > 0 && // Has children
-      info.node.props.expanded && // Is expanded
-      dropPosition === 1 // On the bottom gap
-    ) {
-      loop(data, dropKey, item => {
-        item.children = item.children || [];
-        // where to insert 示例添加到尾部，可以是随意位置
-        item.children.unshift(dragObj);
-      });
-    } else {
-      let ar;
-      let i;
-      loop(data, dropKey, (item, index, arr) => {
-        ar = arr;
-        i = index;
-      });
-      if (dropPosition === -1) {
-        ar.splice(i, 0, dragObj);
-      } else {
-        ar.splice(i + 1, 0, dragObj);
-      }
-    }
-
+  /**
+   * Handle tree item check.
+   * @param checkedKeys
+   */
+  onCheck(checkedKeys) {
     this.setState({
-      gData: data,
+      checkedKeys
     });
-  };
+  }
 
-  onProjectOpen(prj) {
-    const self = this;
-    if (!prj) {
-    } else {
-      project
-        .load(prj)
-        .then(p => {
-          // let data = p.metadata;
-          const items = p.files
-            .map(f => {
-              return {
-                id: f.path,
-                children: [],
-                hasChildren: f.stats.isDirectory(),
-                isExpanded: false,
-                isChildrenLoading: false,
-                data: {
-                  title: path.basename(f.path)
-                  // TODO add file metadata
-                },
-                onCollapse: self.onTreeItemCollapse,
-                onExpand: self.onTreeItemExpand
-              };
-            })
-            .reduce((m, f) => {
-              m[f.id] = f;
-              return m;
-            }, {});
-          items[prj] = {
-            id: prj,
-            children: Object.keys(items),
-            hasChildren: true,
-            isExpanded: true,
-            isChildrenLoading: false,
-            data: {
-              title: path.basename(prj)
-              // TODO add file metadata
-            }
-          };
-          const tree = { rootId: prj, items };
-          const projects = [{ label: path.basename(prj), value: prj }];
-          self.setState({ project: tree, projects });
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
+  /**
+   * Handle tree item expand event.
+   * @param {array} expandedKeys - List of expanded tree nodes
+   */
+  onExpand(expandedKeys) {
+    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+    // or, you can remove all expanded children keys.
+    this.setState({ autoExpandParent: false, expandedKeys });
+  }
+
+  // onLoadData(treeNode) {
+  //   const self = this;
+  //   console.info('load', treeNode);
+  //   const { key } = treeNode.props.dataRef;
+  //   return Project.loadFileTree(key).then(function(subtree) {
+  //     const tree = clone(this.state.tree);
+  //     const keyLens = lensProp('key');
+  //     const children = subtree.children;
+  //     const node = set(keyLens, key, {children});
+  //     console.info('subtree', subtree);
+  //     treeNode.props.dataRef.children = children;
+  //     self.setState({ tree: [...self.state.tree] });
+  //     return subtree;
+  //   });
+  // }
+
+  /**
+   * Handle tree item selection.
+   * @param selectedKeys
+   * @param info
+   */
+  onSelect(selectedKeys, info) {
+    this.setState({ selectedKeys });
   }
 
   /**
@@ -161,28 +127,67 @@ class OutlinePanelComponent extends React.Component {
   render() {
     return (
       <OutlinePanel className="noselect">
-        <Body>{this.props.children}</Body>
+        <Body>
+          <Tree
+            autoExpandParent={this.state.autoExpandParent}
+            expandedKeys={this.state.expandedKeys}
+            onCheck={this.onCheck.bind(this)}
+            onExpand={this.onExpand.bind(this)}
+            onSelect={this.onSelect.bind(this)}
+            selectedKeys={this.state.selectedKeys}
+            showIcon={this.state.showIcon}
+            showLine={this.state.showLine}
+          >
+            {this.renderTreeNodes(this.state.tree)}
+          </Tree>
+        </Body>
       </OutlinePanel>
     );
   }
 
+  /**
+   * Render the component footer.
+   * @returns {JSX.Element}
+   */
   renderFooter() {
     return <Footer>Search box</Footer>;
   }
 
   /**
-   * Render header.
-   * @returns {XML}
+   * Render the component header.
+   * @returns {JSX.Element}
    */
   renderHeader() {
-    return <Header />;
+    return <Header /> ;
+  }
+
+  /**
+   * Render tree nodes.
+   * @param data
+   * @returns {*}
+   */
+  renderTreeNodes(data) {
+    return data
+      .filter(item => !item.hidden)
+      .map((item) => {
+        if (item.dir === true && Array.isArray(item.children)) {
+          const icon = <Folder />;
+          return (
+            <TreeNode title={item.title} icon={icon} key={item.key} dataRef={item}>
+              {this.renderTreeNodes(item.children)}
+            </TreeNode>
+          );
+        }
+        // a file or symbolic link
+        const icon = this.getIcon(item);
+        return <TreeNode {...item} icon={icon} isLeaf dataRef={item} />;
+      });
   }
 }
 
 const mapStateToProps = state => {
   return {
     application: state.application,
-    library: state.library,
     profile: state.profile,
     project: state.project
   };

@@ -4,10 +4,10 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise-middleware';
 
+
 // actions
-import * as appActions from './actions/app';
-import * as libraryActions from './actions/library';
-import * as profileActions from './actions/profile';
+// import * as appActions from './actions/app';
+// import * as profileActions from './actions/profile';
 import * as projectActions from './actions/project';
 
 // reducers
@@ -16,7 +16,9 @@ import { createRootReducer } from './reducers';
 const history = createHashHistory();
 const rootReducer = createRootReducer(history);
 
-const configureStore = initialState => {
+const configureStore = (initialState) => {
+  console.info('creating development store configuration');
+
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -25,10 +27,7 @@ const configureStore = initialState => {
   middleware.push(promise);
 
   // Logging Middleware
-  const logger = createLogger({
-    level: 'info',
-    collapsed: true
-  });
+  const logger = createLogger({ collapsed: true, level: 'info' });
 
   // Skip redux logs in console during the tests
   if (process.env.NODE_ENV !== 'test') {
@@ -41,11 +40,10 @@ const configureStore = initialState => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...appActions,
-    ...libraryActions,
-    ...profileActions,
+    // ...appActions,
+    // ...profileActions,
     ...projectActions,
-    ...routerActions
+    // ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */

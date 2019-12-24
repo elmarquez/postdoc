@@ -14,7 +14,7 @@ import {
   loadIndex,
   updateIndex,
   writeIndex
-} from '../../store/actions/library';
+} from '../../store/actions/project';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';

@@ -1,101 +1,115 @@
 import { PROJECT } from '../types';
+import Project from '../../lib/project';
 
-function addFile(fp, data) {
+/**
+ * Add file.
+ * @param {String} fp - File path
+ * @returns {Object}
+ */
+function addFile(fp) {
+  return { type: PROJECT.ADD_FILE, path: fp };
+}
+
+/**
+ * Add tag.
+ * @param {String} tag - Tag
+ * @returns {Object}
+ */
+function addTag(tag) {
+  return { type: PROJECT.ADD_FILE, tag };
+}
+
+/**
+ * Delete file.
+ * @param {String} fp - File path
+ * @returns {Object}
+ */
+function deleteFile(fp) {
+  return { type: PROJECT.DELETE_FILE, path: fp };
+}
+
+/**
+ * Delete tag.
+ * @param {String} tag - Tag
+ * @returns {Object}
+ */
+function deleteTag(tag) {
+  return { type: PROJECT.DELETE_TAG, tag };
+}
+
+/**
+ * Load file tree.
+ * @param {String} fp - Library path
+ * @returns {object}
+ */
+function loadFileTree(fp) {
   return {
-    type: PROJECT.ADD_RECENT_PROJECT,
-    data: {
-      path: fp
-    }
+    type: PROJECT.LOAD_FILE_TREE,
+    payload: Project.loadFileTree(fp)
   };
 }
 
 /**
- * Add project to recent projects list.
- * @param fp
- * @returns {Object}
+ * Get library index.
+ * @param {String} fp - Library path
+ * @returns {Function}
  */
-function addRecentProject(fp) {
+function loadIndex(fp) {
   return {
-    type: PROJECT.ADD_RECENT_PROJECT,
-    data: {
-      path: fp
-    }
-  };
-}
-
-function addTag(fp, data) {}
-
-/**
- * Create new project.
- * @param {Object} data - Project configuration
- * @returns {Object}
- */
-function createProject(data) {
-  return {
-    type: PROJECT.CREATE_PROJECT,
-    data
+    type: PROJECT.LOAD_INDEX,
+    payload: Project.loadIndex(fp)
   };
 }
 
 /**
- * Delete project from file system.
- * @param {String} fp - Project path
+ * Update file record.
+ * @param {String} fp - File path
  * @returns {Object}
  */
-function deleteProject(fp) {
+function updateFile(fp) {
+  throw new Error('not implemented');
+}
+
+/**
+ * Reindex the library, merge changes into the existing index file.
+ * @param {String} fp - Library path
+ * @returns {Object}
+ */
+function updateIndex(fp, data) {
   return {
-    type: PROJECT.DELETE_PROJECT,
-    data: {
-      path: fp
-    }
+    type: PROJECT.UPDATE_INDEX,
+    payload: Project.updateIndex(fp)
   };
 }
 
 /**
- * Load project index and settings into memory.
- * @param {String} fp - Project path
- * @returns {Object}
+ * Update tag.
+ * @param {String} tag - Tag
+ * @return {Object}
  */
-function loadProject(fp) {
-  return {
-    type: PROJECT.LOAD_PROJECT,
-    data: {
-      path: fp
-    }
-  };
+function updateTag(tag) {
+  throw new Error('not implemented');
 }
 
 /**
- * Remove project from recent projects list.
- * @param {String} fp - Project path
+ * Write library index to the file system.
+ * @param {String} fp - Library path
+ * @param {Object} data - Index data
  * @returns {Object}
  */
-function removeRecentProject(fp) {
-  return {
-    type: PROJECT.REMOVE_RECENT_PROJECT,
-    data: {
-      path: fp
-    }
-  };
-}
-
-function updateScenario(id, data) {
-  return {
-    type: SCENARIOS.UPDATE_SCENARIO,
-    data: {
-      id,
-      data
-    }
-  };
+function writeIndex() {
+  throw new Error('not implemented');
 }
 
 export {
   addFile,
-  addRecentProject,
   addTag,
-  createProject,
-  deleteProject,
-  loadProject,
-  removeRecentProject,
-  updateScenario
+  deleteFile,
+  deleteTag,
+  loadFileTree,
+  loadIndex,
+  updateFile,
+  updateIndex,
+  updateTag,
+  writeIndex
 };

@@ -1,6 +1,8 @@
+import crypto from 'crypto';
 import fs from 'fs';
 import glob from 'glob';
 import hasha from 'hasha';
+import mime from 'mime-types';
 import path from 'path';
 import Promise from 'bluebird';
 
@@ -76,6 +78,21 @@ function getDirStats(files) {
 }
 
 /**
+ * Get file hash.
+ * @param {string} f - File path
+ * @returns {Promise}
+ */
+function getFileHash(f) {
+  return new Promise(function (resolve, reject) {
+    const shasum = crypto.createHash(algorithm);
+    const s = fs.ReadStream(f);
+    s.on('data', (data) => shasum.update(data));
+    s.on('end', () => resolve(shasum.digest('hex')));
+    s.on('error', (err) => reject(err));
+  });
+}
+
+/**
  * Get file hashses.
  * @param {Array} files - Files
  * @return {Promise|Array} file list with hashes
@@ -90,30 +107,26 @@ function getFileHashes(files) {
   return Promise.all(promises);
 }
 
-function getFileMetadata(files) {
-  const promises = files.map(f => {
-    // get last modified data, filename, extension, mimetype
-  });
-  return Promise.all(promises);
+/**
+ * Get file metadata.
+ * @param {string} file - File path
+ * @returns {Promise<unknown[]>}
+ */
+function getFileMetadata(f) {
+  return getFileStats(f).then(function(stats) {
+    const name = path.basename(f);
+    return {path: f, stats, mimetype: mime.lookup(name)};
+  })
 }
 
 /**
- * Get project file tree.
- * @param {String} cwd - Project path
- * @param {object} options - Options
- * @returns {Promise}
+ * Get files metadata.
+ * @param {array} files - Files
+ * @returns {Promise<unknown[]>}
  */
-function getFileTree(cwd, options) {
-  options = { absolute: true, cwd, nodir: true, silent: true };
-  return new Promise(function(resolve, reject) {
-    glob('**/*', options, function(err, files) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(files);
-      }
-    });
-  });
+function getFilesMetadata(files) {
+  const promises = files.map(f => getFileMetadata(f));
+  return Promise.all(promises);
 }
 
 /**
@@ -146,6 +159,28 @@ function getFileStats(f) {
         reject(err);
       } else {
         resolve({ path: f, stats });
+      }
+    });
+  });
+}
+
+/**
+ * Get subdirectory file listing.
+ * @param {String} cwd - Project path
+ * @param {object} options - Options
+ * @returns {Promise}
+ */
+function getFileList(cwd, options) {
+  options = { absolute: true, cwd, nodir: true, silent: true };
+  return new Promise(function(resolve, reject) {
+    glob('**/*', options, function(err, files) {
+      if (err) {
+        reject(err);
+      } else {
+        getFilesMetadata(files)
+          .then(function(tree) {
+            resolve(tree);
+          });
       }
     });
   });
@@ -274,7 +309,7 @@ export default {
   getFileHashes,
   getFiles,
   getFileStats,
-  getFileTree,
+  getFileList,
   getStats,
   isAccessible: isWriteable,
   mkdir,
