@@ -1,9 +1,14 @@
+import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { Provider } from 'react-redux'
-import { HashRouter, Route } from 'react-router-dom';
-import { App } from './styles';
+import React, {Context} from 'react';
+import {connect, Provider} from 'react-redux'
+import {HashRouter, Route} from 'react-router-dom';
+import {createFile, loadIndex, openProject, updateIndex} from '../../store/actions/project';
+import {PROJECT} from '../../store/types';
+import {App} from './styles';
 import Workspace from './workspace';
+
+const { dialog } = require('electron').remote;
 
 // styles
 import "antd/dist/antd.css";
@@ -14,27 +19,106 @@ import "antd/lib/tabs/style/index.css";
  */
 class Application extends React.Component {
 
-    /**
-     * Render the component.
-     * @returns {JSX.Element}
-     */
-    render() {
-        const { history, store } = this.props; 
-        return (
-            <Provider store={store}>
-                <App className={'App'}>
-                    <HashRouter history={history}>
-                        <Workspace />
-                    </HashRouter>
-                </App>
-            </Provider>
-        );
-    }
+  /**
+   * Handle component lifecycle event.
+   */
+  componentDidMount() {
+    // handle application menu bar actions
+    ipcRenderer.on(PROJECT.CREATE_FILE, (e, msg) => this.onCreateFile());
+    ipcRenderer.on(PROJECT.CREATE_PROJECT, (e, msg) => this.onCreateProject());
+    ipcRenderer.on(PROJECT.OPEN_FILE, (e, msg) => this.onOpenFile());
+    ipcRenderer.on('file:open:project', (e, msg) => this.onOpenProject());
+  }
+
+  onCreateFile() {
+    console.info('create file');
+  }
+
+  onCreateProject() {
+    console.info('create project')
+    const options = {
+      buttonLabel: 'Open',
+      createDirectory: true,
+      properties: ['createDirectory', 'openDirectory', 'promptToCreate'],
+      title: 'Create project'
+    };
+    const path = dialog.showOpenDialogSync(options);
+  }
+
+  onOpenFile() {
+    console.info('open file')
+  }
+
+  onOpenProject() {
+    const self = this;
+    const options = {
+      buttonLabel: 'Open',
+      properties: ['createDirectory', 'openDirectory', 'promptToCreate'],
+      title: 'Open project'
+    };
+    dialog
+      .showOpenDialog(options)
+      .then(function(result) {
+        const { cancelled, filePaths } = result;
+        if (!cancelled) {
+          self.props.openProject(filePaths.pop());
+        }
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+
+  /**
+   * Render the component.
+   * @returns {JSX.Element}
+   */
+  render() {
+    const {history, store} = this.props;
+    return (
+      <Provider store={store}>
+        <App className={'App'}>
+          <HashRouter history={history}>
+            <Workspace/>
+          </HashRouter>
+        </App>
+      </Provider>
+    );
+  }
 }
 
 Application.propTypes = {
-    history: PropTypes.any,
-    store: PropTypes.any,
+  history: PropTypes.any,
+  store: PropTypes.any,
 };
 
-export default Application;
+
+/**
+ * Map data store state to component properties.
+ * @param {object} state - Data store state
+ * @returns {object}
+ */
+const mapStateToProps = state => {
+  return {
+    application: state.application,
+    profile: state.profile,
+    project: state.project
+  };
+};
+
+/**
+ * Map data store dispatch functions to component properties.
+ * @param {Function} dispatch - Redux dispatch function
+ * @return {Object} Map of functions to be assigned to the component props
+ */
+const mapDispatchToProps = {
+  createFile,
+  loadIndex,
+  openProject,
+  updateIndex
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Application);

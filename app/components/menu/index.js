@@ -1,4 +1,4 @@
-import { app, Menu, shell, BrowserWindow } from 'electron';
+import { Menu } from 'electron';
 import * as Darwin from './darwin';
 import * as Posix from './posix';
 
@@ -45,7 +45,7 @@ export default class MenuBuilder {
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
-          click: () => wndow.inspectElement(x, y)
+          click: () => window.inspectElement(x, y)
         }
       ]).popup(window);
     });

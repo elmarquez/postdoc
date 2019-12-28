@@ -24,6 +24,7 @@ module.exports = {
     "no-shadow": "warn",
     "no-undef": "warn",
     "no-underscore-dangle": "warn",
+    "no-unreachable": "warn",
     "no-unused-expressions": "warn",
     "no-unused-vars": "warn",
     "no-useless-constructor": "warn",

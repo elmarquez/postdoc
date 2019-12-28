@@ -9,7 +9,7 @@ const WIDTH = 16;
 const Body = styled.div`
   flex-grow: 2;
   overflow: auto;
-  padding: 16px 8px;
+  padding: 16px 0;
   
   .ant-tree {
     li {
@@ -63,6 +63,7 @@ const OutlinePanel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 200px;
   overflow: hidden;
   width: 200px;
 `;

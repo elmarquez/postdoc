@@ -1,6 +1,8 @@
 import { PROJECT } from '../types';
 import Project from '../../lib/project';
 
+const { dialog } = require('electron');
+
 /**
  * Add file.
  * @param {String} fp - File path
@@ -17,6 +19,17 @@ function addFile(fp) {
  */
 function addTag(tag) {
   return { type: PROJECT.ADD_FILE, tag };
+}
+
+/**
+ * Create project.
+ * @returns {Object}
+ */
+function createProject() {
+  return {
+    type: PROJECT.CREATE_PROJECT,
+    payload: Promise.resolve(path)
+  };
 }
 
 /**
@@ -58,6 +71,18 @@ function loadIndex(fp) {
   return {
     type: PROJECT.LOAD_INDEX,
     payload: Project.loadIndex(fp)
+  };
+}
+
+/**
+ * Open new project folder.
+ * @param {String} fp - Project path
+ * @returns {object}
+ */
+function openProject(fp) {
+  return {
+    type: PROJECT.OPEN_PROJECT,
+    payload: Promise.resolve(fp)
   };
 }
 
@@ -104,10 +129,12 @@ function writeIndex() {
 export {
   addFile,
   addTag,
+  createProject,
   deleteFile,
   deleteTag,
   loadFileTree,
   loadIndex,
+  openProject,
   updateFile,
   updateIndex,
   updateTag,

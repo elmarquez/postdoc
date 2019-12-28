@@ -1,9 +1,4 @@
-import {
-  app,
-  Menu,
-  shell,
-  BrowserWindow
-} from 'electron';
+import { PROJECT } from '../../store/types';
 
 /**
  * Build Mac OS application menu.
@@ -65,7 +60,7 @@ function getAboutMenu() {
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click: () => app.quit()
+        click: () => console.info('quit application')
       }
     ]
   };
@@ -125,39 +120,46 @@ function getFileMenu(window) {
   return {
     label: 'File',
     submenu: [{
-        label: 'New File',
         accelerator: 'Command+N',
-        selector: 'new:file'
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'New File',
+        selector: PROJECT.CREATE_FILE,
       },
       {
-        label: 'New Project',
         accelerator: 'Command+Shift+N',
-        selector: 'new:project'
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'New Project',
+        selector: PROJECT.CREATE_PROJECT
       },
       {
         type: 'separator'
       },
       {
-        label: 'Open File',
         accelerator: 'Command+O',
-        selector: 'file:open'
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Open File',
+        selector: PROJECT.OPEN_FILE
       },
       {
-        label: 'Open Project',
         accelerator: 'Command+Shift+O',
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Open Project',
         selector: 'file:open:project'
       },
       {
-        label: 'Save',
         accelerator: 'Command+S',
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Save',
         selector: 'file:save'
       },
       {
-        label: 'Save As',
         accelerator: 'Command+Shift+S',
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Save As',
         selector: 'file:save:as'
       },
       {
+        click: (item, win) => win.webContents.send(item.selector),
         label: 'Save All',
         selector: 'file:save:all'
       },
@@ -165,8 +167,9 @@ function getFileMenu(window) {
         type: 'separator'
       },
       {
-        label: 'Close',
         accelerator: 'Command+W',
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Close',
         selector: 'file:close'
       },
     ]
@@ -183,29 +186,19 @@ function getHelpMenu(window) {
     label: 'Help',
     submenu: [{
         label: 'Learn More',
-        click() {
-          shell.openExternal('http://electron.atom.io');
-        }
+        click: () => console.info('click')
       },
       {
         label: 'Documentation',
-        click() {
-          shell.openExternal(
-            'https://github.com/atom/electron/tree/master/docs#readme'
-          );
-        }
+        click: () => console.info('click')
       },
       {
         label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
+        click: () => console.info('click')
       },
       {
         label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
-        }
+        click: () => console.info('click')
       }
     ]
   };

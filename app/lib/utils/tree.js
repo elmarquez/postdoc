@@ -1,5 +1,7 @@
-import { basename } from 'path';
+import { basename, extname } from 'path';
 import Promise from 'bluebird';
+import mime from 'mime-types';
+
 import files from './files';
 
 /**
@@ -7,7 +9,7 @@ import files from './files';
  * @param {string} cwd - Directory path
  * @returns {Promise}
  */
-function getDirectoryTree(cwd, recurse) {
+function getDirectoryTree(cwd) {
   return files
     .getFiles(cwd)
     .then(function(filez) {
@@ -28,7 +30,9 @@ function getDirectoryTree(cwd, recurse) {
             return { ...r, children };
           });
         }
-        return Promise.resolve(r);
+        const ext = extname(r.title);
+        const mimetype = mime.lookup(r.title);
+        return Promise.resolve({ ...r, ext, mimetype });
       });
       return Promise.all(promises);
     });

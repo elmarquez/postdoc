@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { equals } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
+import SplitPane from 'react-split-pane';
 import DocumentViewer from '../../components/document-viewer';
 import GlobalNavigation from '../../components/global-navigation';
 import { FlexColumn, FlexRow } from '../../components/layout';
@@ -49,7 +50,7 @@ class WorkspaceComponent extends React.Component {
                     <DocumentViewer />
                     <StatusBar />
                 </FlexColumn>
-            </FlexRow>                    
+            </FlexRow>
         );
     }
 }

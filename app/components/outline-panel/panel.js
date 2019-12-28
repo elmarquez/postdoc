@@ -40,19 +40,17 @@ class OutlinePanelComponent extends React.Component {
   componentDidUpdate(prevProps) {
     const self = this;
     if (!equals(self.props, prevProps)) {
-      const { profile } = self.props;
-      if (profile.data && profile.data.library) {
-        const { library } = profile.data;
-        if (library !== '') {
-          Project
-            .loadFileTree(library)
-            .then(function(tree) {
-              self.setState({ expandedKeys: [tree[0].key], tree });
-            })
-            .catch(function(err) {
-              console.error(err);
-            });
-        }
+      const { project } = self.props;
+      if (project.path !== "" && !equals(project.path, prevProps.project.path)) {
+        console.info('loading new project folder');
+        Project
+          .loadFileTree(project.path)
+          .then(function(tree) {
+            self.setState({ expandedKeys: [tree[0].key], tree });
+          })
+          .catch(function(err) {
+            console.error(err);
+          });
       }
     }
   }
@@ -69,10 +67,46 @@ class OutlinePanelComponent extends React.Component {
   /**
    * Get file icon.
    * @param {object} item - File metadata
-   * @returns {*}
+   * @returns {JSX.Element}
    */
   getIcon(item) {
-    return <File />;
+    switch (item.mimetype) {
+      case 'application/javascript':
+        return <File />;
+        break;
+      case 'application/json':
+        return <File />;
+        break;
+      case 'application/pdf':
+        return <File />;
+        break;
+      case 'application/postscript':
+        return <File />;
+        break;
+      case 'image/jpeg':
+        return <File />;
+        break;
+      case 'image/png':
+        return <File />;
+        break;
+      case 'image/svg+xml':
+        return <File />;
+        break;
+      case 'text/css':
+        return <File />;
+        break;
+      case 'text/html':
+        return <File />;
+        break;
+      case 'text/markdown':
+        return <File />;
+        break;
+      case 'text/yaml':
+        return <File />;
+        break;
+      default:
+        return <File />;
+    }
   }
 
   /**
@@ -80,9 +114,7 @@ class OutlinePanelComponent extends React.Component {
    * @param checkedKeys
    */
   onCheck(checkedKeys) {
-    this.setState({
-      checkedKeys
-    });
+    this.setState({ checkedKeys });
   }
 
   /**
@@ -185,6 +217,11 @@ class OutlinePanelComponent extends React.Component {
   }
 }
 
+/**
+ * Map data store state to component properties.
+ * @param {object} state - Data store state
+ * @returns {object}
+ */
 const mapStateToProps = state => {
   return {
     application: state.application,
