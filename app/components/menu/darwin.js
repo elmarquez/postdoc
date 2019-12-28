@@ -1,4 +1,5 @@
-import { PROJECT } from '../../store/types';
+import { app } from 'electron';
+import { APP, PROJECT } from '../../store/types';
 
 /**
  * Build Mac OS application menu.
@@ -22,32 +23,34 @@ function buildMenu(mainWindow) {
 
 /**
  * Get about menu.
+ * @param {electron.BrowserWindow} window - Application window
  */
-function getAboutMenu() {
+function getAboutMenu(window) {
   return {
     label: 'postdoc',
-    submenu: [{
+    submenu: [
+      {
+        click: (item, win) => win.webContents.send(APP.SHOW_ABOUT),
         label: 'About postdoc',
-        selector: 'orderFrontStandardAboutPanel:'
       },
       {
         type: 'separator'
       },
       {
+        click: (item, win) => win.webContents.send(APP.SHOW_PREFERENCES),
         label: 'Preferences',
-        selector: 'preferences:'
       },
       {
         type: 'separator'
       },
       {
-        label: 'Hide postdoc',
         accelerator: 'Command+H',
+        label: 'Hide postdoc',
         selector: 'hide:'
       },
       {
-        label: 'Hide Others',
         accelerator: 'Command+Shift+H',
+        label: 'Hide Others',
         selector: 'hideOtherApplications:'
       },
       {
@@ -58,9 +61,13 @@ function getAboutMenu() {
         type: 'separator'
       },
       {
-        label: 'Quit',
         accelerator: 'Command+Q',
-        click: () => console.info('quit application')
+        label: 'Quit',
+        click: () => {
+          // TODO save application state then close window, quit the application after timeout
+          window.close();
+          app.quit();
+        }
       }
     ]
   };
@@ -121,30 +128,26 @@ function getFileMenu(window) {
     label: 'File',
     submenu: [{
         accelerator: 'Command+N',
-        click: (item, win) => win.webContents.send(item.selector),
-        label: 'New File',
-        selector: PROJECT.CREATE_FILE,
+        click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE),
+        label: 'New File'
       },
       {
         accelerator: 'Command+Shift+N',
-        click: (item, win) => win.webContents.send(item.selector),
-        label: 'New Project',
-        selector: PROJECT.CREATE_PROJECT
+        click: (item, win) => win.webContents.send(PROJECT.CREATE_PROJECT),
+        label: 'New Project'
       },
       {
         type: 'separator'
       },
       {
         accelerator: 'Command+O',
-        click: (item, win) => win.webContents.send(item.selector),
-        label: 'Open File',
-        selector: PROJECT.OPEN_FILE
+        click: (item, win) => win.webContents.send(PROJECT.OPEN_FILE),
+        label: 'Open File'
       },
       {
         accelerator: 'Command+Shift+O',
-        click: (item, win) => win.webContents.send(item.selector),
-        label: 'Open Project',
-        selector: 'file:open:project'
+        click: (item, win) => win.webContents.send(PROJECT.OPEN_PROJECT),
+        label: 'Open Project'
       },
       {
         accelerator: 'Command+S',

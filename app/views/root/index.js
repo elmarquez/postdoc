@@ -4,7 +4,7 @@ import React, {Context} from 'react';
 import {connect, Provider} from 'react-redux'
 import {HashRouter, Route} from 'react-router-dom';
 import {createFile, loadIndex, openProject, updateIndex} from '../../store/actions/project';
-import {PROJECT} from '../../store/types';
+import { APP, PROJECT } from '../../store/types';
 import {App} from './styles';
 import Workspace from './workspace';
 
@@ -24,10 +24,12 @@ class Application extends React.Component {
    */
   componentDidMount() {
     // handle application menu bar actions
+    ipcRenderer.on(APP.SHOW_ABOUT, (e, msg) => console.info('show about'));
+    ipcRenderer.on(APP.SHOW_PREFERENCES, (e, msg) => console.info('show preferences'));
     ipcRenderer.on(PROJECT.CREATE_FILE, (e, msg) => this.onCreateFile());
     ipcRenderer.on(PROJECT.CREATE_PROJECT, (e, msg) => this.onCreateProject());
     ipcRenderer.on(PROJECT.OPEN_FILE, (e, msg) => this.onOpenFile());
-    ipcRenderer.on('file:open:project', (e, msg) => this.onOpenProject());
+    ipcRenderer.on(PROJECT.OPEN_PROJECT, (e, msg) => this.onOpenProject());
   }
 
   onCreateFile() {
