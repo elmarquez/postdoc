@@ -1,14 +1,15 @@
-import { Tree } from 'antd';
+import { Dropdown, Menu, Tree } from 'antd';
 import { equals } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 import { File } from 'styled-icons/fa-solid/File';
 import { Folder } from 'styled-icons/fa-solid/Folder';
 import { Body, Footer, Header, OutlinePanel } from './styles';
-import { loadIndex, updateIndex } from '../../store/actions/project';
+import { loadIndex, openFile, updateIndex } from '../../store/actions/project';
 import Project from '../../lib/project';
 
-const { TreeNode } = Tree;
+const { DirectoryTree, TreeNode } = Tree;
+const DOUBLE_CLICK_TIMEOUT = 200;
 
 /**
  * Outline panel.
@@ -20,15 +21,12 @@ class OutlinePanelComponent extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.clickTarget = null;
+    this.doubleClickTimeout = null;
     this.state = {
       autoExpandParent: true,
-      // checkable: false,
-      // checkedKeys: [],
       expandedKeys: [],
-      // filter: null,
       selectedKeys: [],
-      showIcon: true,
-      showLine: false,
       tree: []
     };
   }
@@ -110,14 +108,6 @@ class OutlinePanelComponent extends React.Component {
   }
 
   /**
-   * Handle tree item check.
-   * @param checkedKeys
-   */
-  onCheck(checkedKeys) {
-    this.setState({ checkedKeys });
-  }
-
-  /**
    * Handle tree item expand event.
    * @param {array} expandedKeys - List of expanded tree nodes
    */
@@ -127,28 +117,26 @@ class OutlinePanelComponent extends React.Component {
     this.setState({ autoExpandParent: false, expandedKeys });
   }
 
-  // onLoadData(treeNode) {
-  //   const self = this;
-  //   console.info('load', treeNode);
-  //   const { key } = treeNode.props.dataRef;
-  //   return Project.loadFileTree(key).then(function(subtree) {
-  //     const tree = clone(this.state.tree);
-  //     const keyLens = lensProp('key');
-  //     const children = subtree.children;
-  //     const node = set(keyLens, key, {children});
-  //     console.info('subtree', subtree);
-  //     treeNode.props.dataRef.children = children;
-  //     self.setState({ tree: [...self.state.tree] });
-  //     return subtree;
-  //   });
-  // }
+  onNodeContextClick(e) {
+    console.info('node context click', e);
+  }
 
   /**
    * Handle tree item selection.
-   * @param selectedKeys
-   * @param info
+   * @param {array} selectedKeys - Selected node keys
+   * @param {Event} e - Click event
    */
-  onSelect(selectedKeys, info) {
+  onSelect(selectedKeys, e) {
+    const self = this;
+    if (self.doubleClickTimeout !== null && self.clickTarget === e.node.key) {
+      this.props.openFile(e.node.key);
+    } else {
+      self.clickTarget = e.node.key;
+      self.doubleClickTimeout = setTimeout(() => {
+        self.clickTarget = null;
+        self.doubleClickTimeout = null;
+      }, DOUBLE_CLICK_TIMEOUT);
+    }
     this.setState({ selectedKeys });
   }
 
@@ -157,21 +145,19 @@ class OutlinePanelComponent extends React.Component {
    * @returns {XML}
    */
   render() {
+    const icon = (<Folder style={{width:16}} />);
     return (
       <OutlinePanel className="noselect">
         <Body>
-          <Tree
-            autoExpandParent={this.state.autoExpandParent}
-            expandedKeys={this.state.expandedKeys}
-            onCheck={this.onCheck.bind(this)}
+          <DirectoryTree
+            defaultExpandAll
+            multiple
             onExpand={this.onExpand.bind(this)}
+            onRightClick={this.onNodeContextClick.bind(this)}
             onSelect={this.onSelect.bind(this)}
-            selectedKeys={this.state.selectedKeys}
-            showIcon={this.state.showIcon}
-            showLine={this.state.showLine}
-          >
+            >
             {this.renderTreeNodes(this.state.tree)}
-          </Tree>
+          </DirectoryTree>
         </Body>
       </OutlinePanel>
     );
@@ -199,20 +185,23 @@ class OutlinePanelComponent extends React.Component {
    * @returns {*}
    */
   renderTreeNodes(data) {
+    /* eslint no-else-return: 0 */
     return data
       .filter(item => !item.hidden)
       .map((item) => {
+        const { key, title } = item;
         if (item.dir === true && Array.isArray(item.children)) {
           const icon = <Folder />;
           return (
-            <TreeNode title={item.title} icon={icon} key={item.key} dataRef={item}>
+            <TreeNode key={key} title={title}>
               {this.renderTreeNodes(item.children)}
             </TreeNode>
           );
+        } else {
+          // a file or symbolic link
+          // const icon = this.getIcon(item);
+          return <TreeNode key={key} title={title} isLeaf />;
         }
-        // a file or symbolic link
-        const icon = this.getIcon(item);
-        return <TreeNode {...item} icon={icon} isLeaf dataRef={item} />;
       });
   }
 }
@@ -235,10 +224,11 @@ const mapStateToProps = state => {
  * @param {Function} dispatch - Redux dispatch function
  * @return {Object} Map of functions to be assigned to the component props
  */
-const mapDispatchToProps = dispatch => ({
-  loadIndex: fp => dispatch(loadIndex(fp)),
-  updateIndex: fp => dispatch(updateIndex(fp))
-});
+const mapDispatchToProps = {
+  loadIndex,
+  openFile,
+  updateIndex
+};
 
 export default connect(
   mapStateToProps,

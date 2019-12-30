@@ -1,5 +1,6 @@
 import { PROJECT } from '../types';
 import Project from '../../lib/project';
+import files from '../../lib/utils/files';
 
 const { dialog } = require('electron');
 
@@ -19,6 +20,16 @@ function addFile(fp) {
  */
 function addTag(tag) {
   return { type: PROJECT.ADD_FILE, tag };
+}
+
+/**
+ * Close file. Before calling this function, you should prompt the user to
+ * persist the file state.
+ * @param {String} fp - File path
+ * @returns {object}
+ */
+function closeFile(fp) {
+
 }
 
 /**
@@ -71,6 +82,18 @@ function loadIndex(fp) {
   return {
     type: PROJECT.LOAD_INDEX,
     payload: Project.loadIndex(fp)
+  };
+}
+
+/**
+ * Open file.
+ * @param {String} fp - File path
+ * @returns {object}
+ */
+function openFile(fp) {
+  return {
+    type: PROJECT.OPEN_FILE,
+    payload: files.readFile(fp)
   };
 }
 
@@ -134,6 +157,7 @@ export {
   deleteTag,
   loadFileTree,
   loadIndex,
+  openFile,
   openProject,
   updateFile,
   updateIndex,

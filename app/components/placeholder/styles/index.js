@@ -16,7 +16,17 @@ const Image = styled.div`
 `;
 
 const Body = styled.div`
-  margin: 12px 0 0 0;
+  padding: 12px 0 0 0;
+  
+  h1, h2, h3 {
+    color: rgba(0,0,0,0.6);
+  }
+  
+  .command {
+    border: 2px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    padding: 1px 3px;
+  }
 `;
 
 const Title = styled.div``;

@@ -238,24 +238,34 @@ function mkdir(p, mode) {
 }
 
 /**
- * Read JSON file.
+ * Read file data.
  * @param {String} f - Path to file
- * @return {Promise<Object>}
+ * @return {Promise<string>}
  */
-function readJSON(f) {
+function readFile(f) {
   return new Promise(function(resolve, reject) {
     fs.readFile(f, 'utf8', function(err, data) {
       if (err) {
         reject(err);
       } else {
-        try {
-          const obj = JSON.parse(data);
-          resolve(obj);
-        } catch (err) {
-          reject(err);
-        }
+        resolve(data);
       }
     });
+  });
+}
+
+/**
+ * Read JSON file.
+ * @param {String} f - Path to file
+ * @return {Promise<Object>}
+ */
+function readJSON(f) {
+  return readFile(f).then(function(data) {
+    try {
+      return JSON.parse(data);
+    } catch (err) {
+      throw new Error(err);
+    }
   });
 }
 
@@ -313,6 +323,7 @@ export default {
   getStats,
   isAccessible: isWriteable,
   mkdir,
+  readFile,
   readJSON,
   removeDirectories,
   removeHiddenFiles,

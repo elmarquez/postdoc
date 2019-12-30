@@ -1,7 +1,15 @@
 import {PROJECT} from '../types';
 
+const DEFAULT_FILE_STATE = {
+  changed: false,
+  data: null,
+  error: null,
+  isPending: false
+};
+
 const INITIAL_STATE = {
   data: null,
+  files: [],
   error: null,
   isPending: false,
   path: null,
@@ -34,6 +42,15 @@ export default function (state = INITIAL_STATE, action) {
     }
     case PROJECT.LOAD_INDEX_REJECTED: {
       return {...state, error: payload.message, isPending: false};
+    }
+    case PROJECT.OPEN_FILE_FULFILLED: {
+      return {...state, path: payload, isPending: false};
+    }
+    case PROJECT.OPEN_FILE_PENDING: {
+      return {...state, error: null, isPending: true};
+    }
+    case PROJECT.OPEN_FILE_REJECTED: {
+      return {...state, error: payload, isPending: false};
     }
     case PROJECT.OPEN_PROJECT_FULFILLED: {
       return {...state, path: payload, isPending: false};

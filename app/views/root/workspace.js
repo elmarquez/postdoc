@@ -42,13 +42,13 @@ class WorkspaceComponent extends React.Component {
      * @returns {JSX.Element}
      */
     render() {
+        const { app, profile, project } = this.props;
         return (
             <FlexRow alignItems={'stretch'} flexGrow={2}>
-                <GlobalNavigation />
                 <Outline profile={1} />
                 <FlexColumn flexGrow={2}>
-                    <DocumentViewer />
-                    <StatusBar />
+                    <DocumentViewer app={app} profile={profile} project={project} />
+                    <StatusBar app={app} profile={profile} project={project} />
                 </FlexColumn>
             </FlexRow>
         );
@@ -82,7 +82,6 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
     return {
         app: state.app,
-        library: state.library,
         profile: state.profile,
         project: state.project,
     };
