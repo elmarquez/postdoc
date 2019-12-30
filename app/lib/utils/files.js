@@ -288,27 +288,37 @@ function removeHiddenFiles(files) {
 }
 
 /**
+ * Write file.
+ * @param {String} fp - Path to file
+ * @param {Object} obj - Data
+ * @return {Promise}
+ */
+function writeFile(fp, data) {
+  return new Promise(function(resolve, reject) {
+    fs.writeFile(fp, data, 'utf8', function(err) {
+      if (err) {
+        reject(err);
+      } else {
+        console.debug('Wrote file', fp, obj);
+        resolve();
+      }
+    });
+  });
+}
+
+/**
  * Write JSON file.
  * @param {String} fp - Path to file
  * @param {Object} obj - Data
  * @return {Promise}
  */
 function writeJSON(fp, obj) {
-  return new Promise(function(resolve, reject) {
-    try {
-      const data = JSON.stringify(obj);
-      fs.writeFile(fp, data, 'utf8', function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          console.debug('Wrote file', fp, obj);
-          resolve();
-        }
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
+  try {
+    const data = JSON.stringify(obj);
+    return writeFile(fp, data);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 }
 
 export default {
@@ -327,5 +337,6 @@ export default {
   readJSON,
   removeDirectories,
   removeHiddenFiles,
+  writeFile,
   writeJSON
 };

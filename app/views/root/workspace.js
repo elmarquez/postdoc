@@ -8,7 +8,7 @@ import GlobalNavigation from '../../components/global-navigation';
 import { FlexColumn, FlexRow } from '../../components/layout';
 import { Panel as Outline } from '../../components/outline-panel';
 import StatusBar from '../../components/status-bar';
-import { loadFileTree, loadIndex } from '../../store/actions/project';
+import { loadIndex } from '../../store/actions/project';
 import { loadProfile } from '../../store/actions/profile';
 
 /**
@@ -26,16 +26,7 @@ class WorkspaceComponent extends React.Component {
      * Handle componentDidUpdate lifecycle event.
      * @param {object} prevProps - Previous component properties
      */
-    componentDidUpdate(prevProps) {
-        if (!equals(this.props, prevProps)) {
-            if (!equals(this.props.profile.data, prevProps.profile.data)) {
-                const { data } = this.props.profile;
-                if (data.library !== null) {
-                    this.props.loadFileTree(data.library);
-                }
-            }
-        }
-    }
+    componentDidUpdate(prevProps) {}
 
     /**
      * Render the component.
@@ -58,7 +49,6 @@ class WorkspaceComponent extends React.Component {
 WorkspaceComponent.propTypes = {
     app: PropTypes.object,
     library: PropTypes.object,
-    loadFileTree: PropTypes.func,
     loadProfile: PropTypes.func,
     profile: PropTypes.object,
     project: PropTypes.object,
@@ -69,7 +59,6 @@ WorkspaceComponent.propTypes = {
  * @returns {object}
  */
 const mapDispatchToProps = {
-    loadFileTree,
     loadIndex,
     loadProfile
 };

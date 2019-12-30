@@ -4,11 +4,12 @@ const DEFAULT_FILE_STATE = {
   changed: false,
   data: null,
   error: null,
-  isPending: false
+  isPending: false,
+  path: null
 };
 
 const INITIAL_STATE = {
-  data: null,
+  active: 0,
   files: [],
   error: null,
   isPending: false,
@@ -44,7 +45,10 @@ export default function (state = INITIAL_STATE, action) {
       return {...state, error: payload.message, isPending: false};
     }
     case PROJECT.OPEN_FILE_FULFILLED: {
-      return {...state, path: payload, isPending: false};
+      const file = { ...DEFAULT_FILE_STATE, data: payload.data, path: payload.path};
+      const active = state.files.length;
+      const files = state.files.concat([file]);
+      return { ...state, active, files, isPending: false };
     }
     case PROJECT.OPEN_FILE_PENDING: {
       return {...state, error: null, isPending: true};

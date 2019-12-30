@@ -93,7 +93,9 @@ function loadIndex(fp) {
 function openFile(fp) {
   return {
     type: PROJECT.OPEN_FILE,
-    payload: files.readFile(fp)
+    payload: files.readFile(fp).then(data => {
+      return { path: fp, data };
+    })
   };
 }
 

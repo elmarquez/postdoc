@@ -40,7 +40,6 @@ class OutlinePanelComponent extends React.Component {
     if (!equals(self.props, prevProps)) {
       const { project } = self.props;
       if (project.path !== "" && !equals(project.path, prevProps.project.path)) {
-        console.info('loading new project folder');
         Project
           .loadFileTree(project.path)
           .then(function(tree) {
@@ -129,7 +128,7 @@ class OutlinePanelComponent extends React.Component {
   onSelect(selectedKeys, e) {
     const self = this;
     if (self.doubleClickTimeout !== null && self.clickTarget === e.node.key) {
-      this.props.openFile(e.node.key);
+      this.props.openFile(e.node.props.eventKey);
     } else {
       self.clickTarget = e.node.key;
       self.doubleClickTimeout = setTimeout(() => {

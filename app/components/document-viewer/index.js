@@ -1,7 +1,7 @@
 import {Layout} from 'antd';
 import PropTypes from 'prop-types';
 import { equals } from 'ramda';
-import React from 'react';
+import React, { Fragment } from 'react';
 import Placeholder from '../placeholder';
 import {FlexColumn, FlexRow} from '../layout';
 import TabPanel from '../tabs';
@@ -14,6 +14,10 @@ const {Header, Footer, Sider, Content} = Layout;
  */
 class DocumentViewerComponent extends React.Component {
 
+  /**
+   * Constructor
+   * @param {object} props - Component properties
+   */
   constructor(props) {
     super(props);
     this.newTabIndex = 0;
@@ -49,7 +53,7 @@ class DocumentViewerComponent extends React.Component {
   }
 
   remove(targetKey) {
-    let {activeKey} = this.state;
+    const { active } = this.state;
     let lastIndex;
     this.state.panes.forEach((pane, i) => {
       if (pane.key === targetKey) {
@@ -68,15 +72,37 @@ class DocumentViewerComponent extends React.Component {
   }
 
   /**
-   *
+   * Render the component.
+   * @return {JSX.Element}
    */
   render() {
-    const { project } = this.props;
     return (
       <Viewer>
-        {equals(project.data, null) && this.renderPlaceholder()}
-        {!equals(project.data, null) && this.renderTabs()}
+        {this.renderDocumentViewer()}
       </Viewer>
+    );
+  }
+
+  /**
+   * Render the document viewer panel.
+   * @returns {JSX.Element}
+   */
+  renderDocumentViewer() {
+    const { project } = this.props;
+    if (equals(project.path, null)) {
+      return this.renderProjectPlaceholder();
+    } else if (project.files.length === 0) {
+      return this.renderFilesPlaceholder();
+    } else {
+      return this.renderTabs();
+    }
+  }
+
+  renderFilesPlaceholder() {
+    return (
+      <Placeholder>
+        <h2>Open a file <span className={'command'}>&#8984; O</span></h2>
+      </Placeholder>
     );
   }
 
@@ -84,7 +110,7 @@ class DocumentViewerComponent extends React.Component {
    * Render the placeholder if a project has not yet been opened.
    * @returns {JSX.Element}
    */
-  renderPlaceholder() {
+  renderProjectPlaceholder() {
     return (
       <Placeholder>
         <h2>Open a project <span className={'command'}>&#8984;&#8679; O</span></h2>
@@ -97,7 +123,8 @@ class DocumentViewerComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderTabs() {
-    return <TabPanel/>;
+    const { active, files } = this.props.project;
+    return (<TabPanel active={active} tabs={files} />);
   }
 }
 

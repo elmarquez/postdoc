@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import { Editor } from './styles';
@@ -20,7 +21,7 @@ class DocumentEditorComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'This is a test',
+            value: props.data || '',
             options: {
                 lineNumbers: true,
                 mode: 'javascript',
@@ -42,5 +43,10 @@ class DocumentEditorComponent extends React.Component {
         );
     }
 }
+
+DocumentEditorComponent.propTypes = {
+    data: PropTypes.string,
+    onChange: PropTypes.func
+};
 
 export default DocumentEditorComponent;
