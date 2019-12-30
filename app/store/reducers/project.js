@@ -26,6 +26,9 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
   const {payload, type} = action;
   switch (type) {
+    case PROJECT.CLOSE_FILE_FULFILLED: {
+      return state;
+    }
     case PROJECT.LOAD_FILE_TREE_FULFILLED: {
       return {...state, tree: payload, isPending: true};
     }
@@ -65,8 +68,11 @@ export default function (state = INITIAL_STATE, action) {
     case PROJECT.OPEN_PROJECT_REJECTED: {
       return {...state, error: payload, isPending: false};
     }
+    case PROJECT.SET_ACTIVE_FILE: {
+      const active = state.files.findIndex((f) => f.path === action.data);
+      return { ...state, active };
+    }
     case PROJECT.UPDATE: {
-      console.info('library update!');
       const data = {...state.library.data, ...action.payload};
       const library = {...state.library, data};
       return {...state, library};

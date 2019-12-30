@@ -14,7 +14,7 @@ const INITIAL_STATE = {
  */
 export default function(state = INITIAL_STATE, action) {
     const { payload, type } = action;
-    switch (action.type) {
+    switch (type) {
       case PROFILE.LOAD_PROFILE_FULFILLED: {
         return { ...state, data: payload, isPending: false };
       }
@@ -28,4 +28,3 @@ export default function(state = INITIAL_STATE, action) {
         return state;
     }
   }
-  

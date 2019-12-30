@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import { equals } from 'ramda';
 import React from 'react';
-import CodeMirror from 'react-codemirror';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { Editor } from './styles';
 
 // editor styles
@@ -18,35 +19,42 @@ import 'codemirror/theme/monokai.css';
  * Document editor.
  */
 class DocumentEditorComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: props.data || '',
-            options: {
-                lineNumbers: true,
-                mode: 'javascript',
-                theme: 'monokai'
-            }
-        };
-    }
+  /**
+   * Constructor
+   * @param {object} props - Component properties
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data || '',
+      options: {
+        lineNumbers: true,
+        mode: 'javascript',
+        theme: 'monokai'
+      }
+    };
+  }
 
-    onChange(a, b, c) {
-        console.info('change', a, b, c);
-    }
+  onChange(a, b, c) {
+    console.info('change', a, b, c);
+  }
 
-    render() {
-        const { options, value } = this.state;
-        return (
-            <Editor>
-                <CodeMirror value={value} onChange={this.onChange.bind(this)} options={options} />
-            </Editor>
-        );
-    }
+  render() {
+    const { data, options } = this.state;
+    return (
+      <Editor>
+        <CodeMirror
+          onChange={this.onChange.bind(this)}
+          options={options}
+          value={this.props.data} />
+      </Editor>
+    );
+  }
 }
 
 DocumentEditorComponent.propTypes = {
-    data: PropTypes.string,
-    onChange: PropTypes.func
+  data: PropTypes.string,
+  onChange: PropTypes.func
 };
 
 export default DocumentEditorComponent;

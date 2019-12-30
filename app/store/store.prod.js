@@ -4,7 +4,6 @@ import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise-middleware';
 import { createRootReducer } from './reducers';
 
-
 const history = createHashHistory();
 const rootReducer = createRootReducer(history);
 const router = routerMiddleware(history);

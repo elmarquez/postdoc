@@ -1,8 +1,6 @@
 import shortid from 'shortid';
 import { Promise } from 'bluebird';
 import { APP } from '../types';
-import Library from '../../lib/library';
-import { loadIndex } from './library';
 import Profile from '../../lib/profile';
 
 /**
@@ -24,14 +22,7 @@ function deleteSetting(settingId) {
 function loadApplicationState() {
   return {
     type: APP.LOAD_APPLICATION_STATE,
-    payload: Profile.getProfile().then(function(profile) {
-      if (profile.library && profile.library !== '') {
-        return Library.loadIndex(profile.library).then(function(library) {
-          return { profile, library };
-        });
-      }
-      return { profile };
-    })
+    payload: Profile.getProfile()
   };
 }
 

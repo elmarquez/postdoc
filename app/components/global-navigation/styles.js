@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import COLOURS from '../../constants/colours';
 
 const Body = styled.div`
   align-items: center;

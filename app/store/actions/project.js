@@ -29,7 +29,10 @@ function addTag(tag) {
  * @returns {object}
  */
 function closeFile(fp) {
-
+  return {
+    type: PROJECT.CLOSE_FILE,
+    payload: Promise.resolve(fp)
+  };
 }
 
 /**
@@ -111,6 +114,13 @@ function openProject(fp) {
   };
 }
 
+function setActiveFile(fp) {
+  return {
+    type: PROJECT.SET_ACTIVE_FILE,
+    data: fp
+  };
+}
+
 /**
  * Update file record.
  * @param {String} fp - File path
@@ -154,6 +164,7 @@ function writeIndex() {
 export {
   addFile,
   addTag,
+  closeFile,
   createProject,
   deleteFile,
   deleteTag,
@@ -161,6 +172,7 @@ export {
   loadIndex,
   openFile,
   openProject,
+  setActiveFile,
   updateFile,
   updateIndex,
   updateTag,

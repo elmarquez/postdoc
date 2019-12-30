@@ -4,10 +4,9 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise-middleware';
 
-
 // actions
-// import * as appActions from './actions/app';
-// import * as profileActions from './actions/profile';
+import * as appActions from './actions/app';
+import * as profileActions from './actions/profile';
 import * as projectActions from './actions/project';
 
 // reducers
@@ -40,10 +39,10 @@ const configureStore = (initialState) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    // ...appActions,
-    // ...profileActions,
+    ...appActions,
+    ...profileActions,
     ...projectActions,
-    // ...routerActions
+    ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */

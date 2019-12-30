@@ -1,3 +1,4 @@
+/* eslint react/no-unused-state:0 */
 import React from 'react';
 import { StatusBar, Group, Item } from './styles';
 

@@ -16,12 +16,13 @@ const INITIAL_STATE = {
  * @returns {Object} next state
  */
 export default function(state = INITIAL_STATE, action) {
-    switch (action.type) {
+  const { payload, type } = action;
+    switch (type) {
       case APP.LOAD_APPLICATION_STATE_FULFILLED: {
         const library = {
           ...state.library,
-          data: { ...DATABASE_DEFAULT, ...action.payload.library },
-          path: action.payload.profile.library,
+          data: { ...state.data, ...action.payload.library },
+          path: payload.profile.library,
           isLoading: false
         };
         const profile = {
@@ -46,4 +47,3 @@ export default function(state = INITIAL_STATE, action) {
         return state;
     }
   }
-  

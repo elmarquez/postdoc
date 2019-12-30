@@ -1,3 +1,4 @@
+/* eslint func-names:0 */
 import { basename, extname } from 'path';
 import Promise from 'bluebird';
 import mime from 'mime-types';

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { PrimitiveDot } from 'styled-icons/octicons/PrimitiveDot';
 import COLOURS from '../../../constants/colours';
 
 import { FlexColumn, FlexRow } from '../../layout';

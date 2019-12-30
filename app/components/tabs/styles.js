@@ -15,6 +15,7 @@ const Tab = styled.div`
     border-bottom: ${EDGE_THICKNESS}px solid #444;
     border-left: ${EDGE_THICKNESS}px solid #444;
     border-right: ${EDGE_THICKNESS}px solid transparent;
+    border-top: 2px solid transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,6 +23,7 @@ const Tab = styled.div`
 
     &.active {
         border-bottom: ${EDGE_THICKNESS}px solid transparent;
+        border-top: 2px solid cornflowerblue;
     } 
 `;
 

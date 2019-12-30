@@ -12,7 +12,7 @@ import tree from './tree';
  * @returns {Promise<any>}
  */
 function loadJSON(p) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     fs.readFile(p, 'utf8', (err, data) => {
       if (err) {
         reject(err);

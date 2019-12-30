@@ -1,7 +1,6 @@
 /**
  * Webpack config for production electron main process
  */
-
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -21,8 +20,6 @@ export default merge.smart(baseConfig, {
     filename: './app/main.prod.js'
   },
   target: 'electron-main',
-
-
   optimization: {
     minimizer: process.env.E2E_BUILD
       ? []
@@ -34,14 +31,12 @@ export default merge.smart(baseConfig, {
           })
         ]
   },
-
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode:
         process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
       openAnalyzer: process.env.OPEN_ANALYZER === 'true'
     }),
-
     /**
      * Create global constants which can be configured at compile time.
      *
@@ -57,7 +52,6 @@ export default merge.smart(baseConfig, {
       START_MINIMIZED: false
     })
   ],
-
   /**
    * Disables webpack processing of __dirname and __filename.
    * If you run the bundle in node.js it falls back to these values of node.js.

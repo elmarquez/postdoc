@@ -3,10 +3,10 @@ import styled from 'styled-components';
 const Editor = styled.div`
     flex-grow: 2;
 
-    & > .ReactCodeMirror {
+    .react-codemirror2 {
         height: 100%;
 
-        & > .CodeMirror {
+        .CodeMirror {
             height: 100%;
         }
     }

@@ -1,3 +1,4 @@
+/* eslint class-methods-use-this:0 */
 import { Menu } from 'electron';
 import * as Darwin from './darwin';
 import * as Posix from './posix';
