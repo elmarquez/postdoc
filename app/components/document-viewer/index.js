@@ -2,10 +2,12 @@ import {Layout} from 'antd';
 import PropTypes from 'prop-types';
 import { equals } from 'ramda';
 import React, { Fragment } from 'react';
+import Dropzone from 'react-dropzone';
 import Placeholder from '../placeholder';
 import {FlexColumn, FlexRow} from '../layout';
 import TabPanel from '../tabs';
 import {Viewer} from './styles';
+import StatusBar from "../status-bar";
 
 const {Header, Footer, Sider, Content} = Layout;
 
@@ -33,6 +35,7 @@ class DocumentViewerComponent extends React.Component {
     ];
     this.state = {
       activeKey: panes[0].key,
+      dragging: false,
       panes,
     };
   }
@@ -46,6 +49,18 @@ class DocumentViewerComponent extends React.Component {
 
   onChange(activeKey) {
     this.setState({activeKey});
+  }
+
+  onDragEnter() {
+    this.setState({ dragging: true });
+  }
+
+  onDragLeave() {
+    this.setState({ dragging: false });
+  }
+
+  onDrop() {
+    this.setState({ dragging: false });
   }
 
   onEdit(targetKey, action) {
@@ -76,10 +91,14 @@ class DocumentViewerComponent extends React.Component {
    * @return {JSX.Element}
    */
   render() {
+    const { app, profile, project} = this.props;
     return (
-      <Viewer>
-        {this.renderDocumentViewer()}
-      </Viewer>
+      <FlexColumn flexGrow={2}>
+        <Viewer>
+          {this.renderDocumentViewer()}
+        </Viewer>
+        <StatusBar app={app} profile={profile} project={project} />
+      </FlexColumn>
     );
   }
 
@@ -124,7 +143,9 @@ class DocumentViewerComponent extends React.Component {
    */
   renderTabs() {
     const { active, files } = this.props.project;
-    return (<TabPanel active={active} tabs={files} />);
+    return (
+      <TabPanel active={active} tabs={files} />
+    );
   }
 }
 

@@ -1,9 +1,11 @@
+import { basename } from 'path';
 import {PROJECT} from '../types';
 
 const DEFAULT_FILE_STATE = {
-  changed: false,
   data: null,
   error: null,
+  filename: null,
+  isChanged: false,
   isPending: false,
   path: null
 };
@@ -26,6 +28,12 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
   const {payload, type} = action;
   switch (type) {
+    case PROJECT.CREATE_FILE_FULFILLED: {
+      const file = { ...DEFAULT_FILE_STATE, data: '', filename: 'untitled', path: null};
+      const active = state.files.length;
+      const files = state.files.concat([file]);
+      return { ...state, active, files, isPending: false };
+    }
     case PROJECT.CLOSE_FILE_FULFILLED: {
       return state;
     }
@@ -48,7 +56,7 @@ export default function (state = INITIAL_STATE, action) {
       return {...state, error: payload.message, isPending: false};
     }
     case PROJECT.OPEN_FILE_FULFILLED: {
-      const file = { ...DEFAULT_FILE_STATE, data: payload.data, path: payload.path};
+      const file = { ...DEFAULT_FILE_STATE, data: payload.data, filename: basename(payload.path), path: payload.path};
       const active = state.files.length;
       const files = state.files.concat([file]);
       return { ...state, active, files, isPending: false };

@@ -57,9 +57,8 @@ class TabPanelComponent extends React.Component {
   renderTabs() {
     const self = this;
     const tabs = self.props.tabs.map(function (tab, key) {
-      const name = basename(tab.path);
       const classes = self.props.project.active === key ? 'active' : '';
-      return (<Tab className={classes} key={key} onClick={() => self.onTabSelect(tab)}>{name}</Tab>);
+      return (<Tab className={classes} key={key} onClick={() => self.onTabSelect(tab)}>{tab.filename}</Tab>);
     });
     return (
       <Fragment>{tabs}</Fragment>

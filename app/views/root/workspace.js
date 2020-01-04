@@ -37,10 +37,7 @@ class WorkspaceComponent extends React.Component {
         return (
             <FlexRow alignItems={'stretch'} flexGrow={2}>
                 <Outline profile={1} />
-                <FlexColumn flexGrow={2}>
-                    <DocumentViewer app={app} profile={profile} project={project} />
-                    <StatusBar app={app} profile={profile} project={project} />
-                </FlexColumn>
+                <DocumentViewer app={app} profile={profile} project={project} />
             </FlexRow>
         );
     }

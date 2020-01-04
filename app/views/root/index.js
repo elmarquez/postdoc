@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, {Context} from 'react';
 import {connect, Provider} from 'react-redux'
 import {HashRouter, Route} from 'react-router-dom';
-import {createFile, loadIndex, openProject, updateIndex} from '../../store/actions/project';
+import {createFile, loadIndex, openFile, openProject, updateIndex} from '../../store/actions/project';
 import { APP, PROJECT } from '../../store/types';
 import {App} from './styles';
 import Workspace from './workspace';
@@ -32,10 +32,16 @@ class Application extends React.Component {
     ipcRenderer.on(PROJECT.OPEN_PROJECT, (e, msg) => this.onOpenProject());
   }
 
+  /**
+   *
+   */
   onCreateFile() {
-    console.info('create file');
+    this.props.createFile();
   }
 
+  /**
+   *
+   */
   onCreateProject() {
     console.info('create project')
     const options = {
@@ -47,10 +53,32 @@ class Application extends React.Component {
     const path = dialog.showOpenDialogSync(options);
   }
 
+  /**
+   *
+   */
   onOpenFile() {
-    console.info('open file')
+    const self = this;
+    const options = {
+      buttonLabel: 'Open',
+      properties: ['openFile'],
+      title: 'Open file'
+    };
+    dialog
+      .showOpenDialog(options)
+      .then(function(result) {
+        const { cancelled, filePaths } = result;
+        if (!cancelled) {
+          self.props.openFile(filePaths.pop());
+        }
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
   }
 
+  /**
+   *
+   */
   onOpenProject() {
     const self = this;
     const options = {
@@ -116,6 +144,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   createFile,
   loadIndex,
+  openFile,
   openProject,
   updateIndex
 };

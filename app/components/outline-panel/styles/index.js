@@ -58,7 +58,6 @@ const Header = styled.div`
 const OutlinePanel = styled.div`
   align-items: stretch;
   background-color: ${COLOURS.BACKGROUND_LIGHT_GRAY};
-  border-right: 1px solid rgb(217, 217, 218);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

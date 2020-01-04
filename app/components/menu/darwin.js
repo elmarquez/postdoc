@@ -173,8 +173,13 @@ function getFileMenu(window) {
       {
         accelerator: 'Command+W',
         click: (item, win) => win.webContents.send(item.selector),
-        label: 'Close',
+        label: 'Close File',
         selector: 'file:close'
+      },
+      {
+        click: (item, win) => win.webContents.send(item.selector),
+        label: 'Close Project',
+        selector: 'file:close:project'
       },
     ]
   };

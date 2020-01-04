@@ -1,3 +1,4 @@
+import { basename } from 'path';
 import { PROJECT } from '../types';
 import Project from '../../lib/project';
 import files from '../../lib/utils/files';
@@ -32,6 +33,18 @@ function closeFile(fp) {
   return {
     type: PROJECT.CLOSE_FILE,
     payload: Promise.resolve(fp)
+  };
+}
+
+/**
+ * Create file.
+ * @param {string} fp - File path
+ * @returns {Object}
+ */
+function createFile(fp) {
+  return {
+    type: PROJECT.CREATE_FILE,
+    payload: fp !== null ? Promise.resolve(fp) : Promise.resolve()
   };
 }
 
@@ -97,7 +110,7 @@ function openFile(fp) {
   return {
     type: PROJECT.OPEN_FILE,
     payload: files.readFile(fp).then(data => {
-      return { path: fp, data };
+      return { filename: basename(fp), path: fp, data };
     })
   };
 }
@@ -165,6 +178,7 @@ export {
   addFile,
   addTag,
   closeFile,
+  createFile,
   createProject,
   deleteFile,
   deleteTag,
