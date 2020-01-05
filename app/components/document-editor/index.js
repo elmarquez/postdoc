@@ -35,8 +35,14 @@ class DocumentEditorComponent extends React.Component {
     };
   }
 
+  /**
+   * Handle document change event.
+   * @param a
+   * @param b
+   * @param c
+   */
   onChange(a, b, c) {
-    console.info('change', a, b, c);
+    // console.info('change', a, b, c);
   }
 
   render() {

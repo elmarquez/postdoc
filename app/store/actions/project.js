@@ -1,17 +1,18 @@
-import { basename } from 'path';
+import { basename, extname } from 'path';
 import { PROJECT } from '../types';
 import Project from '../../lib/project';
 import files from '../../lib/utils/files';
+import { getFileType } from '../../lib/utils/type';
 
 const { dialog } = require('electron');
 
 /**
  * Add file.
- * @param {String} fp - File path
+ * @param {String} path - File path
  * @returns {Object}
  */
-function addFile(fp) {
-  return { type: PROJECT.ADD_FILE, path: fp };
+function addFile(path) {
+  return { type: PROJECT.ADD_FILE, path };
 }
 
 /**
@@ -26,25 +27,25 @@ function addTag(tag) {
 /**
  * Close file. Before calling this function, you should prompt the user to
  * persist the file state.
- * @param {String} fp - File path
+ * @param {String} path - File path
  * @returns {object}
  */
-function closeFile(fp) {
+function closeFile(path) {
   return {
     type: PROJECT.CLOSE_FILE,
-    payload: Promise.resolve(fp)
+    payload: Promise.resolve(path)
   };
 }
 
 /**
  * Create file.
- * @param {string} fp - File path
+ * @param {string} path - File path
  * @returns {Object}
  */
-function createFile(fp) {
+function createFile(path) {
   return {
     type: PROJECT.CREATE_FILE,
-    payload: fp !== null ? Promise.resolve(fp) : Promise.resolve()
+    payload: path !== null ? Promise.resolve(path) : Promise.resolve()
   };
 }
 
@@ -61,11 +62,11 @@ function createProject() {
 
 /**
  * Delete file.
- * @param {String} fp - File path
+ * @param {String} path - File path
  * @returns {Object}
  */
-function deleteFile(fp) {
-  return { type: PROJECT.DELETE_FILE, path: fp };
+function deleteFile(path) {
+  return { type: PROJECT.DELETE_FILE, path };
 }
 
 /**
@@ -79,79 +80,100 @@ function deleteTag(tag) {
 
 /**
  * Load file tree.
- * @param {String} fp - Library path
+ * @param {String} path - Library path
  * @returns {object}
  */
-function loadFileTree(fp) {
+function loadFileTree(path) {
   return {
     type: PROJECT.LOAD_FILE_TREE,
-    payload: Project.loadFileTree(fp)
+    payload: Project.loadFileTree(path)
   };
 }
 
 /**
  * Get library index.
- * @param {String} fp - Library path
+ * @param {String} path - Library path
  * @returns {Function}
  */
-function loadIndex(fp) {
+function loadIndex(path) {
   return {
     type: PROJECT.LOAD_INDEX,
-    payload: Project.loadIndex(fp)
+    payload: Project.loadIndex(path)
   };
 }
 
 /**
  * Open file.
- * @param {String} fp - File path
+ * @param {String} path - File path
  * @returns {object}
  */
-function openFile(fp) {
+function openFile(path) {
   return {
     type: PROJECT.OPEN_FILE,
-    payload: files.readFile(fp).then(data => {
-      return { filename: basename(fp), path: fp, data };
+    payload: files.readFile(path).then(data => {
+      const filename = basename(path);
+      const extension = extname(path);
+      const type = getFileType(path, data);
+      return { data, filename, path, type };
     })
   };
 }
 
 /**
  * Open new project folder.
- * @param {String} fp - Project path
+ * @param {String} path - Project path
  * @returns {object}
  */
-function openProject(fp) {
+function openProject(path) {
   return {
     type: PROJECT.OPEN_PROJECT,
-    payload: Promise.resolve(fp)
+    payload: Promise.resolve(path)
   };
 }
 
-function setActiveFile(fp) {
+/**
+ * Save file.
+ * @param {string} path - File path
+ * @param {array|object|string} data - File data
+ * @returns {{payload: Promise<void>, type: string}}
+ */
+function saveFile(path, data) {
+  return {
+    type: PROJECT.SAVE_FILE,
+    payload: Promise.resolve()
+  };
+}
+
+/**
+ * Set active editor file.
+ * @param {string} path - File path
+ * @returns {object}
+ */
+function setActiveFile(path) {
   return {
     type: PROJECT.SET_ACTIVE_FILE,
-    data: fp
+    data: path
   };
 }
 
 /**
  * Update file record.
- * @param {String} fp - File path
- * @returns {Object}
+ * @param {String} path - File path
+ * @returns {object}
  */
-function updateFile(fp) {
+function updateFile(path) {
   throw new Error('not implemented');
 }
 
 /**
  * Reindex the library, merge changes into the existing index file.
- * @param {String} fp - Library path
+ * @param {String} path - Library path
  * @returns {Object}
  */
-function updateIndex(fp, data) {
+function updateIndex(path, data) {
   return {
     type: PROJECT.UPDATE_INDEX,
-    payload: Project.updateIndex(fp)
+    payload: Project.updateIndex(path)
   };
 }
 
@@ -166,11 +188,11 @@ function updateTag(tag) {
 
 /**
  * Write library index to the file system.
- * @param {String} fp - Library path
+ * @param {String} path - Library path
  * @param {Object} data - Index data
  * @returns {Object}
  */
-function writeIndex() {
+function writeIndex(path, data) {
   throw new Error('not implemented');
 }
 
@@ -186,6 +208,7 @@ export {
   loadIndex,
   openFile,
   openProject,
+  saveFile,
   setActiveFile,
   updateFile,
   updateIndex,

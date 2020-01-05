@@ -208,6 +208,7 @@
     "ag-grid-react": "^21.2.2",
     "antd": "^3.26.3",
     "bluebird": "^3.5.3",
+    "citation-js": "^0.5.0-alpha.4",
     "codemirror": "^5.50.2",
     "connected-react-router": "^6.6.1",
     "core-js": "^3.5.0",

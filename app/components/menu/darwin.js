@@ -1,5 +1,5 @@
 /* eslint no-unused-vars:0 */
-import { app } from 'electron';
+import { app, Menu } from 'electron';
 import { APP, PROJECT } from '../../store/types';
 
 /**
@@ -82,39 +82,14 @@ function getAboutMenu(window) {
 function getEditMenu(window) {
   return {
     label: 'Edit',
-    submenu: [{
-        label: 'Undo',
-        accelerator: 'Command+Z',
-        selector: 'undo:'
-      },
-      {
-        label: 'Redo',
-        accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Cut',
-        accelerator: 'Command+X',
-        selector: 'cut:'
-      },
-      {
-        label: 'Copy',
-        accelerator: 'Command+C',
-        selector: 'copy:'
-      },
-      {
-        label: 'Paste',
-        accelerator: 'Command+V',
-        selector: 'paste:'
-      },
-      {
-        label: 'Select All',
-        accelerator: 'Command+A',
-        selector: 'selectAll:'
-      }
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'selectAll' }
     ]
   };
 }
@@ -127,10 +102,10 @@ function getEditMenu(window) {
 function getFileMenu(window) {
   return {
     label: 'File',
-    submenu: [{
-        accelerator: 'Command+N',
-        click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE),
-        label: 'New File'
+    submenu: [
+      {
+        label: 'New',
+        submenu: getNewItemMenu(window)
       },
       {
         accelerator: 'Command+Shift+N',
@@ -211,6 +186,47 @@ function getHelpMenu(window) {
       }
     ]
   };
+}
+
+function getNewItemMenu(window) {
+  // TODO move file types into a constant
+  return [
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_PROJECT),
+      label: 'Project...'
+    },
+    {
+      type: 'separator'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'directory'),
+      label: 'Directory'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'asciidoc'),
+      label: 'AsciiDoc File'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'bibjson'),
+      label: 'Bibliography (BibJSON)'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'json'),
+      label: 'JSON File'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'markdown'),
+      label: 'Markdown File'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'javascript'),
+      label: 'Script (JavaScript)'
+    },
+    {
+      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'python'),
+      label: 'Script (Python)'
+    },
+  ];
 }
 
 /**
