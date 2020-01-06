@@ -186,20 +186,20 @@ class OutlinePanelComponent extends React.Component {
   renderTreeNodes(data) {
     /* eslint no-else-return: 0 */
     return data
-      .filter(item => !item.hidden)
       .map((item) => {
         const { key, title } = item;
+        const classes = item.hidden === true ? 'hidden': '';
         if (item.dir === true && Array.isArray(item.children)) {
           const icon = <Folder />;
           return (
-            <TreeNode key={key} title={title}>
+            <TreeNode classNames={classes} key={key} title={title}>
               {this.renderTreeNodes(item.children)}
             </TreeNode>
           );
         } else {
           // a file or symbolic link
           // const icon = this.getIcon(item);
-          return <TreeNode key={key} title={title} isLeaf />;
+          return <TreeNode classNames={classes} key={key} title={title} isLeaf />;
         }
       });
   }

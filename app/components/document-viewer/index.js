@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { equals } from 'ramda';
 import React, { Fragment } from 'react';
 import Dropzone from 'react-dropzone';
-import Placeholder from '../placeholder';
+
+import DocumentEditor from "../document-editor";
 import {FlexColumn, FlexRow} from '../layout';
-import TabPanel from '../tabs';
-import {Viewer} from './styles';
+import Placeholder from '../placeholder';
 import StatusBar from "../status-bar";
+import {Tab, TabList, TabListFiller, TabPane, Tabs, Viewer} from './styles';
+import { closeFile, setActiveFile } from '../../store/actions/project';
 
 const {Header, Footer, Sider, Content} = Layout;
 
@@ -22,33 +24,17 @@ class DocumentViewerComponent extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.newTabIndex = 0;
-    const panes = [
-      {title: 'Tab 1', content: 'Content of Tab 1', key: '1'},
-      {title: 'Tab 2', content: 'Content of Tab 2', key: '2'},
-      {
-        title: 'Tab 3',
-        content: 'Content of Tab 3',
-        key: '3',
-        closable: false,
-      },
-    ];
     this.state = {
-      activeKey: panes[0].key,
       dragging: false,
-      panes,
     };
   }
 
-  add() {
-    const {panes} = this.state;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({title: 'New Tab', content: 'Content of new Tab', key: activeKey});
-    this.setState({panes, activeKey});
+  onChange(a, b, c) {
+    console.info('content change', a, b, c);
   }
 
-  onChange(activeKey) {
-    this.setState({activeKey});
+  onCloseTab(tab) {
+    console.info('close tab');
   }
 
   onDragEnter() {
@@ -63,27 +49,12 @@ class DocumentViewerComponent extends React.Component {
     this.setState({ dragging: false });
   }
 
-  onEdit(targetKey, action) {
-    this[action](targetKey);
-  }
-
-  remove(targetKey) {
-    const { active } = this.state;
-    let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-    if (panes.length && activeKey === targetKey) {
-      if (lastIndex >= 0) {
-        activeKey = panes[lastIndex].key;
-      } else {
-        activeKey = panes[0].key;
-      }
-    }
-    this.setState({panes, activeKey});
+  /**
+   * Set active tab.
+   * @param {object} tab - Tab data
+   */
+  onTabSelect(tab) {
+    this.props.setActiveFile(tab.path);
   }
 
   /**
@@ -117,6 +88,10 @@ class DocumentViewerComponent extends React.Component {
     }
   }
 
+  /**
+   * Render the placeholder if no project files have been opened.
+   * @returns {JSX.Element}
+   */
   renderFilesPlaceholder() {
     return (
       <Placeholder>
@@ -138,13 +113,34 @@ class DocumentViewerComponent extends React.Component {
   }
 
   /**
-   * Render the document tabs.
+   * Render the tab content.
+   * @returns {JSX.Element}
+   */
+  renderTabContent() {
+    const { active, files } = this.props.project;
+    const tab = files[active];
+    return (<DocumentEditor data={tab.data} onChange={this.onChange.bind(this)}/>);
+  }
+
+  /**
+   * Render the tabs.
    * @returns {JSX.Element}
    */
   renderTabs() {
+    const self = this;
     const { active, files } = this.props.project;
+    const tabs = files.map(function (file, key) {
+      const classes = active === key ? 'active' : '';
+      return (<Tab className={classes} key={key} onClick={() => self.onTabSelect(file)}>{file.filename}</Tab>);
+    });
     return (
-      <TabPanel active={active} tabs={files} />
+      <Tabs>
+        <TabList>
+          {tabs}
+          <TabListFiller/>
+        </TabList>
+        <TabPane>{this.renderTabContent()}</TabPane>
+      </Tabs>
     );
   }
 }
@@ -153,6 +149,29 @@ DocumentViewerComponent.propTypes = {
   app: PropTypes.object,
   profile: PropTypes.object,
   project: PropTypes.object,
+};
+
+/**
+ * Map data store state to component properties.
+ * @param {object} state - Data store state
+ * @returns {object}
+ */
+const mapStateToProps = (state) => {
+  return {
+    app: state.app,
+    profile: state.profile,
+    project: state.project,
+  };
+};
+
+/**
+ * Map data store dispatch functions to component properties.
+ * @param {Function} dispatch - Redux dispatch function
+ * @return {Object} Map of functions to be assigned to the component props
+ */
+const mapDispatchToProps = {
+  closeFile,
+  setActiveFile
 };
 
 export default DocumentViewerComponent;
