@@ -12,6 +12,8 @@ module.exports = {
     "import/no-unresolved": "warn",
     "import/prefer-default-export": "off",
     "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
     "no-empty": "warn",
     "import/first": "warn",
     "import/newline-after-import": "warn",

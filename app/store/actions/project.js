@@ -161,8 +161,11 @@ function setActiveFile(path) {
  * @param {String} path - File path
  * @returns {object}
  */
-function updateFile(path) {
-  throw new Error('not implemented');
+function updateFile(path, data) {
+  return {
+    type: PROJECT.UPDATE_FILE,
+    payload: Promise.resolve({path, data})
+  };
 }
 
 /**

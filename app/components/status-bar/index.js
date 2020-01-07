@@ -1,6 +1,8 @@
 /* eslint react/no-unused-state:0 */
 import React from 'react';
-import { StatusBar, Group, Item } from './styles';
+import { DownloadCloud } from 'styled-icons/remix-fill/DownloadCloud';
+import { GitCommit } from 'styled-icons/remix-line/GitCommit';
+import { Group, Item, Separator, StatusBar } from './styles';
 
 /**
  * Application status bar.
@@ -33,12 +35,18 @@ class StatusBarComponent extends React.Component {
           <Item>LF</Item>
           <Item>UTF-8</Item>
           <Item>Markdown</Item>
+          <Separator />
           <Item>master</Item>
           <Item>Fetch</Item>
           <Item>GitHub</Item>
-          <Item>Git (201)</Item>
           <Item>
-            1 update <span className="ti-github" />
+            <GitCommit style={{marginRight: 4, width:18}} />
+            <span>Git (2)</span>
+          </Item>
+          <Separator />
+          <Item>
+            <DownloadCloud style={{marginRight: 4, width:12}}/>
+            <a>1 update <span className="ti-github" /></a>
           </Item>
         </Group>
       </StatusBar>

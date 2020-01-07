@@ -35,6 +35,7 @@ class WorkspaceComponent extends React.Component {
     render() {
         const { app, closeFile, profile, project, setActiveFile } = this.props;
         return (
+          <FlexColumn flexGrow={2}>
             <FlexRow alignItems={'stretch'} flexGrow={2}>
                 <Outline profile={1} />
                 <DocumentViewer
@@ -44,6 +45,8 @@ class WorkspaceComponent extends React.Component {
                   project={project}
                   setActiveFile={setActiveFile} />
             </FlexRow>
+            <StatusBar app={app} profile={profile} project={project} />
+          </FlexColumn>
         );
     }
 }

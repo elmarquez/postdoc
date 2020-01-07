@@ -4,7 +4,6 @@ import TagGroup from '@atlaskit/tag-group';
 import { AgGridReact } from 'ag-grid-react';
 import PropTypes from 'prop-types';
 import React from 'react';
-import CodeMirror from 'react-codemirror';
 import DataGrid from '../../datagrid';
 import TagEditor from '../../datagrid/editors/tag';
 import TagFormatter from '../../datagrid/formatters/tag';

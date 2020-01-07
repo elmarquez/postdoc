@@ -11,6 +11,7 @@ const Body = styled.div`
   padding: 16px 0;
   
   .ant-tree {
+    font-size: 12px;
     li {
       padding: 0;
     }
@@ -60,6 +61,7 @@ const OutlinePanel = styled.div`
   background-color: ${COLOURS.BACKGROUND_LIGHT_GRAY};
   display: flex;
   flex-direction: column;
+  font-size: 12px;
   justify-content: space-between;
   min-width: 200px;
   overflow: hidden;

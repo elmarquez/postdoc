@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { equals } from 'ramda';
 import React, { Fragment } from 'react';
 import Dropzone from 'react-dropzone';
+import { CheckboxBlankCircle } from 'styled-icons/remix-fill/CheckboxBlankCircle';
+import { Close } from 'styled-icons/remix-line/Close';
 
 import MIMETYPES from '../../constants/mimetypes';
-import DocumentEditor from "../document-editor";
+import BibliographyEditor from './bibliography';
+import DocumentEditor from "./document";
+import ImageViewer from './image';
 import {FlexColumn, FlexRow} from '../layout';
+import PdfDocumentViewer from './pdf';
 import Placeholder from '../placeholder';
-import StatusBar from "../status-bar";
 import {Tab, TabList, TabListFiller, TabPane, Tabs, Viewer} from './styles';
 import { closeFile, setActiveFile } from '../../store/actions/project';
 
@@ -34,10 +38,6 @@ class DocumentViewerComponent extends React.Component {
     console.info('content change', a, b, c);
   }
 
-  onCloseTab(tab) {
-    console.info('close tab');
-  }
-
   onDragEnter() {
     this.setState({ dragging: true });
   }
@@ -48,6 +48,17 @@ class DocumentViewerComponent extends React.Component {
 
   onDrop() {
     this.setState({ dragging: false });
+  }
+
+  /**
+   * Close tab.
+   * @param {Event} e - Click event
+   * @param {object} doc - Document metadata
+   */
+  onTabClose(e, doc) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.info('close tab', doc);
   }
 
   /**
@@ -63,13 +74,7 @@ class DocumentViewerComponent extends React.Component {
    * @return {JSX.Element}
    */
   render() {
-    const { app, profile, project} = this.props;
-    return (
-      <FlexColumn flexGrow={2}>
-        <Viewer>{this.renderDocumentViewer()}</Viewer>
-        <StatusBar app={app} profile={profile} project={project} />
-      </FlexColumn>
-    );
+    return (<Viewer>{this.renderDocumentViewer()}</Viewer>);
   }
 
   /**
@@ -117,23 +122,22 @@ class DocumentViewerComponent extends React.Component {
    */
   renderTabContent() {
     const { active, files } = this.props.project;
-    const tab = files[active];
-    const { mimetype } = tab.type;
-    console.info('mimetypes', MIMETYPES);
+    const doc = files[active];
+    const { mimetype } = doc.type;
     switch(mimetype) {
       case MIMETYPES.BIBJSON.mimetype:
-        return (<div>bibjson</div>);
+        return (<BibliographyEditor doc={doc} />);
       case MIMETYPES.BIBTEX.mimetype:
-        return (<div>bibtex</div>);
+        return (<BibliographyEditor doc={doc} />);
       case MIMETYPES.GIF.mimetype:
       case MIMETYPES.JPEG.mimetype:
       case MIMETYPES.PNG.mimetype:
       case MIMETYPES.WEBP.mimetype:
-        return (<div>GIF, JPEG, PNG, WEBP image</div>);
+        return (<ImageViewer doc={doc} />);
       case MIMETYPES.PDF.mimetype:
-        return (<div>PDF document</div>);
+        return (<PdfDocumentViewer doc={doc} />);
       default:
-        return (<DocumentEditor data={tab.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
+        return (<DocumentEditor data={doc.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
     }
   }
 
@@ -146,7 +150,13 @@ class DocumentViewerComponent extends React.Component {
    */
   renderTab(doc, key, active) {
     const classes = active === key ? 'active' : '';
-    return (<Tab className={classes} key={key} onClick={() => this.onTabSelect(doc)}>{doc.filename}</Tab>);
+    return (
+      <Tab className={classes} key={key} onClick={() => this.onTabSelect(doc)}>
+        <span className={'title'}>{doc.filename}</span>
+        <span className={'close icon'} onClick={(e) => this.onTabClose(e, doc)}><Close /></span>
+        <span className={'status icon'}><CheckboxBlankCircle /></span>
+      </Tab>
+    );
   }
 
   /**
