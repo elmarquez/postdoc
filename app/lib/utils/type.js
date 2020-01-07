@@ -1,4 +1,5 @@
 import { basename, extname } from 'path';
+import files from './files';
 import MIMETYPES from '../../constants/mimetypes';
 
 /**
@@ -12,7 +13,7 @@ function getFileType(fp, data) {
   if (filename === MIMETYPES.PACKAGE_JSON.filename) {
     return MIMETYPES.PACKAGE_JSON;
   } else {
-    const ext = extname(filename);
+    const ext = files.getFileExtension(filename);
     switch (ext) {
       case MIMETYPES.ASCIIDOC.extension:
         return MIMETYPES.ASCIIDOC;

@@ -4,6 +4,7 @@ import { equals } from 'ramda';
 import React, { Fragment } from 'react';
 import Dropzone from 'react-dropzone';
 
+import MIMETYPES from '../../constants/mimetypes';
 import DocumentEditor from "../document-editor";
 import {FlexColumn, FlexRow} from '../layout';
 import Placeholder from '../placeholder';
@@ -65,9 +66,7 @@ class DocumentViewerComponent extends React.Component {
     const { app, profile, project} = this.props;
     return (
       <FlexColumn flexGrow={2}>
-        <Viewer>
-          {this.renderDocumentViewer()}
-        </Viewer>
+        <Viewer>{this.renderDocumentViewer()}</Viewer>
         <StatusBar app={app} profile={profile} project={project} />
       </FlexColumn>
     );
@@ -119,20 +118,45 @@ class DocumentViewerComponent extends React.Component {
   renderTabContent() {
     const { active, files } = this.props.project;
     const tab = files[active];
-    return (<DocumentEditor data={tab.data} onChange={this.onChange.bind(this)}/>);
+    const { mimetype } = tab.type;
+    console.info('mimetypes', MIMETYPES);
+    switch(mimetype) {
+      case MIMETYPES.BIBJSON.mimetype:
+        return (<div>bibjson</div>);
+      case MIMETYPES.BIBTEX.mimetype:
+        return (<div>bibtex</div>);
+      case MIMETYPES.GIF.mimetype:
+      case MIMETYPES.JPEG.mimetype:
+      case MIMETYPES.PNG.mimetype:
+      case MIMETYPES.WEBP.mimetype:
+        return (<div>GIF, JPEG, PNG, WEBP image</div>);
+      case MIMETYPES.PDF.mimetype:
+        return (<div>PDF document</div>);
+      default:
+        return (<DocumentEditor data={tab.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
+    }
   }
 
   /**
-   * Render the tabs.
+   * Render document tab.
+   * @param {object} doc - Document metadata
+   * @param {string} key - Element key
+   * @param {string} active - Key of the active document tab
+   * @returns {JSX.Element}
+   */
+  renderTab(doc, key, active) {
+    const classes = active === key ? 'active' : '';
+    return (<Tab className={classes} key={key} onClick={() => this.onTabSelect(doc)}>{doc.filename}</Tab>);
+  }
+
+  /**
+   * Render document tabs.
    * @returns {JSX.Element}
    */
   renderTabs() {
     const self = this;
     const { active, files } = this.props.project;
-    const tabs = files.map(function (file, key) {
-      const classes = active === key ? 'active' : '';
-      return (<Tab className={classes} key={key} onClick={() => self.onTabSelect(file)}>{file.filename}</Tab>);
-    });
+    const tabs = files.map((file, key) => this.renderTab(file, key, active));
     return (
       <Tabs>
         <TabList>
@@ -147,31 +171,10 @@ class DocumentViewerComponent extends React.Component {
 
 DocumentViewerComponent.propTypes = {
   app: PropTypes.object,
+  closeFile: PropTypes.func,
   profile: PropTypes.object,
   project: PropTypes.object,
-};
-
-/**
- * Map data store state to component properties.
- * @param {object} state - Data store state
- * @returns {object}
- */
-const mapStateToProps = (state) => {
-  return {
-    app: state.app,
-    profile: state.profile,
-    project: state.project,
-  };
-};
-
-/**
- * Map data store dispatch functions to component properties.
- * @param {Function} dispatch - Redux dispatch function
- * @return {Object} Map of functions to be assigned to the component props
- */
-const mapDispatchToProps = {
-  closeFile,
-  setActiveFile
+  setActiveFile: PropTypes.func,
 };
 
 export default DocumentViewerComponent;

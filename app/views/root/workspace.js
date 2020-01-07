@@ -8,7 +8,7 @@ import GlobalNavigation from '../../components/global-navigation';
 import { FlexColumn, FlexRow } from '../../components/layout';
 import { Panel as Outline } from '../../components/outline-panel';
 import StatusBar from '../../components/status-bar';
-import { loadIndex } from '../../store/actions/project';
+import { closeFile, loadIndex, setActiveFile } from '../../store/actions/project';
 import { loadProfile } from '../../store/actions/profile';
 
 /**
@@ -33,11 +33,16 @@ class WorkspaceComponent extends React.Component {
      * @returns {JSX.Element}
      */
     render() {
-        const { app, profile, project } = this.props;
+        const { app, closeFile, profile, project, setActiveFile } = this.props;
         return (
             <FlexRow alignItems={'stretch'} flexGrow={2}>
                 <Outline profile={1} />
-                <DocumentViewer app={app} profile={profile} project={project} />
+                <DocumentViewer
+                  app={app}
+                  closeFile={closeFile}
+                  profile={profile}
+                  project={project}
+                  setActiveFile={setActiveFile} />
             </FlexRow>
         );
     }
@@ -56,8 +61,10 @@ WorkspaceComponent.propTypes = {
  * @returns {object}
  */
 const mapDispatchToProps = {
+    closeFile,
     loadIndex,
-    loadProfile
+    loadProfile,
+    setActiveFile
 };
 
 /**

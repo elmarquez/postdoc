@@ -8,7 +8,7 @@ import { FilePlus } from 'styled-icons/boxicons-solid/FilePlus';
 import { PrimitiveDot } from 'styled-icons/octicons/PrimitiveDot/PrimitiveDot';
 
 import Accordion from '../../components/accordion';
-import ContentPanel from '../../components/content-panel';
+import ContentPanel from '../../components/document-viewer/content-panel';
 import EdgePanel from '../../components/edge-panel';
 import GitPanel from '../../components/git-panel';
 import { FlexRow } from '../../components/layout';

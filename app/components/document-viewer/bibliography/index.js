@@ -5,16 +5,16 @@ import { AgGridReact } from 'ag-grid-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'react-codemirror';
-import DataGrid from '../datagrid';
-import TagEditor from '../datagrid/editors/tag';
-import TagFormatter from '../datagrid/formatters/tag';
+import DataGrid from '../../datagrid';
+import TagEditor from '../../datagrid/editors/tag';
+import TagFormatter from '../../datagrid/formatters/tag';
 import { Body, ContentPanel } from './styles';
-import ErrorBoundary from '../error-boundary';
+import ErrorBoundary from '../../error-boundary';
 import {
   loadIndex,
   updateIndex,
   writeIndex
-} from '../../store/actions/project';
+} from '../../../store/actions/project';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';

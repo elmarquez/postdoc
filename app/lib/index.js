@@ -1,4 +1,4 @@
-import Constants from './constants';
+import Constants from '../constants';
 import Database from './database';
 import Profile from './profile';
 import Project from './project';

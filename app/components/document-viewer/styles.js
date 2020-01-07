@@ -18,8 +18,11 @@ const Tab = styled.div`
     border-top: 2px solid transparent;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: center;
+    overflow: hidden;
     padding: 0 16px;
+    white-space: nowrap;
 
     &.active {
         border-bottom: ${EDGE_THICKNESS}px solid transparent;

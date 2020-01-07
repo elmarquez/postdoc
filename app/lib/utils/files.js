@@ -78,6 +78,15 @@ function getDirStats(files) {
 }
 
 /**
+ * Get file extension.
+ * @param {string} filename - Filename
+ * @returns {string}
+ */
+function getFileExtension(filename) {
+  return path.extname(filename).slice(1);
+}
+
+/**
  * Get file hash.
  * @param {string} f - File path
  * @returns {Promise}
@@ -326,6 +335,7 @@ export default {
   ensureFile,
   exists,
   getDirStats,
+  getFileExtension,
   getFileHashes,
   getFiles,
   getFileStats,

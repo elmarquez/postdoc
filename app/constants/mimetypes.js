@@ -8,7 +8,7 @@ export default {
     extension: 'sh',
     mimetype: 'application/x-sh',
     name: 'Bourne Shell script'
-  } ,
+  },
   BIBJSON: {
     extension: 'json',
     mimetype: 'application/x-bibjson',
