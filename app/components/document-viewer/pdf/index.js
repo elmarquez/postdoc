@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Document, Outline, Page } from 'react-pdf';
 import { FlexColumn } from '../../layout';
@@ -26,6 +27,10 @@ class PdfDocumentViewer extends React.Component {
     };
   }
 
+  /**
+   *
+   * @param offset
+   */
   onChangePage = offset => this.setState(prevState => ({
     pageNumber: prevState.pageNumber + offset,
   }));
@@ -68,12 +73,13 @@ class PdfDocumentViewer extends React.Component {
    */
   render() {
     const { options, pageNumber } = this.state;
+    const { doc } = this.props;
     return (
       <Viewer>
         {this.renderControls()}
         <Document
           className={'document'}
-          file={'http://www2.econ.iastate.edu/tesfatsi/ArchitectureOfComplexity.HSimon1962.pdf'}
+          file={`data:application/pdf;base64,${doc.data}`}
           onLoadError={this.onDocumentLoadError.bind(this)}
           onLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
           options={options}>
@@ -124,5 +130,9 @@ class PdfDocumentViewer extends React.Component {
     ));
   }
 }
+
+PdfDocumentViewer.propTypes = {
+  doc: PropTypes.object.isRequired
+};
 
 export default PdfDocumentViewer;

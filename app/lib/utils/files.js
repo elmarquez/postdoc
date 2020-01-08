@@ -249,11 +249,12 @@ function mkdir(p, mode) {
 /**
  * Read file data.
  * @param {String} f - Path to file
+ * @param {object|string} options - Options
  * @return {Promise<string>}
  */
-function readFile(f) {
+function readFile(f, options={}) {
   return new Promise(function(resolve, reject) {
-    fs.readFile(f, 'utf8', function(err, data) {
+    fs.readFile(f, options, function(err, data) {
       if (err) {
         reject(err);
       } else {

@@ -2,7 +2,9 @@ import { basename, extname } from 'path';
 import { PROJECT } from '../types';
 import Project from '../../lib/project';
 import files from '../../lib/utils/files';
+import Utils from '../../lib/utils';
 import { getFileType } from '../../lib/utils/type';
+import MIMETYPES from '../../constants/mimetypes';
 
 const { dialog } = require('electron');
 
@@ -114,6 +116,20 @@ function openFile(path) {
       const filename = basename(path);
       const extension = extname(path);
       const type = getFileType(path, data);
+      // convert data encoding depending on its inferred type
+      const binaryTypes = [
+        MIMETYPES.GIF.mimetype,
+        MIMETYPES.JPEG.mimetype,
+        MIMETYPES.PDF.mimetype,
+        MIMETYPES.PNG.mimetype,
+        MIMETYPES.TIFF.mimetype,
+        MIMETYPES.WEBP.mimetype,
+      ];
+      if (type.mimetype === MIMETYPES.PDF.mimetype) {
+        data = data.toString('base64');
+      } else if (binaryTypes.indexOf(type.mimetype) === -1) {
+        data = data.toString();
+      }
       return { data, filename, path, type };
     })
   };

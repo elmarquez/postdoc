@@ -31,6 +31,7 @@ module.exports = {
     "no-unused-expressions": "warn",
     "no-unused-vars": "warn",
     "no-useless-constructor": "warn",
+    "prefer-const": "warn",
     "prefer-promise-reject-errors": "warn",
     "prettier/prettier": "off",
     "promise/always-return": "warn",

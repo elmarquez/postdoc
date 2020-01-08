@@ -24,7 +24,10 @@ function addTag() {
  * @param {String} fp - Directory path
  * @return {Promise}
  */
-function ensureThumbnailsDirectory(fp) {}
+function ensureThumbnailsDirectory(fp) {
+  console.info('ensure thumbnails directory', fp);
+  throw new Error('not implemented');
+}
 
 /**
  * Load file tree.

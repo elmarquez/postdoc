@@ -1,10 +1,29 @@
 /**
  * Utility functions.
  */
+import Buffer from 'buffer';
 import fs from 'fs';
 import Promise from 'bluebird';
 import files from './files';
 import tree from './tree';
+
+function toArrayBuffer(buf) {
+  let ab = new ArrayBuffer(buf.length);
+  let view = new Uint8Array(ab);
+  for (let i = 0; i < buf.length; ++i) {
+    view[i] = buf[i];
+  }
+  return ab;
+}
+
+function toBuffer(ab) {
+  let buf = Buffer.alloc(ab.byteLength);
+  let view = new Uint8Array(ab);
+  for (let i = 0; i < buf.length; ++i) {
+    buf[i] = view[i];
+  }
+  return buf;
+}
 
 /**
  * Load JSON file.
@@ -37,5 +56,7 @@ export default {
   files,
   loadJSON,
   loadJSONSync,
+  toArrayBuffer,
+  toBuffer,
   tree
 };

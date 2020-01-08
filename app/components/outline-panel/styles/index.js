@@ -59,6 +59,7 @@ const Header = styled.div`
 const OutlinePanel = styled.div`
   align-items: stretch;
   background-color: ${COLOURS.BACKGROUND_LIGHT_GRAY};
+  border-right: 1px solid rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   font-size: 12px;

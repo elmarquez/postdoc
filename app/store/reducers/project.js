@@ -1,4 +1,3 @@
-import { basename } from 'path';
 import {PROJECT} from '../types';
 
 const DEFAULT_FILE_STATE = {
@@ -27,8 +26,8 @@ const INITIAL_STATE = {
  * @returns {Object} next state
  */
 export default function (state = INITIAL_STATE, action) {
-  const {payload, type} = action;
-  switch (type) {
+  const { payload } = action;
+  switch (action.type) {
     case PROJECT.CREATE_FILE_FULFILLED: {
       const file = { ...DEFAULT_FILE_STATE, data: '', filename: 'untitled', path: null};
       const active = state.files.length;

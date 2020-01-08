@@ -66,10 +66,11 @@ const Tabs = styled.div`
 `;
 
 const Viewer = styled.div`
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    flex-grow: 2;
+  align-items: stretch;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
 `;
 
 export {
