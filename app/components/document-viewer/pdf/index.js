@@ -73,13 +73,15 @@ class PdfDocumentViewer extends React.Component {
    */
   render() {
     const { options, pageNumber } = this.state;
-    const { doc } = this.props;
+    const { data } = this.props;
+    const file = `data:application/pdf;base64,${data.data}`;
+    console.info('pdf', file);
     return (
       <Viewer>
         {this.renderControls()}
         <Document
           className={'document'}
-          file={`data:application/pdf;base64,${doc.data}`}
+          file={file}
           onLoadError={this.onDocumentLoadError.bind(this)}
           onLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
           options={options}>
@@ -132,7 +134,7 @@ class PdfDocumentViewer extends React.Component {
 }
 
 PdfDocumentViewer.propTypes = {
-  doc: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired
 };
 
 export default PdfDocumentViewer;

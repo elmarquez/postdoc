@@ -3,7 +3,7 @@ import { PROJECT } from '../types';
 import Project from '../../lib/project';
 import files from '../../lib/utils/files';
 import Utils from '../../lib/utils';
-import { getFileType } from '../../lib/utils/type';
+import { getFileType, getJsonType } from '../../lib/utils/type';
 import MIMETYPES from '../../constants/mimetypes';
 
 const { dialog } = require('electron');
@@ -115,7 +115,7 @@ function openFile(path) {
     payload: files.readFile(path).then(data => {
       const filename = basename(path);
       const extension = extname(path);
-      const type = getFileType(path, data);
+      let type = getFileType(path, data);
       // convert data encoding depending on its inferred type
       const binaryTypes = [
         MIMETYPES.GIF.mimetype,
@@ -127,6 +127,15 @@ function openFile(path) {
       ];
       if (type.mimetype === MIMETYPES.PDF.mimetype) {
         data = data.toString('base64');
+      } else if (type.mimetype === MIMETYPES.JSON.mimetype) {
+        try {
+          data = data.toString();
+          data = JSON.parse(data);
+          type = getJsonType(data);
+        } catch (err) {
+          // TODO need a better approach to this than just bombing out
+            console.error(err);
+        }
       } else if (binaryTypes.indexOf(type.mimetype) === -1) {
         data = data.toString();
       }

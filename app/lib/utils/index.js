@@ -8,7 +8,7 @@ import files from './files';
 import tree from './tree';
 
 function toArrayBuffer(buf) {
-  let ab = new ArrayBuffer(buf.length);
+  const ab = new ArrayBuffer(buf.length);
   let view = new Uint8Array(ab);
   for (let i = 0; i < buf.length; ++i) {
     view[i] = buf[i];
@@ -18,7 +18,7 @@ function toArrayBuffer(buf) {
 
 function toBuffer(ab) {
   let buf = Buffer.alloc(ab.byteLength);
-  let view = new Uint8Array(ab);
+  const view = new Uint8Array(ab);
   for (let i = 0; i < buf.length; ++i) {
     buf[i] = view[i];
   }

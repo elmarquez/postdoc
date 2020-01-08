@@ -1,4 +1,3 @@
-import shortid from 'shortid';
 import { Promise } from 'bluebird';
 import { APP } from '../types';
 import Profile from '../../lib/profile';
@@ -11,7 +10,7 @@ import Profile from '../../lib/profile';
 function deleteSetting(settingId) {
   return {
     type: APP.DELETE_SETTING,
-    id: shortid.generate()
+    payload: Promise.resolve()
   };
 }
 
@@ -33,7 +32,7 @@ function loadApplicationState() {
 function loadSettings() {
   return {
     type: APP.LOAD_SETTINGS,
-    id: shortid.generate()
+    payload: Promise.resolve()
   };
 }
 
@@ -49,7 +48,7 @@ function resetSettings() {}
 function saveSettings() {
   return {
     type: APP.SAVE_SETTINGS,
-    id: shortid.generate()
+    payload: Promise.resolve()
   };
 }
 
@@ -66,8 +65,7 @@ function showModal() {
 function updateRecentProjects(data) {
   return {
     type: APP.UPDATE_RECENT_PROJECTS,
-    id: shortid.generate(),
-    data
+    payload: Promise.resolve()
   };
 }
 
@@ -80,7 +78,7 @@ function updateRecentProjects(data) {
 function updateSetting(settingId, data) {
   return {
     type: APP.UPDATE_SETTING,
-    id: shortid.generate()
+    payload: Promise.resolve()
   };
 }
 

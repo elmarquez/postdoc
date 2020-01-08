@@ -1,7 +1,6 @@
 import { Github } from 'styled-icons/boxicons-logos/Github';
-import { Gitlab } from 'styled-icons/boxicons-logos/Gitlab';
 import React from 'react';
-import { Bacteria, Owl5 } from '../../components/branding';
+import { Bacteria } from '../../components/branding';
 import { FlexColumn, FlexRow } from '../../components/layout';
 import { Card, Home } from './styles';
 
@@ -44,7 +43,7 @@ class HomeContainer extends React.Component {
           </FlexColumn>
           <FlexColumn style={{ flexBasis: '50%' }}>
             <FlexRow alignItems="center" justifyContent="center">
-              <img src={Owl5} style={{ maxWidth: 320 }} />
+              <img alt='logo' src={Bacteria} style={{ maxWidth: 320 }} />
             </FlexRow>
             <section className="margin-top-l">
               <h1 className="brand">postdoc</h1>
@@ -52,7 +51,7 @@ class HomeContainer extends React.Component {
               <ul>
                 <li>
                   the postdoc{' '}
-                  <a href="https://google.com" target="_blank">
+                  <a href="https://google.com" rel="noopener noreferrer" target="_blank">
                     Help and API documentation
                   </a>
                 </li>

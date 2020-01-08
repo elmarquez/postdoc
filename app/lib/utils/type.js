@@ -35,7 +35,7 @@ function getFileType(fp, data) {
     case MIMETYPES.JPEG.extension:
       return MIMETYPES.JPEG;
     case MIMETYPES.JSON.extension:
-      return getJsonType(filename, data);
+      return MIMETYPES.JSON;
     case MIMETYPES.JSON_LD.extension:
       return MIMETYPES.JSON_LD;
     case MIMETYPES.MARKDOWN.extension:
@@ -66,7 +66,8 @@ function getFileType(fp, data) {
  * @returns {object}
  */
 function getJsonType(data) {
-  if (has(data, '$schema')) {
+  const hasSchema = has('$schema');
+  if (hasSchema(data)) {
     const { $schema } = data;
     switch ($schema) {
       case MIMETYPES.BIBJSON.schema:
@@ -83,4 +84,5 @@ function getJsonType(data) {
 
 export {
   getFileType,
+  getJsonType
 };

@@ -122,22 +122,22 @@ class DocumentViewerComponent extends React.Component {
    */
   renderTabContent() {
     const { active, files } = this.props.project;
-    const doc = files[active];
-    const { mimetype } = doc.type;
+    const file = files[active];
+    const { mimetype } = file.type;
     switch(mimetype) {
       case MIMETYPES.BIBJSON.mimetype:
-        return (<BibliographyEditor doc={doc} />);
+        return (<BibliographyEditor file={file} />);
       case MIMETYPES.BIBTEX.mimetype:
-        return (<BibliographyEditor doc={doc} />);
+        return (<BibliographyEditor file={file} />);
       case MIMETYPES.GIF.mimetype:
       case MIMETYPES.JPEG.mimetype:
       case MIMETYPES.PNG.mimetype:
       case MIMETYPES.WEBP.mimetype:
-        return (<ImageViewer doc={doc} />);
+        return (<ImageViewer data={file} />);
       case MIMETYPES.PDF.mimetype:
-        return (<PdfDocumentViewer doc={doc} />);
+        return (<PdfDocumentViewer data={file} />);
       default:
-        return (<DocumentEditor data={doc.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
+        return (<DocumentEditor data={file.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
     }
   }
 

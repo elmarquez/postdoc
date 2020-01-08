@@ -1,12 +1,9 @@
-import Button from '@atlaskit/button';
-import Tag from '@atlaskit/tag';
-import TagGroup from '@atlaskit/tag-group';
 import { AgGridReact } from 'ag-grid-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import DataGrid from '../../datagrid';
 import TagEditor from '../../datagrid/editors/tag';
-import TagFormatter from '../../datagrid/formatters/tag';
+import { Authors, Tag } from '../../datagrid/formatters';
 import { Body, ContentPanel } from './styles';
 import ErrorBoundary from '../../error-boundary';
 import {
@@ -30,9 +27,10 @@ class ContentPanelComponent extends React.Component {
       editing: false,
       gridOptions: {
         columnDefs: [
-          { field: 'filename', headerName: 'Filename', resizable: true },
-          { field: 'extension', headerName: 'Extension' },
-          { field: 'lastUpdated', headerName: 'Last Updated' },
+          { field: 'author', headerName: 'Author', cellRenderer: 'authorsFormatter', resizable: true },
+          { field: 'title', headerName: 'Title', resizable: true },
+          { field: 'year', headerName: 'Year', resizable: true },
+          { field: 'type', headerName: 'Type', resizable: true },
           {
             cellEditor: 'tagEditor',
             cellRenderer: 'tagFormatter',
@@ -41,10 +39,6 @@ class ContentPanelComponent extends React.Component {
             headerName: 'Tags',
             resizable: true
           },
-          { field: 'mimetype', headerName: 'Type' },
-          { field: 'hash', headerName: 'Hash' },
-          { field: 'citation', headerName: 'Citation', resizable: true },
-          { field: 'path', headerName: 'Path', resizable: true }
         ],
         onCellEditingStarted: this.onCellEditingStarted.bind(this),
         onCellValueChanged: this.onCellValueChanged.bind(this),
@@ -86,18 +80,20 @@ class ContentPanelComponent extends React.Component {
    * @returns {XML}
    */
   render() {
-    const rows = this.props.data.files || [];
+    const { file } = this.props;
+    const rows = file.data.records || [];
     return (
       <ContentPanel>
         <Body className="ag-theme-balham">
           <ErrorBoundary>
             <AgGridReact
               frameworkComponents={{
+                authorsFormatter: Authors,
                 tagEditor: TagEditor,
-                tagFormatter: TagFormatter
+                tagFormatter: Tag
               }}
               gridOptions={this.state.gridOptions}
-              rowData={this.props.data.files}
+              rowData={rows}
             />
           </ErrorBoundary>
         </Body>
@@ -107,9 +103,8 @@ class ContentPanelComponent extends React.Component {
 }
 
 ContentPanelComponent.propTypes = {
-  data: PropTypes.object.isRequired,
+  file: PropTypes.object.isRequired,
   filter: PropTypes.func,
-  isLoading: PropTypes.bool.isRequired,
   onDocumentSelected: PropTypes.func,
   onFileUpdated: PropTypes.func
 };

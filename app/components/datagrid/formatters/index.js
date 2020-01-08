@@ -1,3 +1,4 @@
+import Authors from './authors';
 import Tag from './tag';
 
-export { Tag };
+export { Authors, Tag };
