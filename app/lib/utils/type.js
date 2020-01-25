@@ -72,6 +72,8 @@ function getJsonType(data) {
     switch ($schema) {
       case MIMETYPES.BIBJSON.schema:
         return MIMETYPES.BIBJSON;
+      case MIMETYPES.CSL.schema:
+        return MIMETYPES.CSL;
       case MIMETYPES.POSTDOC_PROJECT.schema:
         return MIMETYPES.POSTDOC_PROJECT;
       default:

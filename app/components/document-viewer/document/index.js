@@ -46,9 +46,10 @@ class DocumentEditorComponent extends React.Component {
   }
 
   render() {
+    const { size } = this.props;
     const { data, options } = this.state;
     return (
-      <Editor>
+      <Editor height={size.height} width={size.width}>
         <CodeMirror
           onChange={this.onChange.bind(this)}
           options={options}
@@ -60,7 +61,8 @@ class DocumentEditorComponent extends React.Component {
 
 DocumentEditorComponent.propTypes = {
   data: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  size: PropTypes.object
 };
 
 export default DocumentEditorComponent;

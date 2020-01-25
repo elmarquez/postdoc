@@ -3,7 +3,8 @@ import COLOURS from '../../../constants/colours';
 
 import { FlexColumn, FlexRow } from '../../layout';
 
-const WIDTH = 16;
+const FILE_ICON_WIDTH = 16;
+const PANEL_WIDTH = 240;
 
 const Body = styled.div`
   flex-grow: 2;
@@ -16,9 +17,9 @@ const Body = styled.div`
       padding: 0;
     }
     .ant-tree-iconEle > svg {
-      height: ${WIDTH}px;
+      height: ${FILE_ICON_WIDTH}px;
       margin-right: 8px;
-      width: ${WIDTH}px;
+      width: ${FILE_ICON_WIDTH}px;
     }
   }
   .ant-tree-child-tree > li:first-child {
@@ -62,11 +63,12 @@ const OutlinePanel = styled.div`
   border-right: 1px solid rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
+  flex-grow: 2;
   font-size: 12px;
+  height: 100%;
   justify-content: space-between;
-  min-width: 200px;
   overflow: hidden;
-  width: 200px;
+  width: 100%;
 `;
 
 const Title = styled.div`

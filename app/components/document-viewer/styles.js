@@ -52,6 +52,9 @@ const TabPane = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 2;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: auto;
 
     & > div {
         flex-grow: 2;
@@ -63,21 +66,24 @@ const Tabs = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 2;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
 `;
 
 const Viewer = styled.div`
   align-items: stretch;
-  border-left: 1px solid rgba(255,255,255,0.1);
+  background-colour: red;
   display: flex;
   flex-direction: row;
   flex-grow: 2;
 `;
 
 export {
-    Tab,
-    TabList,
-    TabListFiller,
-    TabPane,
-    Tabs,
-    Viewer,
+  Tab,
+  TabList,
+  TabListFiller,
+  TabPane,
+  Tabs,
+  Viewer,
 };

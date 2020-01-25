@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { equals } from 'ramda';
 import React, { Fragment } from 'react';
 import Dropzone from 'react-dropzone';
+import ReactResizeDetector from 'react-resize-detector';
 import { CheckboxBlankCircle } from 'styled-icons/remix-fill/CheckboxBlankCircle';
 import { Close } from 'styled-icons/remix-line/Close';
 
@@ -29,25 +30,11 @@ class DocumentViewerComponent extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      dragging: false,
-    };
+    this.state = {};
   }
 
   onChange(a, b, c) {
     console.info('content change', a, b, c);
-  }
-
-  onDragEnter() {
-    this.setState({ dragging: true });
-  }
-
-  onDragLeave() {
-    this.setState({ dragging: false });
-  }
-
-  onDrop() {
-    this.setState({ dragging: false });
   }
 
   /**
@@ -97,6 +84,8 @@ class DocumentViewerComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderFilesPlaceholder() {
+    // TODO show the list of recent files
+    // TODO add an option to create a new file
     return (
       <Placeholder>
         <h2>Open a file <span className={'command'}>&#8984; O</span></h2>
@@ -109,36 +98,13 @@ class DocumentViewerComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderProjectPlaceholder() {
+    // TODO show the list of recent projects
+    // TODO add an option to create a new project
     return (
       <Placeholder>
         <h2>Open a project <span className={'command'}>&#8984;&#8679; O</span></h2>
       </Placeholder>
     );
-  }
-
-  /**
-   * Render the tab content.
-   * @returns {JSX.Element}
-   */
-  renderTabContent() {
-    const { active, files } = this.props.project;
-    const file = files[active];
-    const { mimetype } = file.type;
-    switch(mimetype) {
-      case MIMETYPES.BIBJSON.mimetype:
-        return (<BibliographyEditor file={file} />);
-      case MIMETYPES.BIBTEX.mimetype:
-        return (<BibliographyEditor file={file} />);
-      case MIMETYPES.GIF.mimetype:
-      case MIMETYPES.JPEG.mimetype:
-      case MIMETYPES.PNG.mimetype:
-      case MIMETYPES.WEBP.mimetype:
-        return (<ImageViewer data={file} />);
-      case MIMETYPES.PDF.mimetype:
-        return (<PdfDocumentViewer data={file} />);
-      default:
-        return (<DocumentEditor data={file.data} onChange={this.onChange.bind(this)} type={mimetype}/>);
-    }
   }
 
   /**
@@ -159,6 +125,39 @@ class DocumentViewerComponent extends React.Component {
     );
   }
 
+
+  /**
+   * Render the tab content.
+   * @param {object} size - Parent element width, height
+   * @returns {JSX.Element}
+   */
+  renderTabContent(size) {
+    const { active, files } = this.props.project;
+    const file = files[active];
+    const { mimetype } = file.type;
+    switch(mimetype) {
+      case MIMETYPES.BIBJSON.mimetype:
+        return (<BibliographyEditor file={file} />);
+      case MIMETYPES.BIBTEX.mimetype:
+        return (<BibliographyEditor file={file} />);
+      case MIMETYPES.GIF.mimetype:
+      case MIMETYPES.JPEG.mimetype:
+      case MIMETYPES.PNG.mimetype:
+      case MIMETYPES.WEBP.mimetype:
+        return (<ImageViewer data={file} />);
+      case MIMETYPES.PDF.mimetype:
+        return (<PdfDocumentViewer data={file} />);
+      default:
+        return (
+          <DocumentEditor
+            data={file.data}
+            onChange={this.onChange.bind(this)}
+            size={size}
+            type={mimetype} />
+        );
+    }
+  }
+
   /**
    * Render document tabs.
    * @returns {JSX.Element}
@@ -173,7 +172,11 @@ class DocumentViewerComponent extends React.Component {
           {tabs}
           <TabListFiller/>
         </TabList>
-        <TabPane>{this.renderTabContent()}</TabPane>
+        <TabPane>
+          <ReactResizeDetector>
+            {(size) => this.renderTabContent(size)}
+          </ReactResizeDetector>
+        </TabPane>
       </Tabs>
     );
   }

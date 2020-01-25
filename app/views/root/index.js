@@ -7,6 +7,7 @@ import {createFile, loadIndex, openFile, openProject, updateIndex} from '../../s
 import { APP, PROJECT } from '../../store/types';
 import {App} from './styles';
 import Workspace from './workspace';
+import {GlobalStyles, SplitterStyles} from "../../styles";
 
 const { dialog } = require('electron').remote;
 
@@ -107,6 +108,8 @@ class Application extends React.Component {
     const {history, store} = this.props;
     return (
       <Provider store={store}>
+        <GlobalStyles />
+        <SplitterStyles />
         <App className={'App'}>
           <HashRouter history={history}>
             <Workspace/>

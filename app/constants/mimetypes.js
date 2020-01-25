@@ -25,6 +25,12 @@ export default {
     mimetype: 'image/bmp',
     name: 'Bitmap image'
   },
+  CSL: {
+    extension: 'json',
+    mimetype: 'application/vnd.citationstyles.style+xml',
+    name: 'Citation Style Language',
+    schema: 'http://purl.org/net/xbiblio/csl'
+  },
   CSV: {
     extension: 'csv',
     mimetype: 'text/csv',

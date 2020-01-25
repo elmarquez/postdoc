@@ -12,6 +12,11 @@ const App = styled.div`
     position: fixed;
     right: 0;
     top: 0;
+    
+    .layout-pane {
+      align-items: stretch;
+      display: flex;
+    }
 `;
 
 export {

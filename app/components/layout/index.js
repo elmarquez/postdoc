@@ -4,19 +4,20 @@ const FlexColumn = styled.div`
   align-items: stretch;
   display: flex;
   flex-direction: column;
-  flex-grow: ${props => (props.flexGrow ? props.flexGrow : 1)};
-  width: ${props => (props.width ? `${props.width}px` : '')};
+  flex-grow: ${p => (p.flexGrow ? p.flexGrow : 1)};
+  overflow: ${p => (p.overflow ? p.overflow : 'hidden')};
+  width: ${p => (p.width ? `${p.width}px` : '')};
 `;
 
 const FlexRow = styled.div`
-  align-items: ${props => (props.alignItems ? props.alignItems : 'center')};
+  align-items: ${p => (p.alignItems ? p.alignItems : 'center')};
   display: flex;
   flex-direction: row;
-  flex-grow: ${props => (props.flexGrow ? props.flexGrow : 1)};
-  justify-content: ${props =>
-    props.justifyContent ? props.justifyContent : 'space-between'};
-  margin: ${props => (props.margin ? props.margin : '')};
-  padding: ${props => (props.padding ? props.padding : '')};
+  flex-grow: ${p => (p.flexGrow ? p.flexGrow : 1)};
+  justify-content: ${p => p.justifyContent ? p.justifyContent : 'space-between'};
+  margin: ${p => (p.margin ? p.margin : '')};
+  overflow: ${p => (p.overflow ? p.overflow : 'hidden')};
+  padding: ${p => (p.padding ? p.padding : '')};
 `;
 
 export { FlexColumn, FlexRow };

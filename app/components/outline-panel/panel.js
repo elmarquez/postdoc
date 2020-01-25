@@ -1,9 +1,11 @@
 import { Dropdown, Menu, Tree } from 'antd';
 import { equals } from 'ramda';
 import React from 'react';
+import Dropzone from "react-dropzone";
 import { connect } from 'react-redux';
 import { File } from 'styled-icons/fa-solid/File';
 import { Folder } from 'styled-icons/fa-solid/Folder';
+
 import { Body, Footer, Header, OutlinePanel } from './styles';
 import { loadIndex, openFile, updateIndex } from '../../store/actions/project';
 import Project from '../../lib/project';
@@ -70,40 +72,33 @@ class OutlinePanelComponent extends React.Component {
     switch (item.mimetype) {
       case 'application/javascript':
         return <File />;
-        break;
       case 'application/json':
         return <File />;
-        break;
       case 'application/pdf':
         return <File />;
-        break;
       case 'application/postscript':
         return <File />;
-        break;
       case 'image/jpeg':
         return <File />;
-        break;
       case 'image/png':
         return <File />;
-        break;
       case 'image/svg+xml':
         return <File />;
-        break;
       case 'text/css':
         return <File />;
-        break;
       case 'text/html':
         return <File />;
-        break;
       case 'text/markdown':
         return <File />;
-        break;
       case 'text/yaml':
         return <File />;
-        break;
       default:
         return <File />;
     }
+  }
+
+  onDrop(files) {
+    console.info('dropped files', files);
   }
 
   /**
@@ -141,24 +136,32 @@ class OutlinePanelComponent extends React.Component {
 
   /**
    * Render the component.
-   * @returns {XML}
+   * @returns {JSX.Element}
    */
   render() {
     const icon = (<Folder style={{width:16}} />);
     return (
       <OutlinePanel className="noselect">
-        <Body>
-          <DirectoryTree
-            defaultExpandAll
-            multiple
-            onExpand={this.onExpand.bind(this)}
-            onRightClick={this.onNodeContextClick.bind(this)}
-            onSelect={this.onSelect.bind(this)}
-            >
-            {this.renderTreeNodes(this.state.tree)}
-          </DirectoryTree>
-        </Body>
+        <Body>{this.renderDirectoryTree()}</Body>
       </OutlinePanel>
+    );
+  }
+
+  /**
+   * Render the directory tree.
+   * @returns {JSX.Element}
+   */
+  renderDirectoryTree() {
+    return (
+      <DirectoryTree
+        defaultExpandAll
+        multiple
+        onExpand={this.onExpand.bind(this)}
+        onRightClick={this.onNodeContextClick.bind(this)}
+        onSelect={this.onSelect.bind(this)}
+      >
+        {this.renderTreeNodes(this.state.tree)}
+      </DirectoryTree>
     );
   }
 
