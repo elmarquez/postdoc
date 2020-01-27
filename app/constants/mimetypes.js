@@ -16,7 +16,7 @@ export default {
     schema: 'https://okfnlabs.org/bibjson/schema.json'
   },
   BIBTEX: {
-    extension: 'bibtex',
+    extension: 'bib',
     mimetype: 'application/x-bibtex',
     name: 'BibTex bibliography'
   },
@@ -76,11 +76,11 @@ export default {
     mimetype: 'text/markdown',
     name: 'Markdown document'
   },
-  PACKAGE_JSON: {
+  NPM_PACKAGE: {
     extension: 'json',
     filename: 'package.json',
     mimetype: 'application/npm.package',
-    name: 'NPM package metadata'
+    name: 'NPM package'
   },
   PDF: {
     extension: 'pdf',

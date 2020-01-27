@@ -7,7 +7,8 @@ import { File } from 'styled-icons/fa-solid/File';
 import { Folder } from 'styled-icons/fa-solid/Folder';
 
 import { Body, Footer, Header, OutlinePanel } from './styles';
-import { loadIndex, openFile, updateIndex } from '../../store/actions/project';
+import { openFile } from '../../store/actions/files';
+import { loadIndex, updateIndex } from '../../store/actions/project';
 import Project from '../../lib/project';
 
 const { DirectoryTree, TreeNode } = Tree;
@@ -216,6 +217,7 @@ class OutlinePanelComponent extends React.Component {
 const mapStateToProps = state => {
   return {
     application: state.application,
+    files: state.files,
     profile: state.profile,
     project: state.project
   };

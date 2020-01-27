@@ -1,21 +1,23 @@
 import * as antd from 'antd';
 import {AgGridReact} from 'ag-grid-react';
 import PropTypes from 'prop-types';
+import { equals } from 'ramda';
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import Dropzone from 'react-dropzone';
 
-import * as bib from '../../../lib/bibliography';
-import files from '../../../lib/utils/files';
-import TagEditor from '../../datagrid/editors/tag';
-import {Authors, Tag} from '../../datagrid/formatters';
+import Placeholder from '../placeholder';
+import * as bib from '../../lib/bibliography';
+import files from '../../lib/utils/files';
+import TagEditor from '../datagrid/editors/tag';
+import {Authors, Tag} from '../datagrid/formatters';
 import {Body, ContentPanel} from './styles';
-import ErrorBoundary from '../../error-boundary';
+import ErrorBoundary from '../error-boundary';
 import {
   loadIndex,
   updateIndex,
   writeIndex
-} from '../../../store/actions/project';
+} from '../../store/actions/project';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -64,6 +66,7 @@ class BibliographyEditorComponent extends React.Component {
             resizable: true
           },
         ],
+        isDragging: false,
         onCellEditingStarted: this.onCellEditingStarted.bind(this),
         onCellValueChanged: this.onCellValueChanged.bind(this),
         onRowDoubleClicked: this.onRowDoubleClicked.bind(this),
@@ -73,6 +76,16 @@ class BibliographyEditorComponent extends React.Component {
       imports: [],
       showImportModal: false
     };
+  }
+
+  componentDidMount() {
+    console.info('file at mount', this.props.file);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!equals(prevProps)) {
+      console.info('file at update', this.props.file);
+    }
   }
 
   onCellEditingStarted(a, b, c) {
@@ -101,19 +114,57 @@ class BibliographyEditorComponent extends React.Component {
       });
   }
 
+  /**
+   * Handle drag enter.
+   * @param {Event} e - Drag event
+   */
   onDragEnter() {
-    console.info('drag enter');
-  }
-
-  onDragLeave() {
-    console.info('drag leave');
+    this.setState({ isDragging: true });
   }
 
   /**
-   *
-   * @param files
+   * Handle drag exit.
+   * @param {Event} e - Drag event
    */
-  onDrop(files) {
+  onDragExit() {
+    this.setState({ isDragging: false });
+  }
+
+  /**
+   * Handle drag leave.
+   * @param {Event} e - Drag event
+   */
+  onDragLeave() {
+    this.setState({ isDragging: false });
+  }
+
+  /**
+   * Handle drag over event.
+   * @param {Event} e - Drag event
+   */
+  onDragOver(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  /**
+   * Handle file drop.
+   * @param {Event} e - Event
+   */
+  onDrop(e) {
+    e.preventDefault();
+    let files = [];
+    if (e.dataTransfer.items) {
+      for (let i = 0; i < e.dataTransfer.items.length; i++) {
+        if (e.dataTransfer.items[i].kind === 'file') {
+          let file = e.dataTransfer.items[i].getAsFile();
+          files.push(file);
+        }
+      }
+    } else {
+      files = e.dataTransfer.files;
+    }
+    this.setState({ isDragging: false });
     this.onShowImportModal(files);
   }
 
@@ -141,20 +192,20 @@ class BibliographyEditorComponent extends React.Component {
    * @returns {XML}
    */
   render() {
+    console.info('file', this.props.file);
+    const { isDragging } = this.state;
     return (
       <ContentPanel>
         <Body className="ag-theme-balham"
               onDragEnter={this.onDragEnter.bind(this)}
-              onDragLeave={this.onDragLeave.bind(this)}>
+              onDragExit={this.onDragExit.bind(this)}
+              onDragLeave={this.onDragLeave.bind(this)}
+              onDragOver={this.onDragOver.bind(this)}
+              onDrop={this.onDrop.bind(this)}
+        >
           <ErrorBoundary>
-            <Dropzone onDrop={this.onDrop.bind(this)}>
-              {({getRootProps, getInputProps}) => (
-                <div {...getRootProps({className: 'dropzone'})}>
-                  <input {...getInputProps()} />
-                  {this.renderDataGrid()}
-                </div>
-              )}
-            </Dropzone>
+            {isDragging && this.renderFileDropzone()}
+            {!isDragging && this.renderDataGrid()}
           </ErrorBoundary>
         </Body>
         {this.renderModals()}
@@ -193,6 +244,18 @@ class BibliographyEditorComponent extends React.Component {
     );
   }
 
+  /**
+   * Render file drag-drop zone.
+   * @returns {JSX.Element}
+   */
+  renderFileDropzone() {
+    return (
+      <Placeholder>
+        <h2>Drop BibTex, RIS or JSON bibliography files here to import</h2>
+      </Placeholder>
+    );
+  }
+
   renderModals() {
     const { imports } = this.state;
     return (
@@ -214,7 +277,6 @@ class BibliographyEditorComponent extends React.Component {
             <Option value="ris">RIS</Option>
           </Select>
         </Modal>
-
       </React.Fragment>
     );
   }

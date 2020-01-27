@@ -34,9 +34,6 @@ export default function (state = INITIAL_STATE, action) {
       const files = state.files.concat([file]);
       return { ...state, active, files, isPending: false };
     }
-    case PROJECT.CLOSE_FILE_FULFILLED: {
-      return state;
-    }
     case PROJECT.LOAD_FILE_TREE_FULFILLED: {
       return {...state, tree: payload, isPending: true};
     }
@@ -55,19 +52,6 @@ export default function (state = INITIAL_STATE, action) {
     case PROJECT.LOAD_INDEX_REJECTED: {
       return {...state, error: payload.message, isPending: false};
     }
-    case PROJECT.OPEN_FILE_FULFILLED: {
-      const { data, filename, path, type } = payload;
-      const file = { ...DEFAULT_FILE_STATE, data, filename, path, type };
-      const active = state.files.length;
-      const files = state.files.concat([file]);
-      return { ...state, active, files, isPending: false };
-    }
-    case PROJECT.OPEN_FILE_PENDING: {
-      return {...state, error: null, isPending: true};
-    }
-    case PROJECT.OPEN_FILE_REJECTED: {
-      return {...state, error: payload, isPending: false};
-    }
     case PROJECT.OPEN_PROJECT_FULFILLED: {
       return {...state, path: payload, isPending: false};
     }
@@ -76,19 +60,6 @@ export default function (state = INITIAL_STATE, action) {
     }
     case PROJECT.OPEN_PROJECT_REJECTED: {
       return {...state, error: payload, isPending: false};
-    }
-    case PROJECT.SAVE_FILE_FULFILLED: {
-      throw new Error('not implemented');
-    }
-    case PROJECT.SAVE_FILE_PENDING: {
-      throw new Error('not implemented');
-    }
-    case PROJECT.SAVE_FILE_REJECTED: {
-      throw new Error('not implemented');
-    }
-    case PROJECT.SET_ACTIVE_FILE: {
-      const active = state.files.findIndex((f) => f.path === action.data);
-      return { ...state, active };
     }
     case PROJECT.UPDATE: {
       const data = {...state.library.data, ...action.payload};

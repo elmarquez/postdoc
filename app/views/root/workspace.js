@@ -9,9 +9,9 @@ import GlobalNavigation from '../../components/global-navigation';
 import {FlexColumn, FlexRow} from '../../components/layout';
 import {Panel as Outline} from '../../components/outline-panel';
 import StatusBar from '../../components/status-bar';
-import {closeFile, loadIndex, setActiveFile} from '../../store/actions/project';
+import { closeFile, setActiveFile } from '../../store/actions/files';
+import { loadIndex } from '../../store/actions/project';
 import {loadProfile} from '../../store/actions/profile';
-import {Body} from "../../components/document-viewer/bibliography/styles";
 
 /**
  * Workspace layout.
@@ -28,19 +28,14 @@ class WorkspaceComponent extends React.Component {
    * Handle componentDidUpdate lifecycle event.
    * @param {object} prevProps - Previous component properties
    */
-  componentDidUpdate(prevProps) {
-  }
-
-  onPaneSizeChanged(size) {
-    console.info('pane size changed', size);
-  }
+  componentDidUpdate(prevProps) {}
 
   /**
    * Render the component.
    * @returns {JSX.Element}
    */
   render() {
-    const {app, closeFile, profile, project, setActiveFile} = this.props;
+    const {app, closeFile, files, profile, project, setActiveFile} = this.props;
     return (
       <FlexColumn flexGrow={2}>
         <SplitterLayout primaryIndex={1} secondaryInitialSize={240}>
@@ -48,9 +43,10 @@ class WorkspaceComponent extends React.Component {
           <DocumentViewer
             app={app}
             closeFile={closeFile}
+            files={files}
             profile={profile}
             project={project}
-            setActiveFile={setActiveFile}/>
+            setActiveFile={setActiveFile} />
         </SplitterLayout>
         <StatusBar app={app} profile={profile} project={project}/>
       </FlexColumn>
@@ -59,11 +55,11 @@ class WorkspaceComponent extends React.Component {
 }
 
 WorkspaceComponent.propTypes = {
-  app: PropTypes.object,
-  library: PropTypes.object,
+  app: PropTypes.object.isRequired,
+  files: PropTypes.object.isRequired,
   loadProfile: PropTypes.func,
-  profile: PropTypes.object,
-  project: PropTypes.object,
+  profile: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 /**
@@ -85,6 +81,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   return {
     app: state.app,
+    files: state.files,
     profile: state.profile,
     project: state.project,
   };

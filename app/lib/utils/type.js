@@ -11,8 +11,8 @@ import MIMETYPES from '../../constants/mimetypes';
  */
 function getFileType(fp, data) {
   const filename = basename(fp);
-  if (filename === MIMETYPES.PACKAGE_JSON.filename) {
-    return MIMETYPES.PACKAGE_JSON;
+  if (filename === MIMETYPES.NPM_PACKAGE.filename) {
+    return MIMETYPES.NPM_PACKAGE;
   }
   const ext = files.getFileExtension(filename);
   switch (ext) {
@@ -74,6 +74,8 @@ function getJsonType(data) {
         return MIMETYPES.BIBJSON;
       case MIMETYPES.CSL.schema:
         return MIMETYPES.CSL;
+      case MIMETYPES.NPM_PACKAGE.schema:
+        return MIMETYPES.NPM_PACKAGE;
       case MIMETYPES.POSTDOC_PROJECT.schema:
         return MIMETYPES.POSTDOC_PROJECT;
       default:

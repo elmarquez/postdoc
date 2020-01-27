@@ -8,14 +8,13 @@ import { CheckboxBlankCircle } from 'styled-icons/remix-fill/CheckboxBlankCircle
 import { Close } from 'styled-icons/remix-line/Close';
 
 import MIMETYPES from '../../constants/mimetypes';
-import BibliographyEditor from './bibliography';
+import BibliographyEditor from '../bibliography-viewer';
 import DocumentEditor from "./document";
-import ImageViewer from './image';
+import ImageViewer from '../image-viewer';
 import {FlexColumn, FlexRow} from '../layout';
-import PdfDocumentViewer from './pdf';
+import PdfDocumentViewer from '../pdf-viewer';
 import Placeholder from '../placeholder';
 import {Tab, TabList, TabListFiller, TabPane, Tabs, Viewer} from './styles';
-import { closeFile, setActiveFile } from '../../store/actions/project';
 
 const {Header, Footer, Sider, Content} = Layout;
 
@@ -38,14 +37,12 @@ class DocumentViewerComponent extends React.Component {
   }
 
   /**
-   * Close tab.
-   * @param {Event} e - Click event
+   * Close file.
    * @param {object} doc - Document metadata
    */
-  onTabClose(e, doc) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.info('close tab', doc);
+  onTabClose(doc) {
+    // TODO ensure that the file has been saved before closing it
+    this.props.closeFile(doc.path);
   }
 
   /**
@@ -69,10 +66,10 @@ class DocumentViewerComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderDocumentViewer() {
-    const { project } = this.props;
+    const { files, project } = this.props;
     if (equals(project.path, null)) {
       return this.renderProjectPlaceholder();
-    } else if (project.files.length === 0) {
+    } else if (files.files.length === 0) {
       return this.renderFilesPlaceholder();
     } else {
       return this.renderTabs();
@@ -119,7 +116,7 @@ class DocumentViewerComponent extends React.Component {
     return (
       <Tab className={classes} key={key} onClick={() => this.onTabSelect(doc)}>
         <span className={'title'}>{doc.filename}</span>
-        <span className={'close icon'} onClick={(e) => this.onTabClose(e, doc)}><Close /></span>
+        <span className={'close icon'} onClick={() => this.onTabClose(doc)}><Close /></span>
         <span className={'status icon'}><CheckboxBlankCircle /></span>
       </Tab>
     );
@@ -132,7 +129,7 @@ class DocumentViewerComponent extends React.Component {
    * @returns {JSX.Element}
    */
   renderTabContent(size) {
-    const { active, files } = this.props.project;
+    const { active, files } = this.props.files;
     const file = files[active];
     const { mimetype } = file.type;
     switch(mimetype) {
@@ -164,7 +161,7 @@ class DocumentViewerComponent extends React.Component {
    */
   renderTabs() {
     const self = this;
-    const { active, files } = this.props.project;
+    const { active, files } = this.props.files;
     const tabs = files.map((file, key) => this.renderTab(file, key, active));
     return (
       <Tabs>
@@ -183,11 +180,12 @@ class DocumentViewerComponent extends React.Component {
 }
 
 DocumentViewerComponent.propTypes = {
-  app: PropTypes.object,
-  closeFile: PropTypes.func,
-  profile: PropTypes.object,
-  project: PropTypes.object,
-  setActiveFile: PropTypes.func,
+  app: PropTypes.object.isRequired,
+  closeFile: PropTypes.func.isRequired,
+  files: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
+  setActiveFile: PropTypes.func.isRequired,
 };
 
 export default DocumentViewerComponent;

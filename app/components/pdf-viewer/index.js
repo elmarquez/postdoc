@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Document, Outline, Page } from 'react-pdf';
-import { FlexColumn } from '../../layout';
+import { FlexColumn } from '../layout';
 import { Controls, Footer, Viewer } from './styles';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';

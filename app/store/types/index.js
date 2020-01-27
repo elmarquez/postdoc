@@ -1,6 +1,5 @@
-import APP from './app';
-import PROFILE from './profile';
-import PROJECT from './project';
-import REPO from './repo';
-
-export { APP, PROFILE, PROJECT, REPO };
+export APP from './app';
+export FILES from './files';
+export PROFILE from './profile';
+export PROJECT from './project';
+export REPO from './repo';
