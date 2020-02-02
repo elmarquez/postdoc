@@ -45,6 +45,10 @@ function deleteFile(path) {
  * @returns {object}
  */
 function openFile(path) {
+  // TODO need to revise the file loading pipeline
+  let handlers = {
+    '.bib': () => console.info('bib handler')
+  };
   return {
     type: FILES.OPEN_FILE,
     payload: files.readFile(path).then(data => {
@@ -111,7 +115,7 @@ function updateFile(path, data) {
  */
 function writeFile(path, data) {
   return {
-    type: FILES.WRITE_FILE,
+    type: FILES.SAVE_FILE,
     payload: Promise.resolve()
   };
 }

@@ -1,6 +1,6 @@
 /* eslint no-unused-vars:0 */
 import { app, Menu } from 'electron';
-import { APP, PROJECT } from '../../store/types';
+import { APP, FILES, PROJECT } from '../../store/types';
 
 /**
  * Build Mac OS application menu.
@@ -127,34 +127,31 @@ function getFileMenu(window) {
       },
       {
         accelerator: 'Command+S',
-        click: (item, win) => win.webContents.send(item.selector),
+        click: (item, win) => {
+          win.webContents.send(FILES.SAVE_FILE);
+        },
         label: 'Save',
-        selector: 'file:save'
       },
       {
         accelerator: 'Command+Shift+S',
-        click: (item, win) => win.webContents.send(item.selector),
+        click: (item, win) => win.webContents.send(FILES.SAVE_FILE_AS),
         label: 'Save As',
-        selector: 'file:save:as'
       },
       {
-        click: (item, win) => win.webContents.send(item.selector),
+        click: (item, win) => win.webContents.send(FILES.SAVE_ALL_FILES),
         label: 'Save All',
-        selector: 'file:save:all'
       },
       {
         type: 'separator'
       },
       {
         accelerator: 'Command+W',
-        click: (item, win) => win.webContents.send(item.selector),
+        click: (item, win) => win.webContents.send(FILES.CLOSE_FILE),
         label: 'Close File',
-        selector: 'file:close'
       },
       {
-        click: (item, win) => win.webContents.send(item.selector),
-        label: 'Close Project',
-        selector: 'file:close:project'
+        click: (item, win) => win.webContents.send(PROJECT.CLOSE_PROJECT),
+         label: 'Close Project',
       },
     ]
   };
@@ -199,31 +196,31 @@ function getNewItemMenu(window) {
       type: 'separator'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'directory'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'directory'),
       label: 'Directory'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'asciidoc'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'asciidoc'),
       label: 'AsciiDoc File'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'bibjson'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'bibjson'),
       label: 'Bibliography (BibJSON)'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'json'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'json'),
       label: 'JSON File'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'markdown'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'markdown'),
       label: 'Markdown File'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'javascript'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'javascript'),
       label: 'Script (JavaScript)'
     },
     {
-      click: (item, win) => win.webContents.send(PROJECT.CREATE_FILE, 'python'),
+      click: (item, win) => win.webContents.send(FILES.CREATE_FILE, 'python'),
       label: 'Script (Python)'
     },
   ];

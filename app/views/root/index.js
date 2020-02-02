@@ -4,7 +4,7 @@ import React, {Context} from 'react';
 import {connect, Provider} from 'react-redux'
 import {HashRouter, Route} from 'react-router-dom';
 import {createFile, loadIndex, openFile, openProject, updateIndex} from '../../store/actions/project';
-import { APP, PROJECT } from '../../store/types';
+import { APP, FILES, PROJECT } from '../../store/types';
 import {App} from './styles';
 import Workspace from './workspace';
 import {GlobalStyles, SplitterStyles} from "../../styles";
@@ -27,16 +27,28 @@ class Application extends React.Component {
     // handle application menu bar actions
     ipcRenderer.on(APP.SHOW_ABOUT, (e, msg) => console.info('show about'));
     ipcRenderer.on(APP.SHOW_PREFERENCES, (e, msg) => console.info('show preferences'));
-    ipcRenderer.on(PROJECT.CREATE_FILE, (e, msg) => this.onCreateFile());
+
+    ipcRenderer.on(FILES.CLOSE_FILE, (e, msg) => console.info('close file'));
+    ipcRenderer.on(FILES.CREATE_FILE, (e, msg) => this.onCreateFile());
+    ipcRenderer.on(FILES.OPEN_FILE, (e, msg) => this.onOpenFile());
+    ipcRenderer.on(FILES.SAVE_ALL_FILES, (e, msg) => console.info('save all files'));
+    ipcRenderer.on(FILES.SAVE_FILE, (e, msg) => console.info('save file'));
+    ipcRenderer.on(FILES.SAVE_FILE_AS, (e, msg) => console.info('save file as'));
+
+    ipcRenderer.on(PROJECT.CLOSE_PROJECT, (e, msg) => console.info('close project'));
     ipcRenderer.on(PROJECT.CREATE_PROJECT, (e, msg) => this.onCreateProject());
-    ipcRenderer.on(PROJECT.OPEN_FILE, (e, msg) => this.onOpenFile());
     ipcRenderer.on(PROJECT.OPEN_PROJECT, (e, msg) => this.onOpenProject());
+  }
+
+  componentWillUnmount() {
+    // TODO release listeners
   }
 
   /**
    *
    */
   onCreateFile() {
+    console.info('create file');
     this.props.createFile();
   }
 
