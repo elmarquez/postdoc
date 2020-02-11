@@ -145,7 +145,7 @@ function getFileMenu(window) {
         type: 'separator'
       },
       {
-        accelerator: 'Command+W',
+        // accelerator: 'Command+W',
         click: (item, win) => win.webContents.send(FILES.CLOSE_FILE),
         label: 'Close File',
       },

@@ -1,6 +1,7 @@
 import { basename, extname } from 'path';
 import {FILES} from '../types';
-import files from '../../lib/utils/files';
+import Files from '../../lib/files';
+import Utils from '../../lib/utils';
 import { getFileType, getJsonType } from '../../lib/utils/type';
 import MIMETYPES from '../../constants/mimetypes';
 
@@ -45,39 +46,35 @@ function deleteFile(path) {
  * @returns {object}
  */
 function openFile(path) {
-  // TODO need to revise the file loading pipeline
-  let handlers = {
-    '.bib': () => console.info('bib handler')
+  const filename = basename(path);
+  const extension = extname(path);
+  const type = getFileType(path);
+  // TODO make file handlers pluggable
+  // file the right file handler
+  let fileHandlers = {
+    DEFAULT: Files.loadText,
+    '.adoc': Files.loadText,
+    '.bib': Files.loadBibtex,
+    '.gif': Files.loadImage,
+    '.jpeg': Files.loadImage,
+    '.jpg': Files.loadImage,
+    '.json': Files.loadJSON,
+    '.md': Files.loadText,
+    '.pdf': Files.loadPDF,
+    '.png': Files.loadImage,
+    '.sh': Files.loadText,
+    '.txt': Files.loadText,
+    '.webp': Files.loadImage,
+    '.yaml': Files.loadText,
+    '.yml': Files.loadText
   };
+  let handler = fileHandlers.DEFAULT;
+  if (extension in fileHandlers) {
+    handler = fileHandlers[extension];
+  }
   return {
     type: FILES.OPEN_FILE,
-    payload: files.readFile(path).then(data => {
-      const filename = basename(path);
-      const extension = extname(path);
-      let type = getFileType(path, data);
-      // convert data encoding depending on its inferred type
-      const binaryTypes = [
-        MIMETYPES.GIF.mimetype,
-        MIMETYPES.JPEG.mimetype,
-        MIMETYPES.PDF.mimetype,
-        MIMETYPES.PNG.mimetype,
-        MIMETYPES.TIFF.mimetype,
-        MIMETYPES.WEBP.mimetype,
-      ];
-      if (type.mimetype === MIMETYPES.PDF.mimetype) {
-        data = data.toString('base64');
-      } else if (type.mimetype === MIMETYPES.JSON.mimetype) {
-        try {
-          data = data.toString();
-          data = JSON.parse(data);
-          type = getJsonType(data);
-        } catch (err) {
-          // TODO need a better approach to this than just bombing out
-          console.error(err);
-        }
-      } else if (binaryTypes.indexOf(type.mimetype) === -1) {
-        data = data.toString();
-      }
+    payload: handler(path).then(function(data) {
       return { data, filename, path, type };
     })
   };

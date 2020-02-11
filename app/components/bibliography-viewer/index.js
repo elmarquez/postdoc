@@ -13,6 +13,7 @@ import TagEditor from '../datagrid/editors/tag';
 import {Authors, Tag} from '../datagrid/formatters';
 import {Body, ContentPanel} from './styles';
 import ErrorBoundary from '../error-boundary';
+import BibtexEditor from './bibtex';
 import {
   loadIndex,
   updateIndex,
@@ -25,10 +26,6 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 const { Button, Form, Modal, Select } = antd;
 const { Option } = Select;
 
-const AuthorsFormatter2 = (props) => {
-  const authors = props.value.map((item) => item.name).join(', ');
-  return <span>{authors}</span>;
-}
 
 /**
  * Content editing and viewing panel.
@@ -43,60 +40,10 @@ class BibliographyEditorComponent extends React.Component {
     this.api = null;
     this.columnApi = null;
     this.state = {
-      columns: [
-        { key: 'author', name: 'Author', formatter: AuthorsFormatter2 },
-        { key: 'title', name: 'Title' },
-        { key: 'year', name: 'Year' },
-        { key: 'type', name: 'Type' },
-        { key: 'tags', name: 'Tags' },
-      ],
-      editing: false,
-      gridOptions: {
-        columnDefs: [
-          {field: 'author', headerName: 'Author', cellRenderer: 'authorsFormatter', resizable: true},
-          {field: 'title', headerName: 'Title', resizable: true},
-          {field: 'year', headerName: 'Year', resizable: true},
-          {field: 'type', headerName: 'Type', resizable: true},
-          {
-            cellEditor: 'tagEditor',
-            cellRenderer: 'tagFormatter',
-            editable: true,
-            field: 'tags',
-            headerName: 'Tags',
-            resizable: true
-          },
-        ],
-        isDragging: false,
-        onCellEditingStarted: this.onCellEditingStarted.bind(this),
-        onCellValueChanged: this.onCellValueChanged.bind(this),
-        onRowDoubleClicked: this.onRowDoubleClicked.bind(this),
-        pagination: true,
-        rowSelection: 'single'
-      },
       imports: [],
+      isDragging: false,
       showImportModal: false
     };
-  }
-
-  componentDidMount() {
-    console.info('file at mount', this.props.file);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!equals(prevProps)) {
-      console.info('file at update', this.props.file);
-    }
-  }
-
-  onCellEditingStarted(a, b, c) {
-    this.setState({editing: true});
-  }
-
-  onCellValueChanged(e) {
-    if (this.props.onFileUpdated) {
-      this.props.onFileUpdated(e.rowIndex, e.data);
-    }
-    this.setState({editing: false});
   }
 
   onCloseImportModal() {
@@ -168,21 +115,6 @@ class BibliographyEditorComponent extends React.Component {
     this.onShowImportModal(files);
   }
 
-  onGridReady(params) {
-    this.api = params.api;
-    this.columnApi = params.columnApi;
-  }
-
-  /**
-   * Handle row double clicked.
-   * @param {Object} row - Data grid row
-   */
-  onRowDoubleClicked(row) {
-    if (this.state.editing === false && this.props.onDocumentSelected) {
-      this.props.onDocumentSelected(row.data);
-    }
-  }
-
   onShowImportModal(files) {
     this.setState({ imports: files, showImportModal: true });
   }
@@ -205,7 +137,7 @@ class BibliographyEditorComponent extends React.Component {
         >
           <ErrorBoundary>
             {isDragging && this.renderFileDropzone()}
-            {!isDragging && this.renderDataGrid()}
+            {!isDragging && this.renderBibliography()}
           </ErrorBoundary>
         </Body>
         {this.renderModals()}
@@ -213,35 +145,18 @@ class BibliographyEditorComponent extends React.Component {
     );
   }
 
-  renderAgGrid() {
+  renderBibliography() {
     const {file} = this.props;
     const rows = file.data.records || [];
-    return (
-      <AgGridReact
-        frameworkComponents={{
-          authorsFormatter: Authors,
-          tagEditor: TagEditor,
-          tagFormatter: Tag
-        }}
-        gridOptions={this.state.gridOptions}
-        rowData={rows}
-      />
-    );
-  }
-
-  renderDataGrid() {
-    const {file} = this.props;
-    const rows = file.data.records || [];
-    return (
-      <ReactDataGrid
-        columns={this.state.columns}
-        enableDragAndDrop
-        enableRowSelect
-        minHeight={150}
-        rowGetter={i => rows[i]}
-        rowsCount={rows.length}
-      />
-    );
+    if (file.type.mimetype === "application/x-bibtex") {
+      return (<BibtexEditor file={file} />);
+    } else if (file.type.mimetype === 'application/vnd.citationstyles.style+xml') {
+      return (<div>CSL bibliography file format</div>);
+    } else if (file.type.mimetype === 'application/x-bibjson') {
+      return (<div>BibJson bibliography file format</div>);
+    } else {
+      return (<div>Bibliography format not supported</div>);
+    }
   }
 
   /**

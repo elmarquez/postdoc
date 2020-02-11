@@ -6,10 +6,9 @@ import MIMETYPES from '../../constants/mimetypes';
 /**
  * Get the file type identifier.
  * @param {string} fp - File path
- * @param {object} data - File data
  * @return {string} mimetype identifier
  */
-function getFileType(fp, data) {
+function getFileType(fp) {
   const filename = basename(fp);
   if (filename === MIMETYPES.NPM_PACKAGE.filename) {
     return MIMETYPES.NPM_PACKAGE;
